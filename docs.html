@@ -1,0 +1,27 @@
+<h1>REQUIREMENTS</h1>
+
+<p>Please, install latest versions of Fabric and PyYAML packages globally:</p>
+
+<pre><code>sudo pip install Fabric --upgrade
+sudo pip install PyYAML --upgrade
+</code></pre>
+
+<p>If you're working with docs, install markdown2 package globally:</p>
+
+<pre><code>sudo pip install markdown2 --upgrade
+</code></pre>
+
+<p>Copy config.example.yaml to your project folder and edit:</p>
+
+<pre><code>cp datafly/config.example.yaml config.yaml
+</code></pre>
+
+<p>Install project based on type in config:</p>
+
+<pre><code>cd datafly &amp;&amp; fab starter_install
+</code></pre>
+
+<p>Run it:</p>
+
+<pre><code>cd script &amp;&amp; fab run
+</code></pre>

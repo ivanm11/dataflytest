@@ -1,0 +1,18 @@
+server:
+    user: root
+    hosts: ['96.126.102.11']
+    repo: '/var/www/starter.git'
+    path: '/var/www/starter'
+    staging: '/var/www/starter_staging'
+    uwsgi:
+        path: '/var/www/starter'
+        socket: 3100
+    nginx:
+        path: '/var/www/starter'
+        socket: 3100
+        server_name: 'starter.datafly.net'
+
+project:
+    name: 'starter'
+    type: 'bottle_mongo'
+    db: 'project'
