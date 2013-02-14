@@ -1,5 +1,4 @@
-import os.path
-from os.path import abspath, dirname
+from os import path
 
 import yaml
 
@@ -9,70 +8,92 @@ from fabric.api import lcd, local
 # server
 from fabric.api import run
 
-# /projects/new_project
-project_path = abspath(dirname(dirname(__file__)))
-www_path = os.path.join(project_path, 'www')
-server_path = os.path.join(project_path, 'server')
-# /projects/new_project/datafly
-datafly_path = abspath(dirname(__file__))
+# Folders
 
-config_file = os.path.join(project_path, 'config.yaml')
+root_dir = path.abspath(path.dirname(path.dirname(__file__)))
+www_dir = path.join(root_dir, 'www')
+server_dir = path.join(root_dir, 'server')
+datafly_dir = path.join(root_dir, 'datafly')
+
+# Parse YAML
+
+config_file = path.join(root_dir, 'config.yaml')
 config = yaml.load(open(config_file))
+
+# Remote configration
 
 env.user = config['server']['user']
 env.hosts = config['server']['hosts']
 
 def _replace_in_file(path, replacements):
     source = open(path).read()
-    for k, v in replacements.iteritems():
-        source = source.replace('{{ $%s }}' % k, v)
+    for key, value in replacements.iteritems():
+        var = '{{ $%s }}' % key
+        source = source.replace(var, str(value))
     output = open(path, 'w')
     output.write(source)
     output.close
 
 # INSTALLATION AND MAINTENANCE
 
-def server_setup():
+def new_project(action=None):
+    def copy_files():
+        files = path.join(datafly_dir, config['project']['type'], '*')
+        local('cp -r %s %s' % (files, root_dir))
+    def setup_venv():
+        with lcd(root_dir):
+            local('virtualenv venv')
+            local('venv/bin/pip install -r server/requirements.txt')
+            local('mkdir -p backup')
+    if action:
+        return locals()[action]()
+    copy_files()
+    setup_venv()
+
+
+uwsgi_filename = '%s.ini' % config['project']['name']
+nginx_filename = '%s.nginx' % config['project']['name']
+
+def conf():
+    if config['server']['type'] == 'nginx_uwsgi':
+        files = path.join(datafly_dir, 'nginx_uwsgi', '*')
+        local('cp -r %s %s' % (files, server_dir))
+        with lcd(path.join(root_dir, 'server')):
+            # uwsgi conf
+            local('mv uwsgi.ini %s' % uwsgi_filename)
+            uwsgi_path = path.join(server_dir, uwsgi_filename)
+            _replace_in_file(uwsgi_path, config['server']['uwsgi'])
+            # nginx conf
+            local('mv default.nginx %s' % nginx_filename)
+            nginx_path = path.join(server_dir, nginx_filename)
+            _replace_in_file(nginx_path, config['server']['nginx'])
+
+
+def server(action=None):
     """Only Ubuntu & Debian"""
-    run('apt-get install nginx')
-    run('apt-get install build-essential python-dev libxml2-dev')
-    run('apt-get install python-pip')
-    run('pip install uwsgi')
+    if action == 'install' and config['server']['type'] == 'nginx_uwsgi':
+        run('apt-get install nginx')
+        run('apt-get install build-essential python-dev libxml2-dev')
+        run('apt-get install python-pip')
+        run('pip install uwsgi')
+    if action == 'configure' and config['server']['type'] == 'nginx_uwsgi':
+        remote_server_dir = path.join(config['server']['path'], 'server')
+        remote_nginx_conf = path.join(remote_server_dir, uwsgi_filename)
+        run('ln -s %s /etc/nginx/sites-enabled/%s'
+            % (remote_nginx_conf, uwsgi_filename))
+        run('service nginx reload')
+        remote_uwsgi_conf = path.join(remote_server_dir, nginx_filename)
+        run('ln -s %s /etc/uwsgi/vassals/%s'
+            % (remote_uwsgi_conf, nginx_filename))
 
-uwsgi_conf = '%s.ini' % config['project']['name']
-nginx_conf = '%s.nginx' % config['project']['name']
-
-def starter_install():
-    files = os.path.join(datafly_path, config['project']['type'], '*')
-    local('cp -r %s %s' % (files, project_path))
-    with lcd(os.path.join(project_path, 'server')):
-        local('mv uwsgi.ini %s' % uwsgi_conf)
-        path = os.path.join(server_path, uwsgi_conf)
-        # _replace_in_file(path, config['server']['uwsgi'])
-        local('mv vhost.nginx %s' % nginx_conf)
-        path = os.path.join(server_path, nginx_conf)
-        # _replace_in_file(path, config['server']['nginx'])
-
-def starter_deploy():
-    remote_server_path = os.path.join(config['server']['path'], 'server')
-    nginx_conf_fullpath = os.path.join(remote_server_path, nginx_conf)
-    run('ln -s %s /etc/nginx/sites-enabled/%s' % (nginx_conf_fullpath, nginx_conf))
-    run('service nginx reload')
-    uwsgi_conf_fullpath = os.path.join(remote_server_path, uwsgi_conf)
-    run('ln -s %s /etc/uwsgi/vassals/%s' % (uwsgi_conf_fullpath, uwsgi_conf))
-
-def local_setup():
-    with lcd(project_path):
-        # local('virtualenv venv')
-        local('venv/bin/pip install -r server/requirements.txt')
-        local('mkdir backup')
 
 def compile_docs():
-    with lcd(datafly_path):
+    with lcd(datafly_dir):
         local('markdown2 docs.md > docs.html')
+
 
 # SHARED METHODS
 
 def bottle_run():
-    with lcd(www_path):
+    with lcd(www_dir):
         local('../venv/bin/python app.py')
