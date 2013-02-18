@@ -1,6 +1,6 @@
 <title>Datafly Starter Documentation</title>
 <link href="static/css/docs.css" rel="stylesheet">
-<script src="http://code.jquery.com/jquery-2.0.0b1.js"></script>
+<script src="static/js/jquery-2.0.0b1.js"></script>
 <script src="static/js/docs.js"></script>
 
 DATAFLY STARTER
@@ -57,10 +57,18 @@ New project based on a type in config.yaml:
 
     # config.yaml
     project:
+        name: 'starter'
         type: 'bottle_mongo'
+        db: 'starter'
+
+    server:
+        type: 'nginx_uwsgi'
 
     # shell
     $ cd datafly && fab new_project
+
+Configuration files are copied to */server* folder. You can edit them before
+upload.
 
 To run using virtualenv:
 
@@ -69,22 +77,31 @@ To run using virtualenv:
 Server
 ------
 
-Please, define your configuration in config.yaml:
+Define one user/hosts pair for repository, production and staging in config:
 
     server:
-        type: 'nginx_uwsgi'
+        hosts: ['root@96.126.102.11']
 
-To install web server run:
+Or define different users/hosts for each:
 
-    $ fab server:install
+    repository:
+        hosts: ['root@96.126.102.11']
 
-To add local configuration files:
+    production:
+        hosts: ['root@96.126.102.12']
 
-    $ fab conf
+If there is a staging env in config, then staging env is default for server
+commands. Otherwise, production is default.
 
-Configuration files are copied to */server* folder. You can edit them before
-upload with next command.
+Install Apache or Nginx, uWSGI or mod_uwsgi, pip:
+
+    $ fab new_server:install
+
+For production (if staging exists):
+
+    $ fab with_production new_server:install
 
 To configure new virtual host and add wsgi configuration:
 
-    $ fab server:configure
+    $ fab new_server:configure
+    $ fab with_production new_server:configure

@@ -61,11 +61,19 @@ $ git clone ssh://root@96.126.102.11/var/www/datafly.git
 
 <pre><code># config.yaml
 project:
+    name: 'starter'
     type: 'bottle_mongo'
+    db: 'starter'
+
+server:
+    type: 'nginx_uwsgi'
 
 # shell
 $ cd datafly &amp;&amp; fab new_project
 </code></pre>
+
+<p>Configuration files are copied to <em>/server</em> folder. You can edit them before
+upload.</p>
 
 <p>To run using virtualenv:</p>
 
@@ -74,26 +82,36 @@ $ cd datafly &amp;&amp; fab new_project
 
 <h2>Server</h2>
 
-<p>Please, define your configuration in config.yaml:</p>
+<p>Define one user/hosts pair for repository, production and staging in config:</p>
 
 <pre><code>server:
-    type: 'nginx_uwsgi'
+    hosts: ['root@96.126.102.11']
 </code></pre>
 
-<p>To install web server run:</p>
+<p>Or define different users/hosts for each:</p>
 
-<pre><code>$ fab server:install
+<pre><code>repository:
+    hosts: ['root@96.126.102.11']
+
+production:
+    hosts: ['root@96.126.102.12']
 </code></pre>
 
-<p>To add local configuration files:</p>
+<p>If there is a staging env in config, then staging env is default for server
+commands. Otherwise, production is default.</p>
 
-<pre><code>$ fab conf
+<p>Install Apache or Nginx, uWSGI or mod_uwsgi, pip:</p>
+
+<pre><code>$ fab new_server:install
 </code></pre>
 
-<p>Configuration files are copied to <em>/server</em> folder. You can edit them before
-upload with next command.</p>
+<p>For production (if staging exists):</p>
+
+<pre><code>$ fab with_production new_server:install
+</code></pre>
 
 <p>To configure new virtual host and add wsgi configuration:</p>
 
-<pre><code>$ fab server:configure
+<pre><code>$ fab new_server:configure
+$ fab with_production new_server:configure
 </code></pre>
