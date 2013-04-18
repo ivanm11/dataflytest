@@ -1,0 +1,19 @@
+- name: add nginx ppa
+  action: apt_repository repo=ppa:nginx/stable
+- name: install nginx
+  action: apt pkg=nginx
+- name: upd for default host issue - http://stackoverflow.com/q/14972792
+  template: src=$root_dir/datafly/ansible/templates/nginx.default
+            dest=/etc/nginx/sites-available/default
+- name: ensure nginx is running
+  action: service name=nginx state=started
+- name: copy production host
+  template: src=$root_dir/server/site.nginx
+            dest=/etc/nginx/sites-enabled/${project}
+  notify:
+    - restart nginx
+- name: copy stagin hosts
+  template: src=$root_dir/server/site_staging.nginx
+            dest=/etc/nginx/sites-enabled/${project}_staging
+  notify:
+    - restart nginx

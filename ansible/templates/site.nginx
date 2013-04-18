@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name {{ $host }};
+    server_name {{ host }};
 
     location = /robots.txt {
             rewrite (.*) /static/robots.txt;
@@ -11,11 +11,11 @@ server {
     }
 
     location /static/ {
-            root {{ $path }}/www;
+            root {{ path }}/www;
     }
 
     location / {
             include uwsgi_params;
-            uwsgi_pass 127.0.0.1:{{ $socket }};
+            uwsgi_pass unix:///tmp/uwsgi.sock;
     }
 }

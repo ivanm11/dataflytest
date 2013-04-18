@@ -1,0 +1,19 @@
+- name: install libxml2-dev for uwsgi compilation
+  action: apt pkg=libxml2-dev
+- name: install uwsgi
+  action: pip name=uwsgi
+- template: src=$root_dir/datafly/ansible/templates/uwsgi.conf
+            dest=/etc/init/
+- name: start uWSGI
+  action: service name=uwsgi state=started
+- action: file name=/etc/uwsgi/vassals state=directory
+- action: file name=/var/log/uwsgi.log state=file
+               owner=www-data group=www-data
+- action: file name=/var/log/uwsgi/emperor.log state=file
+               owner=www-data group=www-data
+- name: copy production ini
+  template: src=$root_dir/server/uwsgi.ini
+            dest=/etc/uwsgi/vassals/${project}.ini
+- name: copy staging ini
+  template: src=$root_dir/server/uwsgi_staging.ini
+            dest=/etc/uwsgi/vassals/${project}_staging.ini

@@ -1,0 +1,19 @@
+---
+
+# install nginx & uwsgi
+# please, edit hosts (add new project group from /etc/ansible/hosts)
+# please, replace newproject with new project code
+- hosts: newproject
+  connection: fireball
+  user: root
+  gather_facts: false
+  vars:
+    root_dir: '..'
+    project: 'newproject'
+  tasks:
+    - include: $root_dir/datafly/ansible/utils.yaml
+    - include: $root_dir/datafly/ansible/mosh.yaml
+    - include: $root_dir/datafly/ansible/nginx.yaml
+    - include: $root_dir/datafly/ansible/uwsgi.yaml
+  handlers:
+    - include: $root_dir/datafly/ansible/handlers.yaml

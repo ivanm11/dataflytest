@@ -1,0 +1,9 @@
+- name: copy nginx vhosts, uwsgi config files from templates
+  template: src=$root_dir/datafly/ansible/templates/site.nginx
+            dest=$root_dir/server/
+- template: src=$root_dir/datafly/ansible/templates/site_staging.nginx
+            dest=$root_dir/server/
+- template: src=$root_dir/datafly/ansible/templates/uwsgi.ini
+            dest=$root_dir/server/
+- template: src=$root_dir/datafly/ansible/templates/uwsgi_staging.ini
+            dest=$root_dir/server/

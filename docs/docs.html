@@ -1,0 +1,164 @@
+<p><title>Datafly Starter Documentation</title>
+<link href="css/docs.css" rel="stylesheet"></p>
+
+<script src="js/jquery-2.0.0b1.js"></script>
+
+<script src="js/docs.js"></script>
+
+<h1>DATAFLY STARTER</h1>
+
+<ol>
+<li><a href="#chapter1">Goals</a></li>
+<li><a href="#chapter2">Requirements</a></li>
+<li><a href="#chapter3">New Project</a></li>
+<li><a href="#chapter4">Server</a></li>
+</ol>
+
+<h2>Goals</h2>
+
+<ol>
+<li><p>Useful local &amp; server commands for <a href="http://http://docs.fabfile.org/">Fabric</a>
+and <a href="http://ansible.cc">Ansible</a></p>
+
+<p>1.1 Setup local and remote git repositories, add staging branch</p>
+
+<p>1.2 Install and configure nginx/uwsgi or apache/mod_wsgi</p></li>
+<li><p>Start project from template (ex. <em>bottle_mongo</em>)</p></li>
+<li><p>Shared python modules and css/js files between all Datafly projects.</p></li>
+</ol>
+
+<h2>Requirements</h2>
+
+<p>Please, install latest versions of Fabric, Ansible and all required dependencies
+globally:</p>
+
+<pre><code>$ sudo pip install fabric --upgrade
+$ sudo pip install paramiko PyYAML jinja2 ansible --upgrade
+</code></pre>
+
+<p>This is required for Ansible Fireball mode (fast connection over 0mq):</p>
+
+<pre><code>$ sudo pip install pyzmq pyasn1 PyCrypto python-keyczar --upgrade
+</code></pre>
+
+<p>If you're planning to edit and compile docs, install
+<a href="https://github.com/trentm/python-markdown2">markdown2</a> package globally:</p>
+
+<pre><code>$ sudo pip install markdown2 --upgrade
+
+# compile docs with fabric
+$ fab docs
+</code></pre>
+
+<p>Add all servers to /etc/ansible/hosts file:</p>
+
+<pre><code>[local]
+localhost
+
+[datafly]
+96.126.102.11
+192.155.82.246
+
+[rme]
+96.126.102.11
+
+[mas]
+192.155.82.246
+</code></pre>
+
+<h2>New project</h2>
+
+<p>Make new project dir:</p>
+
+<pre><code>$ mkdir newproject &amp;&amp; cd newproject
+</code></pre>
+
+<p>You can clone Datafly Starter repository inside it:</p>
+
+<pre><code>$ git clone ssh://root@96.126.102.11/home/datafly/git/datafly.git
+</code></pre>
+
+<p>Or simply make a symbolic link to existing local Datafly Starter path:</p>
+
+<pre><code>$ ln -s ~/projects/datafly datafly
+</code></pre>
+
+<p>Copy project files and setup virtualenv:</p>
+
+<pre><code>$ cd datafly/fabric
+$ fab new:bottle-mongo
+</code></pre>
+
+<p>Or if you are using Datafly Starter via symlink:</p>
+
+<pre><code>$ fab new:bottle-mongo --set root_dir="$(pwd)"
+</code></pre>
+
+<p>Then you should edit variables in <em>/script</em> files:</p>
+
+<pre><code>/script/fabfile.py
+/script/local.yaml
+/script/fireball.yaml
+/script/server.yaml
+</code></pre>
+
+<p>To copy Nginx vhosts, uWSGI config files from templates to <em>/server</em> folder:</p>
+
+<pre><code>$ ansible-playbook script/local.yaml
+</code></pre>
+
+<p>Nginx vhosts, uWSGI config files are ready for use. If you want, you can edit
+this files (for special Nginx or uWSGI setup).</p>
+
+<p>To run project locally use virtualenv:</p>
+
+<pre><code>$ cd www
+$ ../venv/bin/python app.py
+</code></pre>
+
+<p>Initialize Git repository:</p>
+
+<pre><code>$ cd script
+$ fab git repo
+</code></pre>
+
+<p>To upload project files (and any update in the future):</p>
+
+<pre><code>$ cd script
+$ fab deploy:staging
+</code></pre>
+
+<p>For production version:</p>
+
+<pre><code>$ fab deploy:production
+</code></pre>
+
+<p><em>To-Do</em>:</p>
+
+<blockquote>
+  <p>maybe rewrite 'fab deploy' to Ansible playbook?</p>
+</blockquote>
+
+<h2>Server</h2>
+
+<p>Install fireball for all servers:</p>
+
+<pre><code>$ ansible-playbook datafly/ansible/fireball.yaml
+</code></pre>
+
+<p>Setup fireball connection for 30 minutes:</p>
+
+<pre><code>$ ansible-playbook script/fireball.yaml
+</code></pre>
+
+<p>From Ansible documentation:</p>
+
+<blockquote>
+  <p>Fireball mode works by launching a temporary 0mq daemon from SSH that by
+  default lives for only 30 minutes before shutting off.</p>
+</blockquote>
+
+<p>You are ready to install and launch Nginx, uWSGI:</p>
+
+<pre><code>$ ansible-playbook script/server.yaml
+</code></pre>

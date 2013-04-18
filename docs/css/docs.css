@@ -1,5 +1,5 @@
 html {
-    font-size: 100%;
+    font-size: 16px;
     overflow-y: scroll;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -32,12 +32,18 @@ code {
     -moz-border-radius: 2px;
     border-radius: 2px;
     color: #004125;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 pre code {
     padding-left: 0px;
     padding-right: 0px;
+}
+
+blockquote {
+    border-left: 5px solid #EDEDED;
+    padding-left: 10px;
+    font-size: 14px;
 }
 
 li p {
