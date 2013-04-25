@@ -11,9 +11,10 @@
     root_dir: '..'
     project: 'newproject'
   tasks:
-    - include: $root_dir/datafly/ansible/utils.yaml
-    - include: $root_dir/datafly/ansible/mosh.yaml
-    - include: $root_dir/datafly/ansible/nginx.yaml
-    - include: $root_dir/datafly/ansible/uwsgi.yaml
+    - include: $root_dir/starter/ansible/utils.yaml
+    - include: $root_dir/starter/ansible/mosh.yaml
+    - include: $root_dir/starter/ansible/nginx.yaml
+    - include: $root_dir/starter/ansible/uwsgi.yaml
+    - include: $root_dir/starter/ansible/mongo.yaml
   handlers:
-    - include: $root_dir/datafly/ansible/handlers.yaml
+    - include: $root_dir/starter/ansible/handlers.yaml

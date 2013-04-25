@@ -1,8 +1,8 @@
 ---
 - hosts: datafly
-  sudo: yes
-  gather_facts: no
   connection: ssh
+  user: root
+  gather_facts: no
   tasks:
       - action: apt pkg=$item
         with_items:

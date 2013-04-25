@@ -2,7 +2,7 @@
   action: apt pkg=libxml2-dev
 - name: install uwsgi
   action: pip name=uwsgi
-- template: src=$root_dir/datafly/ansible/templates/uwsgi.conf
+- template: src=$root_dir/starter/ansible/templates/uwsgi.conf
             dest=/etc/init/
 - name: start uWSGI
   action: service name=uwsgi state=started

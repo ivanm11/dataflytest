@@ -1,0 +1,10 @@
+- name: add 10gen public GPG Key
+  action: command apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+- name: add mongo ppa
+  action: copy
+          src=$root_dir/starter/ansible/templates/10gen.list
+          dest=/etc/apt/sources.list.d/10gen.list
+          owner=root group=root mode=0644
+- action: command apt-get update
+- name: install mongo
+  action: apt pkg=mongodb-10gen

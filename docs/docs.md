@@ -10,6 +10,7 @@ DATAFLY STARTER
 2. [Requirements](#chapter2)
 3. [New Project](#chapter3)
 4. [Server](#chapter4)
+5. [GIT](#chapter5)
 
 Goals
 -----
@@ -70,15 +71,15 @@ Make new project dir:
 
 You can clone Datafly Starter repository inside it:
 
-    $ git clone ssh://root@96.126.102.11/home/datafly/git/datafly.git
+    $ git clone ssh://root@96.126.102.11/home/datafly/git/starter.git
 
 Or simply make a symbolic link to existing local Datafly Starter path:
 
-    $ ln -s ~/projects/datafly datafly
+    $ ln -s ~/projects/starter starter
 
 Copy project files and setup virtualenv:
 
-    $ cd datafly/fabric
+    $ cd starter/fabric
     $ fab new:bottle-mongo
 
 Or if you are using Datafly Starter via symlink:
@@ -127,7 +128,7 @@ Server
 
 Install fireball for all servers:
 
-    $ ansible-playbook datafly/ansible/fireball.yaml
+    $ ansible-playbook starter/ansible/fireball.yaml
 
 Setup fireball connection for 30 minutes:
 
@@ -141,4 +142,13 @@ default lives for only 30 minutes before shutting off.
 You are ready to install and launch Nginx, uWSGI:
 
     $ ansible-playbook script/server.yaml
+
+GIT
+---
+
+Change remote origin for new location (use for your local):
+
+    $ git remote set-url origin ssh://git@96.126.102.11/home/git/repo.git
+
+
 

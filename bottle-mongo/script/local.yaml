@@ -12,4 +12,4 @@
     path: '/home/newproject/production'
     path_staging: '/home/newproject/staging'
   tasks:
-    - include: $root_dir/datafly/ansible/local.yaml
+    - include: $root_dir/starter/ansible/local.yaml

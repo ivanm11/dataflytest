@@ -3,7 +3,7 @@
 - name: install nginx
   action: apt pkg=nginx
 - name: upd for default host issue - http://stackoverflow.com/q/14972792
-  template: src=$root_dir/datafly/ansible/templates/nginx.default
+  template: src=$root_dir/starter/ansible/templates/nginx.default
             dest=/etc/nginx/sites-available/default
 - name: ensure nginx is running
   action: service name=nginx state=started

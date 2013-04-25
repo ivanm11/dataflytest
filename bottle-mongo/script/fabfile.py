@@ -11,5 +11,6 @@ env.project  = 'newproject'
 env.remote_path = '/home/newproject/'
 env.hosts = ['staging.newproject.com']
 env.user  = 'root'
+env.db = 'dbname'
 
-from datafly.fabric.fabfile import deploy, git, repo
+from starter.fabric.fabfile import deploy, git, repo, put_db

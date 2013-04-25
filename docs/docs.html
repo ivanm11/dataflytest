@@ -12,6 +12,7 @@
 <li><a href="#chapter2">Requirements</a></li>
 <li><a href="#chapter3">New Project</a></li>
 <li><a href="#chapter4">Server</a></li>
+<li><a href="#chapter5">GIT</a></li>
 </ol>
 
 <h2>Goals</h2>
@@ -75,17 +76,17 @@ localhost
 
 <p>You can clone Datafly Starter repository inside it:</p>
 
-<pre><code>$ git clone ssh://root@96.126.102.11/home/datafly/git/datafly.git
+<pre><code>$ git clone ssh://root@96.126.102.11/home/datafly/git/starter.git
 </code></pre>
 
 <p>Or simply make a symbolic link to existing local Datafly Starter path:</p>
 
-<pre><code>$ ln -s ~/projects/datafly datafly
+<pre><code>$ ln -s ~/projects/starter starter
 </code></pre>
 
 <p>Copy project files and setup virtualenv:</p>
 
-<pre><code>$ cd datafly/fabric
+<pre><code>$ cd starter/fabric
 $ fab new:bottle-mongo
 </code></pre>
 
@@ -143,7 +144,7 @@ $ fab deploy:staging
 
 <p>Install fireball for all servers:</p>
 
-<pre><code>$ ansible-playbook datafly/ansible/fireball.yaml
+<pre><code>$ ansible-playbook starter/ansible/fireball.yaml
 </code></pre>
 
 <p>Setup fireball connection for 30 minutes:</p>
@@ -161,4 +162,11 @@ $ fab deploy:staging
 <p>You are ready to install and launch Nginx, uWSGI:</p>
 
 <pre><code>$ ansible-playbook script/server.yaml
+</code></pre>
+
+<h2>GIT</h2>
+
+<p>Change remote origin for new location (use for your local):</p>
+
+<pre><code>$ git remote set-url origin ssh://git@96.126.102.11/home/git/repo.git
 </code></pre>
