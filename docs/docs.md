@@ -11,6 +11,8 @@ DATAFLY STARTER
 3. [New Project](#chapter3)
 4. [Server](#chapter4)
 5. [GIT](#chapter5)
+6. [Development with LESS](#chapter6)
+7. [Reusable apps](#chapter7)
 
 Goals
 -----
@@ -146,9 +148,45 @@ You are ready to install and launch Nginx, uWSGI:
 GIT
 ---
 
-Change remote origin for new location (use for your local):
+All Git repositories are moved recently to /home/git/ folder.
+
+Change remote origin for new location (use for your local repository):
 
     $ git remote set-url origin ssh://git@96.126.102.11/home/git/repo.git
 
+Development with LESS
+---------------------
 
+[LESS documentation](http://lesscss.org/#docs)
 
+Install [Python LiveReload](https://github.com/lepture/python-livereload)
+globally:
+
+    $ sudo pip install livereload --upgrade
+
+Install browser extension:
+
+    http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions
+
+Install LESS compiler with [npm](https://npmjs.org/), Node.js required:
+
+    $ sudo npm install -g less
+
+Update your less & js assets list, edit:
+
+    www/Guardfile
+
+Start monitoring changes (and autoreload browser tab):
+
+    $ cd www
+    $ livereload
+
+Reusable apps
+-------------
+
+Copy app from `starter/apps` to `www/datafly` folder.
+
+Add app less/js assets to Guardfile.
+
+You can overload apps templates, example:
+`datafly/app/template.html` is replaced by `www/templates/app/template.html`

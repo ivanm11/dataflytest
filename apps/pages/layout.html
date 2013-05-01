@@ -1,0 +1,24 @@
+{% extends "admin/layout.html" %}
+
+{% block content %}
+
+<div class="page">
+    {% if id %}
+
+    <button class="btn btn-success" id="save">Save and Publish</button>
+    <a href="/admin/pages/{{ id }}" class="btn btn-danger">Cancel</a>
+    <div class="editor">
+        <textarea name="html" id="redactor"
+                  data-post-to="/admin/pages/{{ id }}">
+            {{ html }}
+        </textarea>
+    </div>
+
+    {% else %}
+
+    Please, select page from menu
+
+    {% endif %}
+</div>
+
+{% endblock %}
