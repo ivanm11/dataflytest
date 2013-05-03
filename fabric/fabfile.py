@@ -2,7 +2,7 @@ from os import path
 from time import strftime, gmtime
 
 # local
-from fabric.api import lcd, local
+from fabric.api import lcd, local, get
 # server
 from fabric.api import cd, run, put
 # other
@@ -52,6 +52,17 @@ def put_images(version):
     local_images = path.join(env.root_dir, 'www', 'static', 'img', 'upload', '*')
     run('chmod -R 775 %s/www/static/img/upload' % remote_path)
     put(local_images, remote_images)
+
+def get_db():
+    run('rm -rf /tmp/%s' % env.db)
+    run('mongodump --db %s --out /tmp' % env.db)
+    filename = '%s.tar.gz' % strftime("%d%b%Y%H%M", gmtime())
+    run('tar -zcf /tmp/%s /tmp/%s' % (filename, env.db))
+    get('/tmp/%s' % filename, path.join(env.root_dir, 'backup'))
+    with lcd(path.join(env.root_dir, 'backup')):
+        local('tar -xvf %s' % filename)
+    restore_from = path.join(env.root_dir, 'backup', 'tmp', env.db)
+    local('mongorestore --drop --db %s %s' % (env.db, restore_from))
 
 def put_db(version):
     remote_path = env.remote_path + version
