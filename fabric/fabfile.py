@@ -36,6 +36,7 @@ def deploy(version=None):
     run('mkdir -p %s/server' % remote_path)
     if not files.exists('%s/venv' % remote_path):
         run('apt-get install python-pip')
+        run('apt-get install rsync')
         run('pip install virtualenv')
         run('virtualenv %s/venv' % remote_path)
     template = '%s/server/requirements.txt'
@@ -45,6 +46,10 @@ def deploy(version=None):
         run('venv/bin/pip install -r server/requirements.txt')
     run('chown -R www-data:www-data %s/www' % remote_path)
     run('service uwsgi restart')
+
+def venv():
+    with lcd(env.root_dir):
+        local('venv/bin/pip install -r server/requirements.txt')        
 
 def put_images(version):
     remote_path = env.remote_path + version
@@ -90,7 +95,7 @@ def git():
     env.hosts = ['96.126.102.11']
 
 def repo():
-    repository = '/home/datafly/git/%s.git' % env.project
+    repository = '/home/git/%s.git' % env.project
     run('mkdir %s' % repository)
     with cd(repository):
         run('git init --bare')
@@ -104,7 +109,7 @@ def repo():
         local('git push origin master')
         local('git push origin staging')
     with cd(repository):
-        run('chown -R datafly:datafly .')
+        run('chown -R git:git .')
 
 def docs():
     with lcd(starter_dir):

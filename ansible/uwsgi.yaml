@@ -4,11 +4,14 @@
   action: pip name=uwsgi
 - template: src=$root_dir/starter/ansible/templates/uwsgi.conf
             dest=/etc/init/
-- name: start uWSGI
-  action: service name=uwsgi state=started
 - action: file name=/etc/uwsgi/vassals state=directory
+               owner=www-data group=www-data
+- action: command touch /var/log/uwsgi.log
 - action: file name=/var/log/uwsgi.log state=file
                owner=www-data group=www-data
+- action: file name=/var/log/uwsgi state=directory
+               owner=www-data group=www-data
+- action: command touch /var/log/uwsgi/emperor.log
 - action: file name=/var/log/uwsgi/emperor.log state=file
                owner=www-data group=www-data
 - name: copy production ini
@@ -17,3 +20,5 @@
 - name: copy staging ini
   template: src=$root_dir/server/uwsgi_staging.ini
             dest=/etc/uwsgi/vassals/${project}_staging.ini
+- name: start uWSGI
+  action: service name=uwsgi state=started
