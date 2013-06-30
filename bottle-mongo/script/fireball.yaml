@@ -1,9 +1,0 @@
----
-
-# set up the fireball transport
-# please, edit hosts (add new project group from /etc/ansible/hosts)
-- hosts: newproject
-  user: root
-  gather_facts: false
-  tasks:
-    - action: fireball
