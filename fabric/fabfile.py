@@ -41,10 +41,16 @@ def deploy(version=None):
         run('virtualenv %s/venv' % remote_path)
     template = '%s/server/requirements.txt'
     put(template % env.root_dir, template % remote_path)
-    rsync_project('%s/www/' % remote_path, '%s/www/' % env.root_dir)
+    rsync_project('%s/www/' % remote_path, '%s/www/' % env.root_dir,
+                  exclude=["*.pyc"])
     with cd(remote_path):
         run('venv/bin/pip install -r server/requirements.txt')
+        run("find . -name '*.pyc' -delete")
     run('chown -R www-data:www-data %s/www' % remote_path)
+    run('mkdir -p %s/www/static/img/upload' % remote_path)    
+    run('chmod -R 775 %s/www/static/img/upload' % remote_path)
+    run('mkdir -p %s/www/static/file/upload' % remote_path)
+    run('chmod -R 775 %s/www/static/file/upload' % remote_path)
     run('service uwsgi restart')
 
 def venv():

@@ -23,8 +23,8 @@ $(document).ready(function(){
         return;
 
     $('#redactor').redactor({
-        imageUpload: '/admin/pages/upload',
-        fileUpload: '/admin/pages/upload',
+        imageUpload: '/admin/pages/upload/img',
+        fileUpload: '/admin/pages/upload/file',
         autoresize: false,
         buttons: Datafly.redactor_buttons
     });
