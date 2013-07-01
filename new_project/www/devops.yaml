@@ -1,15 +1,12 @@
 ---
 project: 'newproject'
 # fabric
-db: 'newproject'
 server: ['root@datafly.net']
 remote_path: '/home/datafly/newproject/'
 # production version
 host: 'newproject.com'
-path: '/home/datafly/newproject/production'
 # staging version
 host_staging: 'staging.newproject.com'
-path_staging: '/home/datafly/newproject/staging'
 # static assets - edit and restart development server after
 # type:
 #   result filename:

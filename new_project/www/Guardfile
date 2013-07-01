@@ -3,7 +3,6 @@ from livereload.task import Task
 
 Task.add('templates/*.html')
 Task.add('templates/*/*.html')
-Task.add('markdown/*.md')
 Task.add('js/*.js')
 Task.add('less/*.less')
     

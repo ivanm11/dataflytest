@@ -1,4 +1,4 @@
-import sys, yaml
+import os, sys, yaml
 from os import path
 from time import strftime, gmtime
 
@@ -17,10 +17,15 @@ if hasattr(env, 'PROJECT_ROOT'):
     PROJECT_ROOT = env.PROJECT_ROOT
     SITE_ROOT = path.abspath(path.join(env.PROJECT_ROOT, 'www'))
     sys.path.append(SITE_ROOT)
+    from config import Production, Staging
+    CONFIG = {
+        'production': Production,
+        'staging': Staging
+    }
     # project specific variables from yaml
     stream = file(path.join(SITE_ROOT, 'devops.yaml'), 'r')
-    devops = yaml.load(stream)
-    env.hosts = devops['server']
+    DEVOPS = yaml.load(stream)
+    env.hosts = DEVOPS['server']
 
 @task
 def venv():
@@ -41,15 +46,23 @@ def app_run():
 
 @task
 def mkdir(version=None):
-    REMOTE_PATH = path.join(devops['remote_path'] + version)
+    REMOTE_PATH = path.join(DEVOPS['remote_path'] + version)
     run('mkdir -p %s/www' % REMOTE_PATH)
     run('mkdir -p %s/backup' % REMOTE_PATH)
     run('mkdir -p %s/server' % REMOTE_PATH)
     return REMOTE_PATH  
 
 @task
+def remote_venv(remote_path):
+    if not files.exists('%s/venv' % remote_path):
+        run('apt-get install python-pip')
+        run('apt-get install rsync')
+        run('pip install virtualenv')
+        run('virtualenv %s/venv' % remote_path)
+
+@task
 def chmod(version=None):
-    REMOTE_PATH = path.join(devops['remote_path'] + version)
+    REMOTE_PATH = path.join(DEVOPS['remote_path'] + version)
     run('chown -R www-data:www-data %s/www' % REMOTE_PATH)
     run('mkdir -p %s/www/static/upload/img' % REMOTE_PATH)    
     run('chmod -R 775 %s/www/static/upload/img' % REMOTE_PATH)
@@ -58,55 +71,41 @@ def chmod(version=None):
 
 @task
 def deploy(version=None):
-    REMOTE_PATH = path.join(devops['remote_path'] + version)
+    REMOTE_PATH = path.join(DEVOPS['remote_path'] + version)
     mkdir(version)
     # version - production or staging
     requirements = '%s/server/requirements.txt'
     put(requirements % PROJECT_ROOT, requirements % REMOTE_PATH)
     rsync_project('%s/' % REMOTE_PATH, SITE_ROOT, exclude=["*.pyc"])
-    venv_remote(REMOTE_PATH)
+    remote_venv(REMOTE_PATH)
     with cd(REMOTE_PATH):
         run('venv/bin/pip install -r server/requirements.txt')
         run("find . -name '*.pyc' -delete")
     chmod(version)
     run('service uwsgi restart')
 
-def venv_remote(remote_path):
-    if not files.exists('%s/venv' % remote_path):
-        run('apt-get install python-pip')
-        run('apt-get install rsync')
-        run('pip install virtualenv')
-        run('virtualenv %s/venv' % remote_path)
+@task
+def backup_db(version):
+    db = CONFIG[version].DB
+    run('rm -rf /tmp/%s' % db)
+    run('mongodump --db %s --out /tmp' % db)
+    id = db + '_' + strftime("%d%b%Y%H%M", gmtime())
+    filename = '%s.tar.gz' % id
+    with cd('/tmp'):
+        run('tar -zcf %s %s' % (filename, db))
+    backup_dir = path.join(PROJECT_ROOT, 'backup')
+    get('/tmp/%s' % filename, backup_dir)
+    if os.name == 'posix':        
+        with lcd(backup_dir):            
+            local('rm -rf %s' % db)
+            local('tar xvf %s' % filename)
 
-def put_images(version):
-    remote_path = env.remote_path + version
-    remote_images = path.join(remote_path, 'www', 'static', 'img', 'upload')
-    local_images = path.join(env.root_dir, 'www', 'static', 'img', 'upload', '*')
-    run('chmod -R 775 %s/www/static/img/upload' % remote_path)
-    put(local_images, remote_images)
-
-def get_db():
-    run('rm -rf /tmp/%s' % env.db)
-    run('mongodump --db %s --out /tmp' % env.db)
-    filename = '%s.tar.gz' % strftime("%d%b%Y%H%M", gmtime())
-    run('tar -zcf /tmp/%s /tmp/%s' % (filename, env.db))
-    get('/tmp/%s' % filename, path.join(env.root_dir, 'backup'))
-    with lcd(path.join(env.root_dir, 'backup')):
-        local('tar -xvf %s' % filename)
-    restore_from = path.join(env.root_dir, 'backup', 'tmp', env.db)
-    local('mongorestore --drop --db %s %s' % (env.db, restore_from))
-
-def put_db(version):
-    remote_path = env.remote_path + version
-    local('rm -rf /tmp/%s' % env.db)
-    local('mongodump --db %s --out /tmp' % env.db)
-    filename = '%s.tar.gz' % strftime("%d%b%Y%H%M", gmtime())
-    local('tar -zcf /tmp/%s /tmp/%s' % (filename, env.db))
-    put('/tmp/%s' % filename, path.join(remote_path, 'backup'))
-    with cd(path.join(remote_path, 'backup')):
-        run('tar -xvf %s' % filename)
-    restore_from = path.join(remote_path, 'backup', 'tmp', env.db)
-    run('mongorestore --drop --db %s %s' % (env.db, restore_from))
+@task
+def get_db(version):
+    db = CONFIG[version].DB  
+    backup_db(version)
+    restore_from = path.abspath(path.join(PROJECT_ROOT, 'backup', db))
+    local('mongorestore --drop --db %s %s' % (db, restore_from))
 
 # INSTALLATION
 
@@ -116,7 +115,7 @@ def git():
 
 @task
 def repo():
-    repository = '/home/git/%s.git' % devops['project']
+    repository = '/home/git/%s.git' % DEVOPS['project']
     #run('mkdir %s' % repository)
     with cd(repository):
         run('git init --bare')
@@ -133,31 +132,36 @@ def repo():
 
 @task
 def collect_static():
-    """ Needs refactoring. Append files into groups, compile if LESS"""
+    """ Needs refactoring. Append files into groups, compile if Less. """
     STATIC_ROOT = path.join(SITE_ROOT, 'static')
     # LESS
-    for result in devops['less']:
+    for result in DEVOPS['less']:
         output_less = path.join(STATIC_ROOT, '%s.less' % result)        
         output_less = open(output_less, 'w')     
-        for file in devops['less'][result]:
+        for file in DEVOPS['less'][result]:
             less = path.join(SITE_ROOT, file+'.less')
             file = open(less, 'r')
             output_less.write(file.read())
         output_less.close()
         local('lessc %s/%s.less -o %s/%s.min.css' % (STATIC_ROOT, result, STATIC_ROOT, result))
     # JS
-    for result in devops['js']:        
+    for result in DEVOPS['js']:        
         output_js = path.join(STATIC_ROOT, '%s.min.js' % result)
         output_js = open(output_js, 'w')     
-        for file in devops['js'][result]:
+        for file in DEVOPS['js'][result]:
             js = path.join(SITE_ROOT, file+'.js')
             file = open(js, 'r')
             output_js.write(file.read())
-        output_js.close()
-    
+        output_js.close()    
 
-# ultimate shortcut for deploy:staging
-def d():
+@task
+def ds():
+    """ shortcut for deploy:staging """
     collect_static()
-    put_db('staging')
     deploy('staging')
+
+@task
+def dp():
+    """ shortcut for deploy:production """
+    collect_static()
+    deploy('production')
