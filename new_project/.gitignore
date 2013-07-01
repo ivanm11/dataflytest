@@ -1,10 +1,10 @@
 backup
+assets
 venv
 tags
 _private
 
-www/myconfig.py
-www/mydevops.yaml
+www/static/upload
 
 *.py[co~]
 *.swp

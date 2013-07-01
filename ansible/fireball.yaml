@@ -1,5 +1,5 @@
 ---
-- hosts: datafly
+- hosts: datafly-all
   connection: ssh
   user: root
   gather_facts: no

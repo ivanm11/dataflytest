@@ -1,3 +1,4 @@
+import sys, yaml
 from os import path
 from time import strftime, gmtime
 
@@ -6,56 +7,76 @@ from fabric.api import lcd, local, get
 # server
 from fabric.api import cd, run, put
 # other
-from fabric.api import env
+from fabric.api import env, task
 from fabric.contrib import files
 from fabric.contrib.project import rsync_project
 
-# Local directories
+# env.PROJECT_ROOT - that's all we know
+if hasattr(env, 'PROJECT_ROOT'):
+    # SITE ROOT - /www
+    PROJECT_ROOT = env.PROJECT_ROOT
+    SITE_ROOT = path.abspath(path.join(env.PROJECT_ROOT, 'www'))
+    sys.path.append(SITE_ROOT)
+    # project specific variables from yaml
+    stream = file(path.join(SITE_ROOT, 'devops.yaml'), 'r')
+    devops = yaml.load(stream)
+    env.hosts = devops['server']
 
-if hasattr(env, 'root_dir'):
-    # `/starter` folder is a symlink inside new project folder
-    root_dir = path.abspath(path.dirname(path.dirname(env.root_dir)))
-else:
-    root_dir = path.abspath(path.dirname(path.dirname(path.dirname(__file__))))
+@task
+def venv():
+    """ Install virtualenv or update packages from requirements.txt """
+    with lcd(PROJECT_ROOT):
+        if not path.exists(path.join(PROJECT_ROOT, 'venv')):
+            local('virtualenv venv')
+            local('source venv/bin/activate')
+        local('venv/bin/pip install -r server/requirements.txt')               
 
-starter_dir = path.join(root_dir, 'starter')
+@task
+def app_run():
+    """ Run development server """
+    with lcd(SITE_ROOT):
+        local('python app.py')
 
 # DEPLOY
 
+@task
+def mkdir(version=None):
+    REMOTE_PATH = path.join(devops['remote_path'] + version)
+    run('mkdir -p %s/www' % REMOTE_PATH)
+    run('mkdir -p %s/backup' % REMOTE_PATH)
+    run('mkdir -p %s/server' % REMOTE_PATH)
+    return REMOTE_PATH  
+
+@task
+def chmod(version=None):
+    REMOTE_PATH = path.join(devops['remote_path'] + version)
+    run('chown -R www-data:www-data %s/www' % REMOTE_PATH)
+    run('mkdir -p %s/www/static/upload/img' % REMOTE_PATH)    
+    run('chmod -R 775 %s/www/static/upload/img' % REMOTE_PATH)
+    run('mkdir -p %s/www/static/upload/file' % REMOTE_PATH)
+    run('chmod -R 775 %s/www/static/upload/file' % REMOTE_PATH)
+
+@task
 def deploy(version=None):
-    if not version:
-        print """
-        Please, specify version:
-        `fab deploy:staging` or `fab deploy:production`
-        """
-        return
+    REMOTE_PATH = path.join(devops['remote_path'] + version)
+    mkdir(version)
     # version - production or staging
-    remote_path = env.remote_path + version
-    run('mkdir -p %s/www' % remote_path)
-    run('mkdir -p %s/backup' % remote_path)
-    run('mkdir -p %s/server' % remote_path)
+    requirements = '%s/server/requirements.txt'
+    put(requirements % PROJECT_ROOT, requirements % REMOTE_PATH)
+    rsync_project('%s/' % REMOTE_PATH, SITE_ROOT, exclude=["*.pyc"])
+    venv_remote(REMOTE_PATH)
+    with cd(REMOTE_PATH):
+        run('venv/bin/pip install -r server/requirements.txt')
+        run("find . -name '*.pyc' -delete")
+    chmod(version)
+    run('service uwsgi restart')
+
+def venv_remote(remote_path):
     if not files.exists('%s/venv' % remote_path):
         run('apt-get install python-pip')
         run('apt-get install rsync')
         run('pip install virtualenv')
         run('virtualenv %s/venv' % remote_path)
-    template = '%s/server/requirements.txt'
-    put(template % env.root_dir, template % remote_path)
-    rsync_project('%s/www/' % remote_path, '%s/www/' % env.root_dir,
-                  exclude=["*.pyc"])
-    with cd(remote_path):
-        run('venv/bin/pip install -r server/requirements.txt')
-        run("find . -name '*.pyc' -delete")
-    run('chown -R www-data:www-data %s/www' % remote_path)
-    run('mkdir -p %s/www/static/img/upload' % remote_path)    
-    run('chmod -R 775 %s/www/static/img/upload' % remote_path)
-    run('mkdir -p %s/www/static/file/upload' % remote_path)
-    run('chmod -R 775 %s/www/static/file/upload' % remote_path)
-    run('service uwsgi restart')
-
-def venv():
-    with lcd(env.root_dir):
-        local('venv/bin/pip install -r server/requirements.txt')        
 
 def put_images(version):
     remote_path = env.remote_path + version
@@ -89,16 +110,8 @@ def put_db(version):
 
 # INSTALLATION
 
-def new(project_type):
-    this_project = path.join(starter_dir, project_type, '.')
-    local('cp -r %s %s' % (this_project, root_dir))
-    with lcd(root_dir):
-        local('virtualenv venv')
-        local('venv/bin/pip install -r server/requirements.txt')
-        local('mkdir -p backup')
-
 def git():
-    env.hosts = ['96.126.102.11']
+    env.hosts = ['git@datafly.net']
 
 def repo():
     repository = '/home/git/%s.git' % env.project
@@ -110,13 +123,40 @@ def repo():
         local('git add .')
         local('git commit -m "Initial commit"')
         local('git checkout -b staging')
-        remote_origin = 'ssh://root@96.126.102.11%s' % repository
+        remote_origin = 'ssh://git@datafly.net%s' % repository
         local('git remote add origin %s' % remote_origin)
         local('git push origin master')
         local('git push origin staging')
     with cd(repository):
         run('chown -R git:git .')
 
-def docs():
-    with lcd(starter_dir):
-        local('markdown2 docs/docs.md > docs/docs.html')
+@task
+def collect_static():
+    """ Needs refactoring. Append files into groups, compile if LESS"""
+    STATIC_ROOT = path.join(SITE_ROOT, 'static')
+    # LESS
+    for result in devops['less']:
+        output_less = path.join(STATIC_ROOT, '%s.less' % result)        
+        output_less = open(output_less, 'w')     
+        for file in devops['less'][result]:
+            less = path.join(SITE_ROOT, file+'.less')
+            file = open(less, 'r')
+            output_less.write(file.read())
+        output_less.close()
+        local('lessc %s/%s.less -o %s/%s.min.css' % (STATIC_ROOT, result, STATIC_ROOT, result))
+    # JS
+    for result in devops['js']:        
+        output_js = path.join(STATIC_ROOT, '%s.min.js' % result)
+        output_js = open(output_js, 'w')     
+        for file in devops['js'][result]:
+            js = path.join(SITE_ROOT, file+'.js')
+            file = open(js, 'r')
+            output_js.write(file.read())
+        output_js.close()
+    
+
+# ultimate shortcut for deploy:staging
+def d():
+    collect_static()
+    put_db('staging')
+    deploy('staging')

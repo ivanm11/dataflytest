@@ -1,0 +1,12 @@
+---
+
+# copy nginx vhosts, uWSGI config files from templates
+# please, replace newproject with new project code (folder & url titles)
+- hosts: local
+  connection: local
+  gather_facts: false
+  vars_files:
+    - ../www/devops.yaml
+    - ../www/mydevops.yaml
+  tasks:
+    - include: $starter/ansible/local.yaml

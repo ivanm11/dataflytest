@@ -1,0 +1,45 @@
+{% set title = 'Login' %}
+{% set namespace = 'login' %}
+
+{% extends "layout.html" %}
+{% import 'datafly/templates/forms.html' as forms with context %}
+
+{% block content %}
+
+<form action="/api/users/login" id="login" class="form-horizontal">
+
+    <fieldset class="state" id="login">
+        {% call forms.alert('LoginError', 'error') %}
+            We apologize! We don't recognize that login information. <br>
+            Would you kindly try again or reset your password.
+        {% endcall %}
+
+        {{ forms.hf_input('Email', 'email') }} 
+        {% call forms.hf_input('Password', 'password', type='password') %}
+            <a href="#" class="switch-state">Forgot password?</a>
+        {% endcall %}
+
+        {{ forms.hf_checkbox('Remember Me', 'remember', checked=True) }}
+        {{ forms.hf_button('Login') }}
+    </fieldset>
+
+    <fieldset class="state hide" id="forgot-password">
+        {% call forms.alert('EmailSent', 'success') %}
+            Please, check your email. Login & change password link was sent.
+        {% endcall %}
+
+        {% call forms.alert('EmailError', 'error') %}
+            We apologize! We don't recognize that email. 
+            Would you kindly try again.
+        {% endcall %}        
+
+        <input type="hidden" name="forgot-password" value="true">
+        {% call forms.hf_input('Email', 'email') %}
+            <a href="#" class="switch-state">Back to Login</a>
+        {% endcall %}
+        {{ forms.hf_button('Submit') }}
+    </fieldset>
+
+</form>
+
+{% endblock %}

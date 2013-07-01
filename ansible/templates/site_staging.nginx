@@ -11,7 +11,7 @@ server {
     }
 
     location /static/ {
-            root {{ path_staging }}/www;
+            root {{ remote_path }}/staging/www;
     }
 
     location / {
