@@ -110,15 +110,18 @@ def put_db(version):
 
 # INSTALLATION
 
+@task
 def git():
-    env.hosts = ['git@datafly.net']
+    env.hosts = ['root@datafly.net']
 
+@task
 def repo():
-    repository = '/home/git/%s.git' % env.project
-    run('mkdir %s' % repository)
+    repository = '/home/git/%s.git' % devops['project']
+    #run('mkdir %s' % repository)
     with cd(repository):
         run('git init --bare')
-    with lcd(env.root_dir):
+        run('chown -R git:git .')
+    with lcd(PROJECT_ROOT):
         local('git init')
         local('git add .')
         local('git commit -m "Initial commit"')
@@ -127,8 +130,6 @@ def repo():
         local('git remote add origin %s' % remote_origin)
         local('git push origin master')
         local('git push origin staging')
-    with cd(repository):
-        run('chown -R git:git .')
 
 @task
 def collect_static():
