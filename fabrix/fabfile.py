@@ -108,8 +108,18 @@ def get_db(version):
     local('mongorestore --drop --db %s %s' % (db, restore_from))
 
 @task
+def migration(version, file):
+    REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
+    MIGRATIONS = path.join(PROJECT_ROOT, 'script', 'migrations')
+    rsync_project('%s/script/' % REMOTE_PATH, MIGRATIONS, exclude=["*.pyc"])
+    with cd(REMOTE_PATH):
+        run('venv/bin/python script/migrations/%s %s' % (file, version))
+
+@task
 def put_db(version):
     db = CONFIG[version].DB
+    run('''mongo --eval "db.copyDatabase('%s','%s_tmp')"''' % (db, db))
+    return
     local('rm -rf /tmp/%s' % db)
     local('mongodump --db %s --out /tmp' % db)
     id = db + '_' + strftime("%d%b%Y%H%M", gmtime())
@@ -117,8 +127,7 @@ def put_db(version):
     with lcd('/tmp'):
         local('tar -zcf %s %s' % (filename, db))
     put('/tmp/%s' % filename, '/tmp/%s' % filename)
-    run('rm -rf /tmp/%s' % db)
-    run('''mongo test --eval "db.copyDatabase('%s','%s_tmp')"''' % (db, db))
+    run('rm -rf /tmp/%s' % db)    
     with cd('/tmp'):
         run('tar -xvf %s' % filename)
         run('mongorestore --drop --db %s %s' % (db, db))
