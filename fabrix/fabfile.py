@@ -40,7 +40,7 @@ def venv():
 def app_run():
     """ Run development server """
     with lcd(SITE_ROOT):
-        local('python app.py')
+        local('../venv/bin/python app.py')
 
 # DEPLOY
 
