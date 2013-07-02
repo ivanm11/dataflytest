@@ -70,18 +70,20 @@ def chmod(version=None):
     run('chmod -R 775 %s/www/static/upload/file' % REMOTE_PATH)
 
 @task
-def deploy(version=None):
+def deploy(version=None, fast=False):
     REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
-    mkdir(version)
-    # version - production or staging
-    requirements = '%s/server/requirements.txt'
-    put(requirements % PROJECT_ROOT, requirements % REMOTE_PATH)
-    rsync_project('%s/' % REMOTE_PATH, SITE_ROOT, exclude=["*.pyc"])
-    remote_venv(REMOTE_PATH)
-    with cd(REMOTE_PATH):
-        run('venv/bin/pip install -r server/requirements.txt')
-        run("find . -name '*.pyc' -delete")
-    chmod(version)
+    if not fast:
+        mkdir(version)
+        # version - production or staging
+        requirements = '%s/server/requirements.txt'
+        put(requirements % PROJECT_ROOT, requirements % REMOTE_PATH)
+    rsync_project('%s/' % REMOTE_PATH, SITE_ROOT, exclude=["*.pyc"])    
+    if not fast:
+        remote_venv(REMOTE_PATH)
+        with cd(REMOTE_PATH):
+            run('venv/bin/pip install -r server/requirements.txt')
+            run("find . -name '*.pyc' -delete")    
+        chmod(version)
     run('service uwsgi restart')
 
 @task
@@ -183,10 +185,10 @@ def collect_static():
 def ds():
     """ shortcut for deploy:staging """
     collect_static()
-    deploy('staging')
+    deploy('staging', fast=True)
 
 @task
 def dp():
     """ shortcut for deploy:production """
     collect_static()
-    deploy('production')
+    deploy('production', fast=True)
