@@ -46,7 +46,7 @@ def app_run():
 
 @task
 def mkdir(version=None):
-    REMOTE_PATH = path.join(DEVOPS['remote_path'] + version)
+    REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
     run('mkdir -p %s/www' % REMOTE_PATH)
     run('mkdir -p %s/backup' % REMOTE_PATH)
     run('mkdir -p %s/server' % REMOTE_PATH)
@@ -62,7 +62,7 @@ def remote_venv(remote_path):
 
 @task
 def chmod(version=None):
-    REMOTE_PATH = path.join(DEVOPS['remote_path'] + version)
+    REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
     run('chown -R www-data:www-data %s/www' % REMOTE_PATH)
     run('mkdir -p %s/www/static/upload/img' % REMOTE_PATH)    
     run('chmod -R 775 %s/www/static/upload/img' % REMOTE_PATH)
@@ -71,7 +71,7 @@ def chmod(version=None):
 
 @task
 def deploy(version=None):
-    REMOTE_PATH = path.join(DEVOPS['remote_path'] + version)
+    REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
     mkdir(version)
     # version - production or staging
     requirements = '%s/server/requirements.txt'
@@ -106,6 +106,22 @@ def get_db(version):
     backup_db(version)
     restore_from = path.abspath(path.join(PROJECT_ROOT, 'backup', db))
     local('mongorestore --drop --db %s %s' % (db, restore_from))
+
+@task
+def put_db(version):
+    db = CONFIG[version].DB
+    local('rm -rf /tmp/%s' % db)
+    local('mongodump --db %s --out /tmp' % db)
+    id = db + '_' + strftime("%d%b%Y%H%M", gmtime())
+    filename = '%s.tar.gz' % id
+    with lcd('/tmp'):
+        local('tar -zcf %s %s' % (filename, db))
+    put('/tmp/%s' % filename, '/tmp/%s' % filename)
+    run('rm -rf /tmp/%s' % db)
+    run('''mongo test --eval "db.copyDatabase('%s','%s_tmp')"''' % (db, db))
+    with cd('/tmp'):
+        run('tar -xvf %s' % filename)
+        run('mongorestore --drop --db %s %s' % (db, db))
 
 # INSTALLATION
 
