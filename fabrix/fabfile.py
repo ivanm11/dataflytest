@@ -120,8 +120,6 @@ def migration(version, file):
 @task
 def put_db(version):
     db = CONFIG[version].DB
-    run('''mongo --eval "db.copyDatabase('%s','%s_tmp')"''' % (db, db))
-    return
     local('rm -rf /tmp/%s' % db)
     local('mongodump --db %s --out /tmp' % db)
     id = db + '_' + strftime("%d%b%Y%H%M", gmtime())
@@ -129,6 +127,7 @@ def put_db(version):
     with lcd('/tmp'):
         local('tar -zcf %s %s' % (filename, db))
     put('/tmp/%s' % filename, '/tmp/%s' % filename)
+    run('''mongo --eval "db.copyDatabase('%s','%s_tmp')"''' % (db, db))
     run('rm -rf /tmp/%s' % db)    
     with cd('/tmp'):
         run('tar -xvf %s' % filename)
