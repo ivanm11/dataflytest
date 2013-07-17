@@ -13,24 +13,21 @@ and [Ansible](http://ansible.cc)
 
 * Safely deploy updates to remote production and staging env
 
-GIT Repositories
-----------------
-
-* host - git@datafly.net
-
-* folder - /home/git
-
-* password - Bbw3SIJotWhE
-
 Fabric
 -------
+
+Compile assets for deployment:
+
+```bash
+  fab collect_static
+```
 
 To upload project files (and any update in the future):
 
 ```bash
   $ fab deploy:staging
   or
-  $ fab ds # shortcut, no requirements.txt check
+  $ fab ds # shortcut, collect static, no requirements.txt check
 ```
 
 For production version:
@@ -38,7 +35,30 @@ For production version:
 ```bash
   $ fab deploy:production
   or
-  $ fab dp # shortcut, no requirements.txt check
+  $ fab dp # shortcut, collect static, no requirements.txt check
+```
+
+Download or upload database:
+
+```bash
+  # download
+  $ fab backup_db:production
+  $ fab backup_db:staging
+  # download, also local import operation
+  $ fab get_db:production
+  $ fab get_db:staging
+  # upload, also remote import operation
+  $ fab put_db:production
+  $ fab put_db:staging
+```
+
+Database migration:
+
+```bash
+  # always test on local db first
+  (venv) python migrations/0002_fix_tz.py
+  # run on production
+  fab migration:production,file=0002_fix_tz.py
 ```
 
 Ansible
@@ -50,7 +70,7 @@ Install Fireball for all DataFly servers:
   $ ansible-playbook starter/ansible/fireball.yaml
 ```
 
-Generate Nginx vhosts, uWSGI config files.
+Generate Nginx vhosts, uWSGI config files from `devops.yaml` information.
 
 ```bash
   $ ansible-playbook script/local.yaml

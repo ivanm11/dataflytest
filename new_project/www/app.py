@@ -1,6 +1,6 @@
 from bottle import Bottle
 
-from datafly.core import template, assets_app
+from datafly.core import template
 
 from config import Config
 from db import init_db
@@ -51,5 +51,6 @@ app.merge(pages_app)
 
 # For local development
 if __name__ == "__main__":
+    from datafly.core import assets_app
     app.merge(assets_app)
     app.run(host=Config.HOST, port=Config.PORT, debug=True, reloader=True)

@@ -4,7 +4,7 @@ GETTING STARTED
 Introduction
 ------------
 
-We start with minimum amount of code and use modern tools for deployment and
+We start with a minimum amount of code and use modern tools for deployment and
 client-side coding. NoSQL and No Big and Heavy Framework. This approach should
 help us make custom projects fast and easily maintain them afterwards.
 
@@ -48,78 +48,39 @@ Tools we use
 [uWSGI](http://uwsgi-docs.readthedocs.org/en/latest/)
 (latest stable, Emperor Mode)
 
-Get project for development
----------------------------
+Important resources
+-------------------
 
-All you need to know is repository url.
+General Documentation ("authorize me" link)  
+[http://doc.datafly.net/?password=WeL1C00Me](http://doc.datafly.net/?password=WeL1C00Me)  
 
-```bash
-  cd /home/$USER/projects
-  # password = Bbw3SIJotWhE
-  git clone ssh://git@datafly.net/home/git/$PROJECT.git  
-```
+Project Management  
+[ProjectSputnik](http://datafly.projectsputnik.com)
 
-Example - [Doc DataFly](http://doc.datafly.net).
+Password for git@datafly.net - *Bbw3SIJotWhE*
 
-$PROJECT will be `doc` in this case.
+Fabric and Ansible helpers, New Project boilerplate  
+`ssh://git@datafly.net/home/git/starter.git`
 
-After `git clone` operation view project in `/home/$USER/projects/doc`.
+Latest approach / structure of a simple project with Dashboard  
+`ssh://git@datafly.net/home/git/starter.git/new_project`  
+[http://starter.datafly.net/section/page](http://starter.datafly.net/section/page)  
+[http://starter.datafly.net/admin/login](http://starter.datafly.net/admin/login)
 
-New project
------------
+Dashboard:  
+email - *demo@datafly.net*, password - *demo*.
 
-To start use latest DataFly Starter (pull any updates) and
-just copy `new_project` dir:
+Script House - good example of a project without Dashboard, fat model classes
+`ssh://git@datafly.net/home/git/evol.git`
 
-```bash
-  $ cp -r new_project /home/$USER/projects/new
-  $ cd /home/$USER/projects/new
-```
+This documentation website - ways to minimize application
+`ssh://git@datafly.net/home/git/starter.git/doc`
 
-Edit configuration files:
+GIT Repositories
+----------------
 
-```bash
-  www/config.py # production, staging, development config
-  www/myconfig.py # development config overrides
-```
+* host - git@datafly.net
 
-Add `www/myconfig.py`, `www/static/upload` to `.gitignore`.
+* folder - /home/git
 
-Setup & run project manually
-----------------------------
-
-Install
-[latest](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/)
-MongoDB.
-
-```bash  
-  cd $PROJECT
-  virtualenv venv  
-  source venv/bin/activate
-  (venv) pip install -r server/requirements.txt
-  (venv) cd www
-  (venv) python app.py
-```
-
-Setup & run project with DataFly Starter
-----------------------------------------
-
-Install
-[latest](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/)
-MongoDB.
-
-Please read `Project Setup` section of [DataFly Starter](/docs/datafly-starter)
-
-```bash
-  cd /$PROJECT/script
-  fab venv # setup virtualenv
-  fab get_db:production # import database (if you have access)
-  fab app_run # python app.py
-```
-
-For new project initialize local and remote Git repository, checkout
-staging branch:
-
-```bash
-  $ fab git repo 
-```
+* password - Bbw3SIJotWhE

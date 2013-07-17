@@ -37,7 +37,7 @@ def venv():
         local('venv/bin/pip install -r server/requirements.txt')               
 
 @task
-def app_run():
+def runserver():
     """ Run development server """
     with lcd(SITE_ROOT):
         local('../venv/bin/python app.py')

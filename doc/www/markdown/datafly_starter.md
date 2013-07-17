@@ -17,10 +17,13 @@ To install & update we simply using Git:
 How to use
 ----------
 
-DataFly Starter should live somewhere outside of your new project folder. Used
-for development only (no need to upload to remote or install as package).
+DataFly Starter should be placed somewhere outside of your new/existing project
+folder.
 
-Current structure, contains three main components:
+Starter is used for development only (no need to upload to remote or
+install as package).
+
+Current structure, contains four components (root folders):
 
 ```bash
   /starter
@@ -30,11 +33,12 @@ Current structure, contains three main components:
   ----/www
   ------/datafly # code from this folder is reused for all projects
   ------/static # full set of HTML, JS libs we use frequently
+  --/doc # Documentation website (and Markdown files)
 ```
 
 Please install Fabric, Ansible, Virtualenv.
 
-More info on Ansible install in section `How to install Ansible`.
+More info on Ansible install in section *How to install Ansible*.
 
 Always go to project `script` dir to run Fabric tasks, Ansible playbooks.
 
