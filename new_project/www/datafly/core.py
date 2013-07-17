@@ -92,15 +92,30 @@ template_lookup = {
 }
 
 class Jinja2TemplateSafeDefaults(Jinja2Template):
+    def prepare(self, filters=None, tests=None, _globals=None, **kwargs):
+        """
+            patch for env.globals Jinja2 issue
+            https://github.com/defnull/bottle/pull/423
+        """
+        from jinja2 import Environment, FunctionLoader
+        if 'prefix' in kwargs: # TODO: to be removed after a while
+            raise RuntimeError('The keyword argument `prefix` has been removed. '
+                'Use the full jinja2 environment name line_statement_prefix instead.')
+        self.env = Environment(loader=FunctionLoader(self.loader), **kwargs)
+        if filters: self.env.filters.update(filters)                
+        if tests: self.env.tests.update(tests)
+        if _globals: self.env.globals.update(_globals)
+        if self.source:
+            self.tpl = self.env.from_string(self.source)
+        else:
+            self.tpl = self.env.get_template(self.filename)
 
     def render(self, *args, **kwargs):
         for dictarg in args: kwargs.update(dictarg)
-        # Bottle default template context is not thread-safe
-        # replaced by g.template_context
+        # Bottle self.defaults are not thread-safe
+        # were replaced by g.template_context
         _defaults = g.template_context
         _defaults.update(kwargs)
-        # also we will extend env.globals (global functions)
-        self.env.globals.update(_globals)
         return self.tpl.render(**_defaults)
     
 template = functools.partial(template,
