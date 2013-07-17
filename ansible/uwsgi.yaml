@@ -15,9 +15,11 @@
 - action: file name=/var/log/uwsgi/emperor.log state=file
                owner=www-data group=www-data
 - name: copy production ini
+  when: host is defined
   template: src=$project_root/server/uwsgi.ini
             dest=/etc/uwsgi/vassals/${project}.ini
 - name: copy staging ini
+  when: host_staging is defined
   template: src=$project_root/server/uwsgi_staging.ini
             dest=/etc/uwsgi/vassals/${project}_staging.ini
 - name: start uWSGI

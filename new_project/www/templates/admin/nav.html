@@ -1,0 +1,16 @@
+{% macro a(url, title) %}
+    <li class="{{ 'active' if url == request_path }}">
+        <a href="{{ url }}">{{ title }}</a>
+    </li>
+{% endmacro %}
+
+{% if user %}        
+<ul class="nav nav-list">
+    {{ a('#', 'Home') }}
+    {{ a('/admin/companies', 'Companies') }}
+    <li class="nav-header">Section</li>
+        {{ a('/admin/section/page', 'Page') }}
+    <li class="nav-header">Another Section</li>
+        {{ a('/admin/another-section/another-page', 'Another Page') }}
+</ul>
+{% endif %}

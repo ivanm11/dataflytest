@@ -1,11 +1,11 @@
-from bottle import request
+from bottle import request, redirect
 
 from datafly.core import g, get_assets
 
 from models import User
 from config import Config
 
-def before_request():    
+def init_globals():    
     # g - global vars for Bottle
     g._reset()    
 
@@ -13,7 +13,7 @@ def before_request():
     g.template_context = c = dict(        
         cache_timestamp = Config.CACHE_TIMESTAMP,
         base_url = Config.BASE_URL,
-        date_format = '<strong>%B %e, %Y</strong> %I:%M %p',        
+        request_path = request.path,
         env = Config.__name__
     )
 
@@ -29,3 +29,7 @@ def before_request():
         g.user = User.get_current()
 
     c['user'] = g.user
+
+def login_required():
+    if not g.user and request.path != '/admin/login':
+        return redirect('/admin/login')

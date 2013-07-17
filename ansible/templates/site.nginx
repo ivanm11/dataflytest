@@ -11,7 +11,7 @@ server {
     }
 
     location /static/ {
-            root {{ remote_path }}/production/www;
+            root {{ remote_path }}production/www;
     }
 
     location / {

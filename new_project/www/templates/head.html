@@ -6,22 +6,13 @@
 
 <link href="/static/bootstrap-2.3.2/bootstrap.min.css" rel="stylesheet">
 
-{% if env != 'Development' %}
-    <link href="/static/public.min.css?{{ cache_timestamp }}" rel="stylesheet">
-{% else %}
-    {% for path in assets.less.public %}
-        <link href="/{{ path }}.less" rel="stylesheet/less">
-    {% endfor %}
-    <script src="/static/dev/less-1.3.3.min.js"></script>
-{% endif %}
-
 <script>
     // for Datafly apps
     window.Datafly = {
         env: '{{ env }}'
     };
     // global project JS namespace
-    window.NewProject = {        
+    window.PM = {        
         namespace: '{{ namespace }}' // current page body class        
     };
 </script>

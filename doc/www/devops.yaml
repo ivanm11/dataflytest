@@ -1,0 +1,8 @@
+---
+project: 'doc'
+# fabric
+server: ['root@datafly.net']
+# trailing slash at the end is important
+remote_path: '/home/datafly/doc/'
+# production version
+host: 'doc.datafly.net'

@@ -17,10 +17,11 @@ if hasattr(env, 'PROJECT_ROOT'):
     PROJECT_ROOT = env.PROJECT_ROOT
     SITE_ROOT = path.abspath(path.join(env.PROJECT_ROOT, 'www'))
     sys.path.append(SITE_ROOT)
-    from config import Production, Staging
+    import config
     CONFIG = {
-        'production': Production,
-        'staging': Staging
+        'default': config.Default,
+        'production': getattr(config, 'Production', None),
+        'staging': getattr(config, 'Staging', None)
     }
     # project specific variables from yaml
     stream = file(path.join(SITE_ROOT, 'devops.yaml'), 'r')
@@ -33,7 +34,6 @@ def venv():
     with lcd(PROJECT_ROOT):
         if not path.exists(path.join(PROJECT_ROOT, 'venv')):
             local('virtualenv venv')
-            local('source venv/bin/activate')
         local('venv/bin/pip install -r server/requirements.txt')               
 
 @task
@@ -161,20 +161,20 @@ def collect_static():
     """ Needs refactoring. Append files into groups, compile if Less. """
     STATIC_ROOT = path.join(SITE_ROOT, 'static')
     # LESS
-    for result in DEVOPS['less']:
+    for result in CONFIG['default'].LESS:
         output_less = path.join(STATIC_ROOT, '%s.less' % result)        
         output_less = open(output_less, 'w')     
-        for file in DEVOPS['less'][result]:
+        for file in CONFIG['default'].LESS[result]:
             less = path.join(SITE_ROOT, file+'.less')
             file = open(less, 'r')
             output_less.write(file.read())
         output_less.close()
         local('lessc %s/%s.less -o %s/%s.min.css' % (STATIC_ROOT, result, STATIC_ROOT, result))
     # JS
-    for result in DEVOPS['js']:        
+    for result in CONFIG['default'].JS:        
         output_js = path.join(STATIC_ROOT, '%s.min.js' % result)
         output_js = open(output_js, 'w')     
-        for file in DEVOPS['js'][result]:
+        for file in CONFIG['default'].JS[result]:
             js = path.join(SITE_ROOT, file+'.js')
             file = open(js, 'r')
             output_js.write(file.read())

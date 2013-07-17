@@ -1,9 +1,11 @@
 backup
+starter
 assets
 venv
 tags
 _private
 
+www/myconfig.py
 www/static/upload
 
 *.py[co~]

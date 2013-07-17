@@ -1,0 +1,11 @@
+{% set namespace = 'docs' %}
+
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <article class="markdown">
+        {{ article|markdown }}
+    </article>
+
+{% endblock %}

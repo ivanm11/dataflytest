@@ -4,28 +4,45 @@
 <head>
     <title>New Project / {{ title }}</title>
     {% include 'head.html' %}
+    {% if env != 'Development' %}
+        <link href="/static/public.min.css?{{ cache_timestamp }}" rel="stylesheet">
+    {% else %}
+        {% for path in assets.less.public %}
+            <link href="/{{ path }}.less" rel="stylesheet/less">
+        {% endfor %}
+        <script src="/static/dev/less-1.3.3.min.js"></script>
+    {% endif %}
 </head>
 
 <body class="{{ namespace }}">
 
-    <header>        
+    <header>
         <div class="container">
+            <h2>Title</h2>        
+            <p class="muted">
+                Description
+            </p>
             {% include 'nav.html' %}
         </div>
-    </header>        
+    </header>
 
-    <div class="content">     
+    <div class="content">      
         <div class="container">
-            {% block content %}
-            {% endblock %}
-        </div>
+        {% block content %}
+        {% endblock %}
+        </div>             
     </div>
 
     <footer>
-        <div class="container">
-            
-        </div>
+
     </footer>
     {% include 'scripts.html' %}
+    {% if env != 'Development' %}
+        <script src="/static/public.min.js?{{ cache_timestamp }}"></script>
+    {% else %}
+        {% for path in assets.js.public %}
+            <script src="/{{ path }}.js"></script>
+        {% endfor %}    
+    {% endif %}
 </body>
 </html>

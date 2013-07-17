@@ -1,10 +1,5 @@
-backup
-venv
 tags
 _private
-
-www/myconfig.py
-www/mydevops.yaml
 
 *.py[co~]
 *.swp

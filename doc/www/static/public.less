@@ -1,0 +1,149 @@
+// Layout
+
+html, body {
+    height: 100%;
+}
+
+body.admin {            
+    font-size: 16px;
+    line-height: 1.5;
+    padding-top: 50px;
+
+    > header {
+        position: fixed;
+        z-index: 1000;
+        top: 0px;
+        width: 100%;    
+        height: 35px;   
+        background-color: #197DCE; 
+        color: #fff;
+        border-bottom: 1px solid #000; 
+        h1 {
+            padding: 0px;
+            margin: -3px 0px 0px 30px;
+            font-size: 20px;
+            font-weight: normal;
+        }  
+        div.toolbar {
+            position: absolute;
+            left: 250px;
+            width: 700px;
+            top: 1px;
+            #redactor-toolbar {
+                width: 486px;
+                a.redactor_btn_html {
+                    position: absolute;
+                    right: 5px;
+                }
+            }                        
+            .pull-right {
+                position: absolute;
+                top: 1px;
+                right: 0px;
+            }
+        }
+    }
+
+    > aside {
+        position: fixed;
+        top: 35px;
+        left: 0px;
+        width: 200px;
+        padding-top: 30px;
+        background-color: #ebebeb;
+        min-height: 100%;
+        .nav-header,
+        .nav-list > li > a {
+            padding-left: 30px;                
+        }
+        .nav-list > li > a {
+            font-size: 13px;
+        }
+    }
+
+    > .content {
+        padding-left: 250px;
+        width: 700px;
+    }   
+}
+
+// Login page
+
+body.login form {
+    margin-top: 150px;
+}// any markdown article
+
+article.markdown {
+    font-family: Helvetica, Arial, Freesans, sans-serif;
+    color: #333;
+    padding: 20px 0px 40px 0px;
+
+    pre {
+        padding: 10px;
+        margin: 15px 0px;
+        border-radius: 2px;
+        overflow: auto;
+    }
+
+    code {
+        border: 0px;
+        color: #004125;    
+        position: relative;
+        top: -1px;
+    }
+
+    pre,
+    code,
+    div.codehilite pre,
+    div.codehilite code {
+        font-family: Monaco, Menlo, Consolas,
+                     "Ubuntu Mono", "Courier New", monospace;
+        font-size: 16px;
+    }
+
+    blockquote {
+        border-left: 5px solid #EDEDED;
+        padding-left: 10px;
+        font-size: 14px;
+    }
+
+    p {
+        margin-bottom: 12px;
+    }
+
+    li p {
+        margin: 0.3em;
+    }
+
+    ul > li {
+        list-style-type: disc;
+    }
+
+    a {
+        color: #C60000;
+    }
+
+    a:hover {
+        color: #FF0030;
+    }
+
+    em {
+        font-style: normal;
+        font-weight: bold;
+    }
+
+    h1 {
+        color: #999;
+        font-weight: 400;
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        border-bottom: 1px dotted #aaa;
+        color: #333;
+        font-size: 30px;
+        margin: 30px 0px;
+    }
+
+}

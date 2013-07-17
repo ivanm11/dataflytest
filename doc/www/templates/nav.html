@@ -1,0 +1,18 @@
+{% macro a(url, title) %}
+    <li class="{{ 'active' if url == request_path }}">
+        <a href="{{ url }}">{{ title }}</a>
+    </li>
+{% endmacro %}
+
+<ul class="nav nav-list">
+    <li class="nav-header">Site</li>
+        {{ a('http://starter.datafly.net/', 'Demo') }}
+    <li class="nav-header">Dashboard</li>    
+        {{ a('http://starter.datafly.net/admin', 'Demo') }}
+    <li class="nav-header">Developer Docs</li>
+        {{ a('/getting-started', 'Getting Started') }}
+        {{ a('/datafly-starter', 'DataFly Starter') }}
+        {{ a('/project-structure', 'Project Structure') }}
+        {{ a('/best-practices', 'Best Practices') }}
+        {{ a('/devops', 'DevOps') }}
+</ul>

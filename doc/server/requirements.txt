@@ -1,0 +1,7 @@
+# BASE
+bottle
+Jinja2
+
+# DOCS
+markdown2
+Pygments

@@ -3,12 +3,10 @@ from bottle import Bottle, request, redirect
 from datafly.core import g
 
 from models import User
-from views.hooks import before_request
 
-app = Bottle()
-app.hooks.add('before_request', before_request)
+users_app = Bottle()
 
-@app.post('/api/users/login')
+@users_app.post('/login')
 def login():    
     user = User.find_one({
         'email': request.forms.email
@@ -26,13 +24,13 @@ def login():
         user.set_as_current(temporary=temporary_login)
         result = {
             'error': False,
-            'redirect': app.config['redirect']
+            'redirect': users_app.config['redirect']
         }
     else:
         result = { 'error': 'LoginError' }
     return result
 
-@app.get('/logout')
-def logout(area):
+@users_app.post('/logout')
+def logout():
     g.user.unset_current()
-    return redirect('/login')
+    return redirect(users_app.config['redirect'])

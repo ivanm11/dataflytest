@@ -1,4 +1,5 @@
 ---
+# ANSIBLE PLAYBOOK
 
 - hosts: datafly
   user: root
@@ -14,10 +15,10 @@
     - ../www/devops.yaml
     - ../www/mydevops.yaml
   tasks:
-    - include: $starter/ansible/utils.yaml
-    - include: $starter/ansible/mosh.yaml
+    #- include: $starter/ansible/utils.yaml
+    #- include: $starter/ansible/mosh.yaml
     - include: $starter/ansible/nginx.yaml
     - include: $starter/ansible/uwsgi.yaml
-    - include: $starter/ansible/mongo.yaml
+    #- include: $starter/ansible/mongo.yaml
   handlers:
     - include: $starter/ansible/handlers.yaml

@@ -1,29 +1,54 @@
 import os
 from os.path import abspath, join, dirname
 
-# extend your application with custom Jinja2 filters
-from jinja2_ext import extended_filters
-
 # SITE ROOT - /www
 SITE_ROOT = abspath(dirname(__file__))
 # one level above site
 PROJECT_ROOT = abspath(join(SITE_ROOT, '..'))
 
 class Default(object):
-    DB = 'newproject'
-    CACHE_TIMESTAMP = 'June30_2013_2100' 
-    DEVOPS_CONFIG = 'devops.yaml'
-    SECRET = 'EJdDcCRXHTyW8UXcQnRhWyujGWnK7Bjf4ZD68ve9Heu9tvCwacPc9zYjwJrb'
+    CACHE_TIMESTAMP = 'July16_2013_2312' 
+    WEBSITE = 'DataFly'    
     MONGO = {
         'host': 'localhost',
-        'port': 27017
+        'port': 27017        
     }
+    DB = 'starter'
+    # STATIC ASSETS
+    # TYPE = { result: [files] }
+    # files - list of files to compile, concat, minify (relative to /www directory)
+    LESS = {
+        'public': [
+            'less/layout',
+            'less/pages'        
+        ],
+        'admin': [
+            'datafly/admin/layout'
+        ]
+    }
+    JS = {
+        'public': [
+            'js/layout',
+            'js/pages' 
+        ],
+        'admin': [
+            'datafly/widgets/ajax',
+            'datafly/pages/redactor',
+            'datafly/users/login'
+        ]
+    }
+    SECRET = 'EJdDcCRXHTyW8UXcQnRhWyujGWnK7Bjf4ZD68ve9Heu9tvCwacPc9zYjwJrb'
 
 class Production(Default):
-    BASE_URL = 'http://newproject.com'
+    BASE_URL = 'http://doc.datafly.net'
 
 class Staging(Default):
-    BASE_URL = 'http://staging.newproject.com'
+    BASE_URL = 'http://staging.doc.datafly.net'
+
+class Development(Default):
+    BASE_URL = 'http://127.0.0.1:8080'
+    HOST = '127.0.0.1'
+    PORT = 8080    
 
 """
     please, define class Development(Default) in myconfig.py
@@ -34,11 +59,14 @@ class Staging(Default):
     (or better add a symlink `ln -s myconfig.py myconfig_name.py`)
 """
 
-# environ variable is defined in project.ini uWSGI configuration file
+# environ variable is defined in uwsgi.ini uWSGI configuration file
 config_name = os.environ.get('CONFIG', False)
 if config_name:
     # Config = Production or Config = Staging
     Config = vars()[config_name]
-else:          
-    import myconfig
-    Config = myconfig.Development
+else:        
+    try:  
+        import myconfig
+        Config = myconfig.Development
+    except ImportError:
+        Config = Development

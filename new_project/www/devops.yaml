@@ -1,23 +1,10 @@
 ---
-project: 'newproject'
+project: 'starter'
 # fabric
 server: ['root@datafly.net']
-remote_path: '/home/datafly/newproject/'
+# trailing slash at the end is important
+remote_path: '/home/datafly/starter/'
 # production version
-host: 'newproject.com'
+host: 'starter.datafly.net'
 # staging version
-host_staging: 'staging.newproject.com'
-# static assets - edit and restart development server after
-# type:
-#   result filename:
-#     - files to compile, concat, minify; relative to /www directory
-less:
-  public:
-    - less/layout
-    - less/pages
-js:
-  public:
-    - js/layout
-    - js/pages    
-    - datafly/widgets/ajax
-    - datafly/users/login
+host_staging: 'staging.starter.datafly.net'

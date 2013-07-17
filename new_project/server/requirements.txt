@@ -3,7 +3,3 @@ bottle
 Jinja2
 pymongo
 passlib
-
-# DEVELOPMENT
-# Recommended packages: pudb (Linux, Mac OS X), bpython
-PyYAML
