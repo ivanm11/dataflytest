@@ -16,7 +16,7 @@ There is a special project that we keep up to date with best practices,
 experiment with new features.
 
 ```
-  ssh://git@datafly.net/home/git/starter.git/new_project
+  git@bitbucket.org:df-sean/datafly-starter.git/new_project
 ```
 
 Open this folder in your IDE / Editor while reading current page.

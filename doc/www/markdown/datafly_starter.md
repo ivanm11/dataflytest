@@ -11,8 +11,15 @@ To install & update we simply using Git:
 ```bash
   # password = Bbw3SIJotWhE
   $ cd /home/user/projects
-  $ git clone ssh://git@datafly.net/home/git/starter.git
+  $ git clone git@bitbucket.org:df-sean/datafly-starter.git
 ```
+
+Mirror (no Bitbucket acc required)
+----------------------------------
+
+* url - ssh://git@datafly.net/home/git/starter.git
+
+* password - Bbw3SIJotWhE
 
 How to use
 ----------

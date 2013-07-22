@@ -22,7 +22,7 @@ Tools we use
 [PyMongo](http://api.mongodb.org/python/current/)
 (and our tiny single-file Object Document Mapper module)
 
-[DataFly Starter](/docsdatafly-starter)
+[DataFly Starter](/datafly-starter)
 (new project boilerplate, Fabric & Ansible global scripts)
 
 *Environment/revision control*
@@ -57,13 +57,11 @@ General Documentation ("authorize me" link)
 Project Management  
 [ProjectSputnik](http://datafly.projectsputnik.com)
 
-Password for git@datafly.net - *Bbw3SIJotWhE*
-
 Fabric and Ansible helpers, New Project boilerplate  
-`ssh://git@datafly.net/home/git/starter.git`
+`git@bitbucket.org:df-sean/datafly-starter.git`
 
 Latest approach / structure of a simple project with Dashboard  
-`ssh://git@datafly.net/home/git/starter.git/new_project`  
+`git@bitbucket.org:df-sean/datafly-starter.git/new_project`  
 [http://starter.datafly.net/section/page](http://starter.datafly.net/section/page)  
 [http://starter.datafly.net/admin/login](http://starter.datafly.net/admin/login)
 
@@ -71,16 +69,7 @@ Dashboard:
 email - *demo@datafly.net*, password - *demo*.
 
 Script House - good example of a project without Dashboard, fat model classes
-`ssh://git@datafly.net/home/git/evol.git`
+`git@bitbucket.org:df-sean/script-house.git`
 
 This documentation website - ways to minimize application
-`ssh://git@datafly.net/home/git/starter.git/doc`
-
-GIT Repositories
-----------------
-
-* host - git@datafly.net
-
-* folder - /home/git
-
-* password - Bbw3SIJotWhE
+`git@bitbucket.org:df-sean/datafly-starter.git/doc`

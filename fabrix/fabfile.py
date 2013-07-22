@@ -136,27 +136,6 @@ def put_db(version):
 # INSTALLATION
 
 @task
-def git():
-    env.hosts = ['root@datafly.net']
-
-@task
-def repo():
-    repository = '/home/git/%s.git' % DEVOPS['project']
-    #run('mkdir %s' % repository)
-    with cd(repository):
-        run('git init --bare')
-        run('chown -R git:git .')
-    with lcd(PROJECT_ROOT):
-        local('git init')
-        local('git add .')
-        local('git commit -m "Initial commit"')
-        local('git checkout -b staging')
-        remote_origin = 'ssh://git@datafly.net%s' % repository
-        local('git remote add origin %s' % remote_origin)
-        local('git push origin master')
-        local('git push origin staging')
-
-@task
 def collect_static():
     """ Needs refactoring. Append files into groups, compile if Less. """
     STATIC_ROOT = path.join(SITE_ROOT, 'static')

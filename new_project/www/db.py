@@ -8,8 +8,8 @@ db = connection[Config.DB]
 
 def init_db():
     from models import User
-    beginner = { 'email': 'demo@datafly.net' }
-    exists = User.find_one(beginner)
+    admin = { 'email': 'demo@datafly.net' }
+    exists = User.find_one(admin)
     if not exists:
-        u = User(beginner)
+        u = User(admin)
         u.encrypt_password('demo')
