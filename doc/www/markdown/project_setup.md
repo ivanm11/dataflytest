@@ -8,8 +8,7 @@ All you need to know is repository url.
 
 ```bash
   cd /home/$USER/projects
-  # password = Bbw3SIJotWhE
-  git clone ssh://git@datafly.net/home/git/$PROJECT.git  
+  git clone git@bitbucket.org:df-sean/script-house.git  
 ```
 
 Example - [Script House](http://evol.datafly.net/).
