@@ -5,7 +5,7 @@
   connection: local
   gather_facts: false
   vars_files:
-    - ../www/devops.yaml
-    - ../www/mydevops.yaml
+    - devops.yaml
+    - mydevops.yaml
   tasks:
     - include: $starter/ansible/local.yaml

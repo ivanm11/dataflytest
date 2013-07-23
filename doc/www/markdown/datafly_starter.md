@@ -13,13 +13,6 @@ To install & update we simply using Git:
   $ git clone git@bitbucket.org:df-sean/datafly-starter.git
 ```
 
-Mirror (no Bitbucket acc required)
-----------------------------------
-
-* url - ssh://git@datafly.net/home/git/starter.git
-
-* password - Bbw3SIJotWhE
-
 How to use
 ----------
 
@@ -55,14 +48,14 @@ For existing project you can copy other developer config:
 
 ```bash
   www/myconfig_ep.py > www/myconfig.py
-  www/mydevops_ep.yaml > www/mydevops.yaml # your path to project_root, starter
+  script/mydevops_ep.yaml > script/mydevops.yaml # your path to project_root, starter
 ```
 
-Don't forget to add your files to Git ($developer means your nickname):
+However, it's better to use symlinks ($developer means your nickname):
 
 ```bash
-  ln -s myconfig.py myconfig_$developer.py
-  ln -s mydevops.yaml mydevops_$developer.yaml
+  ln -s myconfig_$developer.py myconfig.py
+  ln -s mydevops_$developer.yaml mydevops.yaml
 ```
 
 For new project
@@ -71,8 +64,8 @@ For new project
 Edit configuration files:
 
 ```bash
-  www/devops.yaml # deployment information for Fabric, Ansible
-  www/mydevops.yaml # path to project_root, starter
+  script/devops.yaml # deployment information for Fabric, Ansible
+  script/mydevops.yaml # path to project_root, starter
 ```
 
 Add `www/mydevops.yaml` to `.gitignore`.

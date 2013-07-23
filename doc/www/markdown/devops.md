@@ -13,6 +13,12 @@ and [Ansible](http://ansible.cc)
 
 * Safely deploy updates to remote production and staging env
 
+---
+
+*Getting errors?*  
+Make sure you properly configured `devops.yaml`
+and `mydevops.yaml` in `script` folder.
+
 Fabric
 -------
 

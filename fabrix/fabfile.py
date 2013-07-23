@@ -24,7 +24,7 @@ if hasattr(env, 'PROJECT_ROOT'):
         'staging': getattr(config, 'Staging', None)
     }
     # project specific variables from yaml
-    stream = file(path.join(SITE_ROOT, 'devops.yaml'), 'r')
+    stream = file(path.join(PROJECT_ROOT, 'script', 'devops.yaml'), 'r')
     DEVOPS = yaml.load(stream)
     env.hosts = DEVOPS['server']
 

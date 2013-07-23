@@ -1,6 +1,20 @@
 PROJECT SETUP
 =============
 
+Usually we are using two versions of each project - production and staging.
+
+Staging version is used until project is gone live and after that for
+testing any new features. Staging version: `staging` Git branch, `Staging` config.
+
+Production version: `master` Git branch, `Production` config.
+
+Typical setup for domain names:
+
+* [new-project.com](new-project.com)
+
+* [staging.new-project.com](staging.new-project.com) or
+  [new-project.datafly.net](new-project.datafly.net)
+
 Get project for development
 ---------------------------
 
