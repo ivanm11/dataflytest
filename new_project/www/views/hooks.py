@@ -27,8 +27,8 @@ def init_globals():
         g.user.set_as_current()
     else:
         g.user = User.get_current()
-
     c['user'] = g.user
+    
 
 def login_required():
     if not g.user and request.path != '/admin/login':

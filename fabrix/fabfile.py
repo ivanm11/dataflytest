@@ -37,6 +37,11 @@ def venv():
         local('venv/bin/pip install -r server/requirements.txt')               
 
 @task
+def checkout(branch):
+    local("find . -name '*.pyc' -delete")
+    local('git checkout %s' % branch)
+
+@task
 def runserver():
     """ Run development server """
     with lcd(SITE_ROOT):
