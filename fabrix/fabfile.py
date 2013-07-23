@@ -16,6 +16,7 @@ if hasattr(env, 'PROJECT_ROOT'):
     # SITE ROOT - /www
     PROJECT_ROOT = env.PROJECT_ROOT
     SITE_ROOT = path.abspath(path.join(env.PROJECT_ROOT, 'www'))
+    STATIC_ROOT = path.join(SITE_ROOT, 'static')
     sys.path.append(SITE_ROOT)
     import config
     CONFIG = {
@@ -115,6 +116,13 @@ def get_db(version):
     local('mongorestore --drop --db %s %s' % (db, restore_from))
 
 @task
+def get_upload(version):
+    REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
+    remote_upload = path.join(REMOTE_PATH, 'www', 'static', 'upload')
+    local_upload = path.join(STATIC_ROOT, 'upload')
+    rsync_project(remote_upload, local_upload, upload=False)
+
+@task
 def migration(version, file):
     REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
     MIGRATIONS = path.join(PROJECT_ROOT, 'script', 'migrations')
@@ -142,8 +150,7 @@ def put_db(version):
 
 @task
 def collect_static():
-    """ Needs refactoring. Append files into groups, compile if Less. """
-    STATIC_ROOT = path.join(SITE_ROOT, 'static')
+    """ Needs refactoring. Append files into groups, compile if Less. """    
     # LESS
     for result in CONFIG['default'].LESS:
         output_less = path.join(STATIC_ROOT, '%s.less' % result)        
