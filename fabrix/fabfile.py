@@ -18,7 +18,10 @@ if hasattr(env, 'PROJECT_ROOT'):
     SITE_ROOT = path.abspath(path.join(env.PROJECT_ROOT, 'www'))
     STATIC_ROOT = path.join(SITE_ROOT, 'static')
     sys.path.append(SITE_ROOT)
-    import config
+    try:
+        from config import config, assets
+    except ImportError:
+        import config
     CONFIG = {
         'default': config.Default,
         'production': getattr(config, 'Production', None),
@@ -35,12 +38,18 @@ def venv():
     with lcd(PROJECT_ROOT):
         if not path.exists(path.join(PROJECT_ROOT, 'venv')):
             local('virtualenv venv')
-        local('venv/bin/pip install -r server/requirements.txt')               
+        local('venv/bin/pip install -r server/requirements.txt')       
 
 @task
-def checkout(branch):
-    local("find . -name '*.pyc' -delete")
+def devenv():
+    """ My favourite development tools for Python """
+    with lcd(PROJECT_ROOT):
+        local('venv/bin/pip install pudb bpython chromelogger')
+
+@task
+def checkout(branch):    
     local('git checkout %s' % branch)
+    local("find . -name '*.pyc' -delete")
 
 @task
 def runserver():
@@ -83,10 +92,13 @@ def deploy(version=None, fast=False):
         # version - production or staging
         requirements = '%s/server/requirements.txt'
         put(requirements % PROJECT_ROOT, requirements % REMOTE_PATH)
-    rsync_project('%s/' % REMOTE_PATH, SITE_ROOT, exclude=["*.pyc"])    
+    delete = True if version == 'staging' else False
+    rsync_project('%s/' % REMOTE_PATH, SITE_ROOT,
+                  delete=delete, exclude=["*.pyc", "upload"])    
     if not fast:
         remote_venv(REMOTE_PATH)
         with cd(REMOTE_PATH):
+            run('apt-get install libxml2-dev libxslt1-dev')
             run('venv/bin/pip install -r server/requirements.txt')
             run("find . -name '*.pyc' -delete")    
         chmod(version)
@@ -152,20 +164,20 @@ def put_db(version):
 def collect_static():
     """ Needs refactoring. Append files into groups, compile if Less. """    
     # LESS
-    for result in CONFIG['default'].LESS:
+    for result in assets.LESS:
         output_less = path.join(STATIC_ROOT, '%s.less' % result)        
         output_less = open(output_less, 'w')     
-        for file in CONFIG['default'].LESS[result]:
+        for file in assets.LESS[result]:
             less = path.join(SITE_ROOT, file+'.less')
             file = open(less, 'r')
             output_less.write(file.read())
         output_less.close()
         local('lessc %s/%s.less -o %s/%s.min.css' % (STATIC_ROOT, result, STATIC_ROOT, result))
     # JS
-    for result in CONFIG['default'].JS:        
+    for result in assets.JS:        
         output_js = path.join(STATIC_ROOT, '%s.min.js' % result)
         output_js = open(output_js, 'w')     
-        for file in CONFIG['default'].JS[result]:
+        for file in assets.JS[result]:
             js = path.join(SITE_ROOT, file+'.js')
             file = open(js, 'r')
             output_js.write(file.read())
