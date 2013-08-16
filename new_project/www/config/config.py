@@ -7,7 +7,7 @@ SITE_ROOT = abspath(dirname(__file__))
 PROJECT_ROOT = abspath(join(SITE_ROOT, '..'))
 
 class Default(object):
-    CACHE_TIMESTAMP = 'July16_2013_2312' 
+    CACHE_TIMESTAMP = 'Aug17-0300' 
     WEBSITE = 'DataFly'    
     MONGO = {
         'host': 'localhost',

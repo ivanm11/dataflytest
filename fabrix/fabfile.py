@@ -85,14 +85,14 @@ def chmod(version=None):
     run('chmod -R 775 %s/www/static/upload/file' % REMOTE_PATH)
 
 @task
-def deploy(version=None, fast=False):
+def deploy(version=None, fast=False, delete=False):
     REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
     if not fast:
         mkdir(version)
         # version - production or staging
         requirements = '%s/server/requirements.txt'
         put(requirements % PROJECT_ROOT, requirements % REMOTE_PATH)
-    delete = True if version == 'staging' else False
+    delete = True if version == 'staging' or delete else False
     rsync_project('%s/' % REMOTE_PATH, SITE_ROOT,
                   delete=delete, exclude=["*.pyc", "upload"])    
     if not fast:
