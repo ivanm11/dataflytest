@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    {% include head %}
+
+    {% if env == 'Development' %}
+        {% for path in assets.less.public %}
+            {% if config.LESSJS %}
+                <link href="/{{ path }}.less" rel="stylesheet/less">
+            {% else %}    
+                <link href="/{{ path }}.css" rel="stylesheet">
+            {% endif %}            
+        {% endfor %}
+    {% else %}
+        <link href="/static/public.min.css?{{ config.CACHE_TIMESTAMP }}"
+              rel="stylesheet">        
+    {% endif %}
+
+</head>
+
+<body class="{{ namespace }}">
+
+    <header>
+        <div class="container">
+            <h2>Title</h2>        
+            <p class="muted">
+                Description
+            </p>
+            {% include 'layout/nav.html' %}
+        </div>
+    </header>
+
+    <div class="content">      
+        <div class="container">
+        {% block content %}
+        {% endblock %}
+        </div>             
+    </div>
+
+    <footer>
+
+    </footer>
+
+    {% include scripts %}
+
+    {% if env == 'Development' %}
+        {% for path in assets.js.public %}
+            <script src="/{{ path }}.js"></script>
+        {% endfor %}
+    {% else %}  
+        <script src="/static/public.min.js?{{ config.CACHE_TIMESTAMP }}"></script>        
+    {% endif %}
+
+</body>
+</html>

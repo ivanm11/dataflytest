@@ -2,7 +2,7 @@ from bottle import request, redirect
 
 from datafly.core import g, get_assets
 
-from models import User
+from models import User, data
 from config import Config
 
 def init_globals():    
@@ -10,10 +10,15 @@ def init_globals():
     g._reset()    
 
     # global template context
-    g.template_context = c = dict(        
-        cache_timestamp = Config.CACHE_TIMESTAMP,
+    g.template_context = c = dict(      
+        layout = 'layout/layout.html',        
+        head = 'layout/head.html',
+        scripts = 'layout/scripts.html',          
+        config = Config,
         base_url = Config.BASE_URL,
+        data = data,
         request_path = request.path,
+        request_query_string = request.query_string,    
         env = Config.__name__
     )
 

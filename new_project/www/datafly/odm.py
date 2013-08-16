@@ -2,7 +2,7 @@ import re
 import bson
 import pymongo
 
-import db as mongo
+from config import mongo
 
 
 class cached_classmethod(object):
@@ -153,8 +153,8 @@ class Document(dict):
 
     def on_load(self): pass
     def pre_insert(self): pass
-    def pre_update(self): pass
-    def pre_save(self): pass
+    def pre_update(self, find_and_modify=None): pass
+    def pre_save(self, find_and_modify=None): pass
     def post_insert(self): pass
     def post_update(self): pass
     def post_save(self): pass

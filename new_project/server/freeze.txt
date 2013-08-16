@@ -6,15 +6,12 @@ passlib==1.6.1
 
 # DEVELOPMENT
 # Recommended packages: pudb (Linux, Mac OS X), bpython
-PyYAML==3.10
 
-# Markdown
+# DOCS
 markdown2==2.1.0
 Pygments==1.6
 ## The following requirements were added by pip --freeze:
 MarkupSafe==0.18
 argparse==1.2.1
-bpython==0.12
-pudb==2013.3.2
 urwid==1.1.1
 wsgiref==0.1.2

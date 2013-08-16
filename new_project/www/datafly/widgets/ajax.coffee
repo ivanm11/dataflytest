@@ -1,3 +1,10 @@
+$.fn.serializeObject = () ->
+    values = this.serializeArray();
+    return _.chain(values)
+            .map( (el) -> [el.name, el.value] )
+            .object()
+            .value()
+
 Datafly.alert = (el) ->
     $('#alert' + el).slideDown('slow').delay(6000).slideUp('slow')
 

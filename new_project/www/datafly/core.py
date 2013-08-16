@@ -3,26 +3,63 @@
 from __future__ import absolute_import
 
 import os
+import inspect
 import functools
+import json
 from datetime import timedelta
 from bottle import (Bottle, request, response, template,
-                    static_file, Jinja2Template)
+                    static_file, Jinja2Template, html_escape)
+import pymongo
+from bson.json_util import dumps
 
-from config import Config
+from config import Config, assets
 from .jinja2_ext import filters, _globals
 
 try:
-    from jinja2_ext import extended_filters, extended_globals
+    from utils.jinja2_ext import extended_filters, extended_globals
 except ImportError:
     extended_filters = extended_globals = {}
+
+try:
+    import chromelogger as console
+except:
+    console = False
+
+# debug
+
+def log(*args):    
+    if Config.__name__ != 'Development':
+        return
+    r = get_route()
+    if r and '/static' in r.rule:
+        return
+    # logging only on staging / development env
+    if console:
+        console.log(*args)
+
+def debug(error=None):
+    if hasattr(error, 'traceback'):
+        msg = error.traceback
+        if not msg:
+            # Bottle raised exception
+            msg = error.body
+    else:
+        msg = error
+    if console:
+        header = console.get_header()
+        if header:
+            k,v = header
+            response.headers[k] = v
+    if error:        
+        return '<pre>%s</pre>' %  html_escape(msg)
 
 # static assets helpers
 
 def get_assets():
     """ Development only. Return list of relative paths for LESS, JS assets"""    
     return dict(
-        less = Config.LESS,
-        js = Config.JS
+        less = assets.LESS,
+        js = assets.JS
     )
 
 assets_app = Bottle()
@@ -49,7 +86,7 @@ def delete_cookie(name):
     return response.delete_cookie(name, secret=Config.SECRET, path='/')
 
 def get_route():
-    return request.environ['bottle.route']
+    return request.environ.get('bottle.route', None)
 
 # thread-safe global variables for Bottle
 
@@ -81,15 +118,15 @@ filters.update(extended_filters)
 _globals.update(extended_globals)
 
 template_settings = {
-    'filters': filters
-    # 'globals': globals - this should be added in Bottle 0.12
+    'filters': filters,
+    '_globals': _globals
 }
 
-template_lookup = {
+template_lookup = [
     './templates',
     './datafly/',
     '.'
-}
+]
 
 class Jinja2TemplateSafeDefaults(Jinja2Template):
     def prepare(self, filters=None, tests=None, _globals=None, **kwargs):
@@ -116,6 +153,26 @@ class Jinja2TemplateSafeDefaults(Jinja2Template):
         # were replaced by g.template_context
         _defaults = g.template_context
         _defaults.update(kwargs)
+        log('--- TEMPLATE CONTEXT ---')
+        for k, v in _defaults.items():
+            try:
+                log('%s =' % k, v)
+            except (AttributeError, TypeError):                
+                if isinstance(v, pymongo.cursor.Cursor):
+                    collection = [json.loads(dumps(obj)) for obj in v]
+                    log('%s =' % k, { 'collection' : collection })
+                    v.rewind()
+                else:
+                    log('%s =' % k, json.loads(dumps(v)))
+        try:
+            r = get_route()        
+            log('--- ROUTE ---')
+            log(str(r))
+            log(str(inspect.getmodule(r.callback)))
+        except:
+            pass
+        log('--- TEMPLATE ---')
+        log('name =', self.tpl.name)
         return self.tpl.render(**_defaults)
     
 template = functools.partial(template,

@@ -1,0 +1,14 @@
+{% set namespace = 'Home' %}
+{% extends layout %}
+
+{% block content %}
+
+<p class="logo">
+   <img src="/static/img/logo.png" alt="">
+</p>
+
+<div data-clip="content">
+    {{ page.content }}
+</div>
+    
+{% endblock %}

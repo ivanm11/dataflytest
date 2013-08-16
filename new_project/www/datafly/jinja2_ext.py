@@ -1,4 +1,5 @@
 import urllib
+from pytz import timezone, utc
 from operator import getitem
 from jinja2 import Markup
 
@@ -25,12 +26,17 @@ def money(value, usd=True, roundup=False):
     with_cents = '{:.2f}'.format(value)
     return '$' + with_cents if usd else with_cents
 
+def strftime(value, fmt):
+    pacific = timezone('US/Pacific')
+    return utc.localize(value).astimezone(pacific).strftime(fmt)
+
 filters = dict(
     urlencode = urlencode_filter,
     getkey = getkey,
     money = money,
     to_json = json.dumps,
-    from_json = json.loads
+    from_json = json.loads,
+    strftime = strftime
 )
 
 _globals = dict()

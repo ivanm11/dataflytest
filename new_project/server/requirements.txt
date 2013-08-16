@@ -1,5 +1,9 @@
-# BASE
+# base
 bottle
 Jinja2
 pymongo
 passlib
+
+# stdlib
+python-dateutil
+pytz

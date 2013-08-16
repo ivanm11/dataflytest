@@ -13,30 +13,11 @@ class Default(object):
         'host': 'localhost',
         'port': 27017        
     }
+    ADMIN_USER = {
+        'login': 'demo@datafly.net',
+        'password': 'demo'
+    }   
     DB = 'starter'
-    # STATIC ASSETS
-    # TYPE = { result: [files] }
-    # files - list of files to compile, concat, minify (relative to /www directory)
-    LESS = {
-        'public': [
-            'less/layout',
-            'less/pages'        
-        ],
-        'admin': [
-            'datafly/admin/layout'
-        ]
-    }
-    JS = {
-        'public': [
-            'js/layout',
-            'js/pages' 
-        ],
-        'admin': [
-            'datafly/widgets/ajax',
-            'datafly/pages/redactor',
-            'datafly/users/login'
-        ]
-    }
     SECRET = 'EJdDcCRXHTyW8UXcQnRhWyujGWnK7Bjf4ZD68ve9Heu9tvCwacPc9zYjwJrb'
 
 class Production(Default):
@@ -49,6 +30,7 @@ class Development(Default):
     BASE_URL = 'http://127.0.0.1:8080'
     HOST = '127.0.0.1'
     PORT = 8080    
+    LESSJS = False
 
 """
     please, define class Development(Default) in myconfig.py

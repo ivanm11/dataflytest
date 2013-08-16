@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin / {{ title }}</title>
+    {% include head %}
+    <link href="/static/redactor-9.0.3/redactor.css?{{ config.CACHE_TIMESTAMP }}"
+          rel="stylesheet">
+    {% if env == 'Development' %}
+        {% for path in assets.less.admin %}
+            {% if config.LESSJS %}
+                <link href="/{{ path }}.less" rel="stylesheet/less">
+            {% else %}    
+                <link href="/{{ path }}.css" rel="stylesheet">
+            {% endif %}  
+        {% endfor %}    
+    {% else %}        
+        <link href="/static/admin.min.css?{{ config.CACHE_TIMESTAMP }}"
+              rel="stylesheet">        
+    {% endif %}    
+</head>
+
+<body class="admin {{ namespace }}">
+    <div class="notifications center"></div>
+
+    <header>
+        <h1>{{ admin_title }}</h1>
+        <div class="toolbar">
+            {% if editor %}
+                {% include 'pages/toolbar.html' %}
+            {% endif %}            
+            {% block header %}                    
+            {% endblock %}
+        </div>
+    </header>
+
+    <aside>       
+        {% include 'admin/nav.html' %}
+    </aside>   
+
+    <div class="content {{ 'default-page' if default }}">  
+        <form id="meta">
+            {% if page and 'created' in page.meta %}
+                <input type="hidden" name="created"
+                       value="{{ page.meta.created.strftime('%Y-%m-%d %H:%M:%S') }}">
+            {% endif %}   
+            <div class="meta">{% if editor %}
+                <label>Meta Title:</label>
+                <input type="text" name="title"
+                       value="{{ page.meta.title if page and page.meta }}"
+                       placeholder="Enter meta title here...">
+                <br>
+                <label>Meta Description:</label>
+                <input type="text" name="description"
+                       value="{{ page.meta.description if page and page.meta }}"
+                       placeholder="Enter meta description here...">
+                    {{ html }}            
+                {% endif %}{% block meta %}{% endblock %}{#
+          #}</div>        
+        </form>
+        {% block content %}
+        {% endblock %}        
+    </div>
+
+    <footer>
+
+    </footer>
+    {% include scripts %}
+    {% if env == 'Development' %}
+        {% for path in assets.js.admin %}
+            <script src="/{{ path }}.js"></script>
+        {% endfor %}
+    {% else %}
+        <script src="/static/admin.min.js?{{ config.CACHE_TIMESTAMP }}"></script>
+    {% endif %}    
+    <!-- Redactor.JS -->    
+    <script src="/static/redactor-9.0.3/redactor.min.js"></script>
+    <script src="/static/redactor-9.0.3/externalswitcher.js"></script>
+</body>
+</html>

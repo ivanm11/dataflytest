@@ -1,9 +1,25 @@
-<div id="redactor-toolbar">
-</div>
-<div class="pull-right">
+<div class="toolbar-save pull-right">    
+    <div class="btn-group">
+        {% if versions %}   
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                Version
+            <span class="caret"></span>
+            </a>             
+            <ul class="dropdown-menu" id="versions">
+                {% for v in versions %}
+                    <li>
+                        <a data-id="{{ v._id|string }}">
+                            {{ v.published|strftime(data.date_format_short) }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
     <button class="btn btn-success" id="save"
-            data-page-id="{{ id or page.id }}">
+            data-page-id="{{ page_id }}">
         Save and Publish
     </button>
-    <button class="btn btn-danger" id="cancel">Cancel</button>
+</div>
+<div class="toolbar-redactor">
 </div>

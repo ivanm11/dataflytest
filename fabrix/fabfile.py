@@ -135,12 +135,13 @@ def get_upload(version):
     rsync_project(remote_upload, local_upload, upload=False)
 
 @task
-def migration(version, file):
+def migration(version, file=None):
     REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
     MIGRATIONS = path.join(PROJECT_ROOT, 'script', 'migrations')
     rsync_project('%s/script/' % REMOTE_PATH, MIGRATIONS, exclude=["*.pyc"])
-    with cd(REMOTE_PATH):
-        run('venv/bin/python script/migrations/%s %s' % (file, version))
+    if file:
+        with cd(REMOTE_PATH):
+            run('venv/bin/python script/migrations/%s %s' % (file, version))
 
 @task
 def put_db(version):
