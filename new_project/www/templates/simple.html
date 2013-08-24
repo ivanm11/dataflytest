@@ -1,9 +1,0 @@
-{% set title = 'Home' %}
-
-{% extends layout or 'layout.html' %}
-
-{% block content %}
-    <article class="redactor" data-clip="content">
-        {{ page.content or lipsum(10) }}
-    </article>
-{% endblock %}

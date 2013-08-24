@@ -132,7 +132,7 @@ def get_upload(version):
     REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
     remote_upload = path.join(REMOTE_PATH, 'www', 'static', 'upload')
     local_upload = path.join(STATIC_ROOT, 'upload')
-    rsync_project(remote_upload, local_upload, upload=False)
+    rsync_project(remote_upload, local_upload, upload=True)
 
 @task
 def migration(version, file=None):
@@ -166,14 +166,14 @@ def collect_static():
     """ Needs refactoring. Append files into groups, compile if Less. """    
     # LESS
     for result in assets.LESS:
-        output_less = path.join(STATIC_ROOT, '%s.less' % result)        
+        output_less = path.join(SITE_ROOT, 'less', '%s.less' % result)        
         output_less = open(output_less, 'w')     
         for file in assets.LESS[result]:
             less = path.join(SITE_ROOT, file+'.less')
             file = open(less, 'r')
             output_less.write(file.read())
         output_less.close()
-        local('lessc %s/%s.less -o %s/%s.min.css' % (STATIC_ROOT, result, STATIC_ROOT, result))
+        local('lessc %s/less/%s.less -o %s/%s.min.css' % (SITE_ROOT, result, STATIC_ROOT, result))
     # JS
     for result in assets.JS:        
         output_js = path.join(STATIC_ROOT, '%s.min.js' % result)
