@@ -4,13 +4,14 @@
 
 LESS = {
     'public': [
-        'less/layout',    
-        'less/pages',
-        'less/responsive'      
+        'less/bootstrap-public',    
+        'less/public',
+        'less/shared'
     ],
     'admin': [
+        'less/bootstrap-admin',    
         'datafly/admin/layout',
-        'less/pages',
+        'less/shared',
         'less/admin'
     ]
 }

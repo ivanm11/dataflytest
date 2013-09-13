@@ -1,0 +1,35 @@
+{% set namespace = 'gallery' %}
+{% extends layout %}
+
+{% block content %}
+
+{% macro item(filename, caption, active) -%}
+    <div class="item {{ 'active' if active }}">
+        <img src="/static/img/{{ filename }}.jpg" alt="">
+        <div class="carousel-caption">
+            <h3>
+                {{ caption }}
+            </h3>
+        </div>
+    </div>
+{%- endmacro %}
+
+<div id="bootstrap-carousel" class="carousel slide">
+    <div class="carousel-inner">
+        {{ item('gallery-01', 'Cabins in Wilamette Valley', true) }}
+        {{ item('gallery-02', 'The Grand Canal in Venice') }}
+        {{ item('gallery-03', 'A sunset') }}
+        {{ item('gallery-04', 'Lake Malta in Poznan, Poland') }}
+        {{ item('gallery-05', 'Westerplatte Ruins') }}
+        {{ item('gallery-06', 'The Grunwaldzki Bridge') }}
+    </div>
+    <!-- Controls -->
+    <a class="left carousel-control" href="#bootstrap-carousel" data-slide="prev">
+        <span class="icon-prev"></span>
+    </a>
+    <a class="right carousel-control" href="#bootstrap-carousel" data-slide="next">
+        <span class="icon-next"></span>
+    </a>
+</div>
+
+{% endblock %}

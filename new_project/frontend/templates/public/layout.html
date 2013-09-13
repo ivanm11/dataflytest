@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include head %}
+    <link rel="stylesheet" href="/less/bootstrap-public.css">
+    <link rel="stylesheet" href="/less/public.css">
+    <link rel="stylesheet" href="/less/shared.css">
+</head>
+
+<body class="{{ namespace }}">
+
+    <header class="wrapper">
+        <h1> New project boilerplate </h1>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-collapse collapse">
+                {% include 'public/nav.html' %}
+            </div>
+        </nav>        
+    </header>
+
+    <div class="content wrapper">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="wrapper">
+        Built in <strong>DataFly</strong>.
+    </footer>
+
+    {% include scripts %}
+
+</body>
+</html>

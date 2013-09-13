@@ -2,12 +2,12 @@ import uuid
 import json
 from bson.json_util import dumps
 from os import path
+from PIL import ImageOps, Image
 from bottle import Bottle, request
 
 from datafly.core import FileUpload
-from datafly.utils import slugify
 
-from config import db, SITE_ROOT
+from config import Config, SITE_ROOT
 from .models import Page
 
 editor_app = Bottle()
@@ -18,9 +18,25 @@ def upload(filetype):
     name, ext = path.splitext(file.filename)
     file = FileUpload(file.file, file.name, file.filename)
     # set unique name
-    new_name = '%s%s' % (str(uuid.uuid4())[:8], ext)
-    file.save(path.join(SITE_ROOT, 'static', 'upload', filetype, new_name),
-             overwrite=True)
+    new_name = '%s%s%s' % (Config.IMG_PREFIX, str(uuid.uuid4())[:8], ext)
+    fp = path.join(SITE_ROOT, 'static', 'upload', filetype, new_name)
+    file.save(fp, overwrite=True)
+    im = Image.open(fp)
+    # resize if bigger than maximum size
+    max_width = int(request.query.get('width', 1920))
+    max_height = int(request.query.get('height', 1200))
+    if request.query.get('crop') == 'yes':
+        WIDTH, HEIGHT = 0, 1
+        resized = ImageOps.fit(
+            im,        
+            (max_width, max_height),
+            Image.ANTIALIAS
+        )
+        resized.save(fp, format='jpeg')   
+    else: 
+        size = max_width, max_height
+        im.thumbnail(size, Image.ANTIALIAS)
+        im.save(fp, 'jpeg')
     link = '/static/upload/%s/%s' % (filetype, new_name)
     return { 'filelink': link }
 
@@ -31,7 +47,5 @@ def get_page(_id):
 
 @editor_app.post('/admin/api/pages/id/<page_id:path>')
 def save_page(page_id):    
-    if 'new' in page_id.split('/'):
-        page_id = page_id.replace('new', slugify(page_content['meta']['title']))
-    new_version = Page(request.json['page'])
-    new_version.save()
+    page = Page(request.json['page'])
+    page.save()

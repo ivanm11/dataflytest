@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin / {{ title }}</title>
+    {% include head %}
+    <link href="/static/redactor-9.0.3/redactor.css"
+          rel="stylesheet">
+    <link href="/less/bootstrap-admin.css" rel="stylesheet">
+    <link href="/static/admin/layout.css" rel="stylesheet">
+    <link href="/less/shared.css" rel="stylesheet">
+    <link href="/less/admin.css" rel="stylesheet">
+</head>
+
+<body class="admin {{ namespace }}">
+    <div class="notifications center"></div>
+
+    <header>
+        <h1>{{ title }}</h1>
+        <div class="toolbar">
+            <div class="toolbar-save pull-right">    
+                <div class="btn-group">
+                </div>
+                <button class="btn btn-success" id="save"
+                        data-page-id="{{ page_id }}">
+                    Save and Publish
+                </button>
+            </div>
+            <div class="toolbar-redactor">
+            </div>       
+            {% block header %}                    
+            {% endblock %}
+        </div>
+    </header>
+
+    <aside>       
+        {% include 'admin/nav.html' %}
+    </aside>   
+
+    <div class="content {{ 'default-page' if default }}"> 
+        
+        <!-- File/img upload, external to any Redactor -->
+        <div id="hidden-upload">
+            <div id="hidden-upload-redactor"></div>
+        </div> 
+
+        <!-- Page meta properties -->
+        <form id="meta">
+            {% if page and 'created' in page.meta %}
+                <input type="hidden" name="created"
+                       value="{{ page.meta.created.strftime('%Y-%m-%d %H:%M:%S') }}">
+            {% endif %}   
+            <div class="meta">{% if editor and not custom_meta %}
+                <label>Meta Title:</label>
+                <input type="text" name="title"
+                       value="{{ page.meta.title if page and page.meta }}"
+                       placeholder="Enter meta title here...">
+                <br>
+                <label>Meta Description:</label>
+                <input type="text" name="description"
+                       value="{{ page.meta.description if page and page.meta }}"
+                       placeholder="Enter meta description here...">
+                    {{ html }}            
+                {% endif %}{% block meta %}{% endblock %}{#
+          #}</div>        
+        </form>
+        {% block content %}
+        {% endblock %}        
+    </div>
+
+    {% include scripts %}
+    <!-- Redactor.JS -->    
+    <script src="/static/redactor-9.0.3/redactor.min.js"></script>
+    <script src="/static/redactor-9.0.3/externalswitcher.js"></script>
+
+    <script src="/static/admin/ajax.js"></script>
+    <script src="/static/admin/redactor.js"></script>
+</body>
+</html>

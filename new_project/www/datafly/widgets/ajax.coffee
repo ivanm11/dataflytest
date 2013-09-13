@@ -8,6 +8,19 @@ $.fn.serializeObject = () ->
 Datafly.alert = (el) ->
     $('#alert' + el).slideDown('slow').delay(6000).slideUp('slow')
 
+Datafly.notify = (msg) ->
+    $('.center').notify(
+        message: 
+            text: msg
+    ).show()
+
+Datafly.error = (msg) ->
+    $('.center').notify(
+        type: 'error',
+        message: 
+            text: msg
+    ).show()
+
 Datafly.submit = (event) ->
     event.preventDefault();
     $form = $(this).parents('form')

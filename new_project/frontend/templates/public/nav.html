@@ -1,0 +1,12 @@
+{% macro a(url, text) -%}
+    <li class="{{ 'active' if url == request_path }}">
+        <a href="{{ url }}">{{ text }}</a>
+    </li>
+{%- endmacro %}
+
+<ul class="nav navbar-nav">
+    {{ a('/', 'Home') }}
+    {{ a('/news', 'News') }}
+    {{ a('/gallery', 'Gallery') }}
+    {{ a('/contact', 'Contact') }}
+</ul>

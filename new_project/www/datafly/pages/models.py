@@ -2,6 +2,7 @@ from datetime import datetime
 from bottle import cached_property
 
 from datafly.odm import Document
+from datafly.utils import slugify
 
 from config import db
 
@@ -28,18 +29,28 @@ class Page(Document):
     def pre_save(self):        
         self['published'] = datetime.utcnow()                
         self.set_as_current()
+        if self.is_new():
+            self.set_title()
         self.set_created()
+
+    def is_new(self):
+        return ('created' not in self['meta'])
 
     def set_created(self):
         created = self['meta'].get('created', None)                
-        if created:
-            if isinstance(created, datetime):
-                return
-            DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
-            self['meta']['created'] = datetime.strptime(self['meta']['created'],
-                                                        DATETIME_FORMAT)
+        if isinstance(created, datetime): return
+        if created:                            
+            self['meta']['created'] = \
+                datetime.strptime(self['meta']['created'], '%Y-%m-%d %H:%M:%S')
         else:
             self['meta']['created'] = datetime.utcnow()
+
+    def set_title(self):              
+        path = self['id'].split('/')
+        for key, s in enumerate(path):
+            if s == 'new':
+                path[key] = s.replace('new', slugify(self['meta']['title']))        
+        self['id'] = '/'.join(path)
 
     def set_as_current(self):
         db.pages.update({ 'id': self['id'] },

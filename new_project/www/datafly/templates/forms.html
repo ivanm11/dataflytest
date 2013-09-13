@@ -7,7 +7,7 @@
 
 
 {% macro hf_select_country(obj=None) %}
-<div class="control-group">
+<div class="form-group">
     <label class="control-label">Country</label>
     <div class="controls">
     <select class="input-xlarge" name="country" id="country">
@@ -25,7 +25,7 @@
 
 
 {% macro hf_select_state(obj=None) %}
-<div class="control-group state">
+<div class="form-group state">
     <label class="control-label">State</label>
     <div class="controls">
     <select data-placeholder="State" class="state" name="state"  id="state">
@@ -45,7 +45,7 @@
 {% macro hf_input(title, key, obj=None, type="text", id=None, class="input-xlarge",
                   placeholder="", required=True) %}
     {% set obj = values if values else obj %}
-    <div class="control-group">
+    <div class="form-group">
         <label class="control-label" for="{{ key }}">
             {{ title }}
         </label>
@@ -62,7 +62,7 @@
 {% macro hf_textarea(title, key, obj=None, id=None, class="input-xlarge",
                      placeholder="", required=True) %}
     {% set obj = values if values else obj %}
-    <div class="control-group">
+    <div class="form-group">
         <label class="control-label" for="{{ key }}">
             {{ title }}
         </label>
@@ -94,7 +94,7 @@
 
 {% macro hf_checkbox(title, key, value='on', id=None, obj=None, checked=False) %}
     {% set obj = values if values else obj %}
-    <div class="control-group">
+    <div class="form-group">
         <div class="controls">  
             {{ checkbox(title, key, value, obj, id, checked) }}
         </div>
@@ -115,7 +115,7 @@
 
 
 {% macro hf_button(title, type="submit", id=None, class='', disabled=False, data={}) %}
-    <div class="control-group">
+    <div class="form-group">
         <div class="controls">
             {{ button(title, type, id, class, disabled, data) }}
         </div>

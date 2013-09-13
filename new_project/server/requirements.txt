@@ -3,7 +3,9 @@ bottle
 Jinja2
 pymongo
 passlib
+mailer
 
 # stdlib
+pillow
 python-dateutil
 pytz

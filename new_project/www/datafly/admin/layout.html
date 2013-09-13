@@ -39,6 +39,13 @@
     </aside>   
 
     <div class="content {{ 'default-page' if default }}">  
+        
+        <!-- File/img upload, external to any Redactor -->
+        <div id="hidden-upload">
+            <div id="hidden-upload-redactor"></div>
+        </div> 
+
+        <!-- Page meta properties -->
         <form id="meta">
             {% if page and 'created' in page.meta %}
                 <input type="hidden" name="created"

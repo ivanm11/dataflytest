@@ -1,13 +1,14 @@
 import os
 from os.path import abspath, join, dirname
 
+CONFIG_ROOT = abspath(dirname(__file__))
 # SITE ROOT - /www
-SITE_ROOT = abspath(dirname(__file__))
+SITE_ROOT = abspath(join(CONFIG_ROOT, '..'))
 # one level above site
 PROJECT_ROOT = abspath(join(SITE_ROOT, '..'))
 
 class Default(object):
-    CACHE_TIMESTAMP = 'Aug17-0300' 
+    CACHE_TIMESTAMP = 'Sep14-0225' 
     WEBSITE = 'DataFly'    
     MONGO = {
         'host': 'localhost',
@@ -18,13 +19,14 @@ class Default(object):
         'password': 'demo'
     }   
     DB = 'starter'
+    IMG_PREFIX = ''
     SECRET = 'EJdDcCRXHTyW8UXcQnRhWyujGWnK7Bjf4ZD68ve9Heu9tvCwacPc9zYjwJrb'
 
 class Production(Default):
-    BASE_URL = 'http://doc.datafly.net'
+    BASE_URL = 'http://starter.datafly.net'
 
 class Staging(Default):
-    BASE_URL = 'http://staging.doc.datafly.net'
+    BASE_URL = 'http://staging.starter.datafly.net'
 
 class Development(Default):
     BASE_URL = 'http://127.0.0.1:8080'

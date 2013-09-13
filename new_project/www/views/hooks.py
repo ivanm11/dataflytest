@@ -11,9 +11,9 @@ def init_globals():
 
     # global template context
     g.template_context = c = dict(      
-        layout = 'layout/layout.html',        
-        head = 'layout/head.html',
-        scripts = 'layout/scripts.html',          
+        layout = 'public/layout.html',        
+        head = 'layout_head.html',
+        scripts = 'layout_scripts.html',          
         config = Config,
         base_url = Config.BASE_URL,
         data = data,

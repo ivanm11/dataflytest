@@ -4,6 +4,10 @@ html, body {
     height: 100%;
 }
 
+#login label {
+    font-weight: normal;
+}
+
 body.admin {            
     font-size: 14px;
     line-height: 1.5;
@@ -20,6 +24,7 @@ body.admin {
         border-bottom: 1px solid #000; 
         h1 {
             padding: 0px;
+            padding-top: 9px;
             margin: -3px 0px 0px 30px;
             font-size: 20px;
             font-weight: normal;
@@ -30,7 +35,7 @@ body.admin {
             width: 100%;
             max-width: 1000px;
             top: 1px;
-            padding-top: 2px;
+            padding-top: 2px;            
             .btn.pull-right {
                 margin-right: 10px;
             }
@@ -67,6 +72,13 @@ body.admin {
         max-width: 1000px;
         padding-right: 20px;
 
+        #hidden-upload {
+            position: absolute;
+            top: -9000px;
+            height: 1px;
+            overflow: hidden; 
+        }
+
         .meta {
             padding-top: 8px;
             padding-left: 4px;
@@ -79,12 +91,15 @@ body.admin {
             input {
                 font-size: 13px;
                 position: relative;
-                top: -6px;
-                left: -6px;
+                top: 0px;
+                left: 5px;  
                 width: 80%;
                 box-shadow: none;
                 transition: none;
                 border: none;
+                &:focus {
+                    outline: none;
+                }
             }
         }
         .meta:empty{
@@ -124,7 +139,8 @@ body.admin {
     }
     li > a {        
         background-color: #f0f0f0;
-        border-radius: 3px;                
+        border-radius: 1px;
+        border: 0px;            
     }
     li > a.redactor_act,
     li > a:hover {
@@ -132,12 +148,56 @@ body.admin {
     }
 }
 
+.toolbar-save .btn-group {
+    display: inline-block;
+    background-color: #eee;
+}
+
 // Login page
 
 body.login form {
-    margin-top: 150px;
+    margin-top: 50px;
+    margin-left: 100px;
 
     .switch-state {
         display: none;
     }
+}
+
+// notifications
+
+.notifications {
+  position: fixed;
+  z-index: 10000;
+}
+.notifications.top-right {
+  right: 10px;
+  top: 25px;
+}
+.notifications.top-left {
+  left: 10px;
+  top: 25px;
+}
+.notifications.bottom-left {
+  left: 10px;
+  bottom: 25px;
+}
+.notifications.bottom-right {
+  right: 10px;
+  bottom: 25px;
+}
+.notifications > div {
+  position: relative;
+  z-index: 9999;
+  margin: 5px 0px;
+}
+.notifications.center {
+  top: 48%;
+  left: 0;
+  width: 100%;
+}
+.notifications.center > div {
+  margin: 5px auto;
+  width: 20%;
+  text-align: center;
 }

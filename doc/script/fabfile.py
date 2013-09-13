@@ -1,11 +1,13 @@
-import sys, yaml
+import sys
+from os import pardir
 from os.path import abspath, join, dirname
 
 from fabric.api import env
 
-env.PROJECT_ROOT = abspath(join(dirname(__file__), '..'))
-stream = file(join(env.PROJECT_ROOT, 'script', 'mydevops.yaml'), 'r')
-mydevops = yaml.load(stream)
-sys.path.append(mydevops['starter'])
+# path to DataFly Fabric core
+sys.path.append(join(pardir, pardir, 'new_project', 'script'))
 
-from fabrix.fabfile import *
+# set project root for imported commands
+env.PROJECT_ROOT = abspath(join(dirname(__file__), pardir))
+
+from datafly.fabric.core import *

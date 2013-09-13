@@ -25,6 +25,11 @@ def login():
         return redirect('/admin/home')
     return template('admin/login.html')
 
+@admin_app.get('/admin/news')
+@admin_app.get('/admin/gallery')
+def custom_admin_page():    
+    return template('admin/custom.html')
+
 @admin_app.get('/admin/:page')
 @admin_app.get('/admin/<section:re:(section|another-section)>/:page')
 def simple_page(page, section=None):
