@@ -166,23 +166,23 @@ def collect_static():
     """ Needs refactoring. Append files into groups, compile if Less. """    
     # LESS
     for result in assets.LESS:
-        output_less = path.join(SITE_ROOT, 'less', '%s.less' % result)        
-        output_less = open(output_less, 'w')     
+        output_less = path.join(SITE_ROOT, 'less', '%s.tmp.less' % result)
+        output_less = open(output_less, 'w')
         for file in assets.LESS[result]:
             less = path.join(SITE_ROOT, file+'.less')
             file = open(less, 'r')
             output_less.write(file.read())
         output_less.close()
-        local('lessc %s/less/%s.less -o %s/%s.min.css' % (SITE_ROOT, result, STATIC_ROOT, result))
+        local('lessc %s/less/%s.tmp.less -o %s/%s.min.css' % (SITE_ROOT, result, STATIC_ROOT, result))
     # JS
-    for result in assets.JS:        
+    for result in assets.JS:
         output_js = path.join(STATIC_ROOT, '%s.min.js' % result)
-        output_js = open(output_js, 'w')     
+        output_js = open(output_js, 'w')
         for file in assets.JS[result]:
             js = path.join(SITE_ROOT, file+'.js')
             file = open(js, 'r')
             output_js.write(file.read())
-        output_js.close()    
+        output_js.close()
 
 @task
 def ds():
