@@ -17,14 +17,15 @@ LESS = {
 }
 JS = {
     'public': [
-        'js/layout',        
-        'js/pages',
+        'js/public',        
+        'js/shared'
     ],
     'admin': [
         'static/can-1.1.16/can.control',
         'datafly/widgets/ajax',
         'datafly/pages/redactor',
         'datafly/users/login',
-        'js/admin',
+        'js/shared',
+        'js/admin'
     ]
 }

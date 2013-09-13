@@ -11,7 +11,7 @@ def home():
                     page = Page.get_latest('home'),)
 
 @pages_app.get('/:page')
-@pages_app.get('/<section:re:(section|another-section)>/:page')
+@pages_app.get('/<section:re:(news)>/:page')
 def simple_page(page=None, section=None):
     page_id = request.path.strip('/')
     page = Page.get_latest(page_id)    

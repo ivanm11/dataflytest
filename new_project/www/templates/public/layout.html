@@ -2,9 +2,14 @@
 <html>
 <head>
     {% include head %}
-    <link rel="stylesheet" href="/less/bootstrap-public.css">
-    <link rel="stylesheet" href="/less/public.css">
-    <link rel="stylesheet" href="/less/shared.css">
+    {% if env != 'Development' or livereload %}
+        <link href="/static/public.min.css?{{ config.CACHE_TIMESTAMP }}" rel="stylesheet">
+    {% else %}
+        {% for path in assets.less.public %}
+            <link href="/{{ path }}.{{ 'less' if config.LESSJS else 'css' }}"
+                  rel="stylesheet{{ '/less' if config.LESSJS}}">
+        {% endfor %}
+    {% endif %}
 </head>
 
 <body class="{{ namespace }}">
