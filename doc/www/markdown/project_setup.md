@@ -45,7 +45,7 @@ just copy `new_project` dir:
 Edit configuration files:
 
 ```bash
-  www/config.py # production, staging, development config
+  www/config/config.py # production, staging, development config
 ```
 
 Add `www/myconfig.py` if needed (development config overrides).
@@ -84,18 +84,11 @@ MongoDB.
 
 Please read [DataFly Starter](/datafly-starter) guide.
 
-You need `devops.yaml`, `mydevops.yaml` files to use Fabric helpers.
+You need to edit `devops.yaml` files before using Ansible and Fabric.
 
 ```bash
   cd /$PROJECT/script
   fab venv # setup virtualenv
   fab get_db:production # import database (if you have access)
   fab runserver # python app.py
-```
-
-To initialize local and remote Git repository for new project and checkout
-staging branch:
-
-```bash
-  $ fab git repo 
 ```

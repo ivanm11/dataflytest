@@ -1,24 +1,19 @@
----
 # ANSIBLE PLAYBOOK
+---
 
-- hosts: datafly
+- hosts: remote
   user: root
-  gather_facts: false
-  tasks:
-    - action: fireball
-
-- hosts: datafly
-  connection: fireball
-  user: root
+  accelerate: true
   gather_facts: false
   vars_files:
     - devops.yaml
-    - mydevops.yaml
+
+  # EDIT BELOW
   tasks:
-    #- include: $starter/ansible/utils.yaml
-    #- include: $starter/ansible/mosh.yaml
-    - include: $starter/ansible/nginx.yaml
-    - include: $starter/ansible/uwsgi.yaml
-    #- include: $starter/ansible/mongo.yaml
+    - include: $ansible/utils.yaml
+    - include: $ansible/mosh.yaml
+    - include: $ansible/nginx.yaml
+    - include: $ansible/uwsgi.yaml
+    - include: $ansible/mongo.yaml
   handlers:
-    - include: $starter/ansible/handlers.yaml
+    - include: $ansible/handlers.yaml

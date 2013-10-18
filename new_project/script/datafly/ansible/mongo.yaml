@@ -1,10 +1,17 @@
-- name: add 10gen public GPG Key
+- name: import MongoDB public GPG Key
   action: command apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
-- name: add mongo ppa
+
+- name: add MongoDB repository to APT sources
   action: copy
-          src=$starter/ansible/templates/10gen.list
+          src=$ansible/templates/10gen.list
           dest=/etc/apt/sources.list.d/10gen.list
           owner=root group=root mode=0644
-- action: command apt-get update
-- name: install mongo
+# FAIL:
+# Failed to fetch
+# http://downloads-distro.mongodb.org/repo/ubuntu-upstart/dists/dist/Release
+# Unable to find expected entry 'mongodb/binary-i386/Packages'
+# in Release file (Wrong sources.list entry or malformed file)
+# action: command apt-get update
+
+- name: install MongoDB
   action: apt pkg=mongodb-10gen

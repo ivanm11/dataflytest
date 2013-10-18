@@ -1,10 +1,16 @@
 ---
+ansible: 'datafly/ansible'
+project_root: '..'
+
+# EDIT BELOW
+
 project: 'starter'
-# fabric
 server: ['root@datafly.net']
-# trailing slash at the end is important
+
+# trailing slash is important
 remote_path: '/home/datafly/starter/'
-# production version
+
+# production host
 host: 'starter.datafly.net'
-# staging version
+# staging host
 host_staging: 'staging.starter.datafly.net'

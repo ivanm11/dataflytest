@@ -33,6 +33,11 @@ if hasattr(env, 'PROJECT_ROOT'):
     env.hosts = DEVOPS['server']
 
 @task
+def ansible(playbook): 
+    """ Ansible shortcut """
+    local('ansible-playbook %s.yaml -i hosts' % playbook)
+
+@task
 def venv():
     """ Install virtualenv or update packages from requirements.txt """
     with lcd(PROJECT_ROOT):

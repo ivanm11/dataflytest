@@ -4,7 +4,8 @@ DEVOPS
 Goal
 ----
 
-Useful local and server deployment / orchestration commands for [Fabric](http://http://docs.fabfile.org/)
+Useful local and server deployment / orchestration commands for
+[Fabric](http://http://docs.fabfile.org/)
 and [Ansible](http://ansible.cc)
 
 * Setup local and remote git repositories, virtualenv
@@ -16,8 +17,7 @@ and [Ansible](http://ansible.cc)
 ---
 
 *Getting errors?*  
-Make sure you properly configured `devops.yaml`
-and `mydevops.yaml` in `script` folder.
+Make sure you properly configured `devops.yaml` in `script` folder.
 
 Fabric
 -------
@@ -44,16 +44,27 @@ For production version:
   $ fab dp # shortcut, collect static, no requirements.txt check
 ```
 
+Permissions (`www-data` user, `upload` dir):
+
+```bash
+  $ fab chmod:production
+  $ fab chmod:staging  
+```
+
 Download or upload database:
 
 ```bash
-  # download
+  # just download
   $ fab backup_db:production
   $ fab backup_db:staging
-  # download, also local import operation
+
+  # download and import
+  # (WARNING: local db will be dropped)
   $ fab get_db:production
   $ fab get_db:staging
-  # upload, also remote import operation
+
+  # upload to remote and import
+  # (WARNING: remote db will be dropped)
   $ fab put_db:production
   $ fab put_db:staging
 ```
@@ -70,20 +81,15 @@ Database migration:
 Ansible
 -------
 
-Install Fireball for all DataFly servers:
+Generate Nginx/uWSGI configuration files from `devops.yaml` information.
 
 ```bash
-  $ ansible-playbook starter/ansible/fireball.yaml
+  $ fab ansible:local
 ```
 
-Generate Nginx vhosts, uWSGI config files from `devops.yaml` information.
-
-```bash
-  $ ansible-playbook script/local.yaml
-```
-
-Nginx vhosts, uWSGI config files are ready for use. If you want, you can edit
-these files (special Nginx or uWSGI setup). Look into `/setup` folder.
+Nginx/uWSGI configuration files are ready for use.
+If you want, you can edit these files (for unique Nginx or uWSGI setup).
+Please look inside `/setup` folder.
 
 ```
   /site.nginx
@@ -95,12 +101,12 @@ these files (special Nginx or uWSGI setup). Look into `/setup` folder.
 You are ready to install and launch Nginx, uWSGI:
 
 ```bash
-  $ ansible-playbook script/server.yaml
+  $ fab ansible:server
 ```
 
-To upload Nginx virtual vhosts, uWSGI configuration files from */server* local
-folder to production/staging env just repeat this playbook again:
+To upload again Nginx/uWSGI configuration files from local */server*
+folder to production/staging just repeat:
 
 ```bash
-  $ ansible-playbook script/server.yaml
+  $ fab ansible:server
 ```

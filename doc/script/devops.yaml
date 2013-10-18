@@ -1,8 +1,16 @@
+
+# I understand that long path to ansible is confusing here,
+# but it's still better than including "script/datafly" twice in repo
+
 ---
+ansible: '../../../starter/new_project/script/datafly/ansible'
+project_root: '..'
+
+# EDIT BELOW
+
 project: 'doc'
-# fabric
 server: ['root@datafly.net']
-# trailing slash at the end is important
+# trailing slash is important
 remote_path: '/home/datafly/doc/'
-# production version
+# production host
 host: 'doc.datafly.net'

@@ -1,11 +1,10 @@
----
 # ANSIBLE PLAYBOOK
+---
 
 - hosts: local
   connection: local
   gather_facts: false
   vars_files:
     - devops.yaml
-    - mydevops.yaml
   tasks:
-    - include: $starter/ansible/local.yaml
+    - include: $ansible/local.yaml

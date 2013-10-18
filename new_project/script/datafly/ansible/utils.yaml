@@ -1,2 +1,8 @@
 - name: install add-apt-repository
   action: apt pkg=python-software-properties state=installed
+- name: install Pillow dependencies
+  action: apt pkg=$item
+  with_items:
+    - libjpeg8-dev
+    - zlib1g-dev
+    - libfreetype6-dev
