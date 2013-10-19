@@ -6,12 +6,8 @@
           src=$ansible/templates/10gen.list
           dest=/etc/apt/sources.list.d/10gen.list
           owner=root group=root mode=0644
-# FAIL:
-# Failed to fetch
-# http://downloads-distro.mongodb.org/repo/ubuntu-upstart/dists/dist/Release
-# Unable to find expected entry 'mongodb/binary-i386/Packages'
-# in Release file (Wrong sources.list entry or malformed file)
-# action: command apt-get update
+
+- action: command apt-get update
 
 - name: install MongoDB
   action: apt pkg=mongodb-10gen

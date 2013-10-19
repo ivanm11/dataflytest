@@ -7,7 +7,8 @@ from fabric.api import lcd, local, get
 # server
 from fabric.api import cd, run, put
 # other
-from fabric.api import env, task
+from fabric.api import env, task, hide
+from fabric.colors import red
 from fabric.contrib import files
 from fabric.contrib.project import rsync_project
 
@@ -35,6 +36,8 @@ if hasattr(env, 'PROJECT_ROOT'):
 @task
 def ansible(playbook): 
     """ Ansible shortcut """
+    if playbook == 'accelerate':
+        playbook = 'datafly/ansible/accelerate'
     local('ansible-playbook %s.yaml -i hosts' % playbook)
 
 @task
@@ -65,48 +68,46 @@ def runserver():
 # DEPLOY
 
 @task
-def mkdir(version=None):
+def chmod(version=None):
+    REMOTE_PATH = path.join(DEVOPS['remote_path'], version)    
+    with hide('output','running'):
+        run('chown -R www-data:www-data %s/www' % REMOTE_PATH)
+        run('mkdir -p %s/www/static/upload/img' % REMOTE_PATH)    
+        run('chmod -R 775 %s/www/static/upload/img' % REMOTE_PATH)
+        run('mkdir -p %s/www/static/upload/file' % REMOTE_PATH)
+        run('chmod -R 775 %s/www/static/upload/file' % REMOTE_PATH)
+
+@task
+def deploy(version=None, delete=False):
     REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
     run('mkdir -p %s/www' % REMOTE_PATH)
-    run('mkdir -p %s/backup' % REMOTE_PATH)
-    run('mkdir -p %s/server' % REMOTE_PATH)
-    return REMOTE_PATH  
-
-@task
-def remote_venv(remote_path):
-    if not files.exists('%s/venv' % remote_path):
-        run('apt-get install python-pip')
-        run('apt-get install rsync')
-        run('pip install virtualenv')
-        run('virtualenv %s/venv' % remote_path)
-
-@task
-def chmod(version=None):
-    REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
-    run('chown -R www-data:www-data %s/www' % REMOTE_PATH)
-    run('mkdir -p %s/www/static/upload/img' % REMOTE_PATH)    
-    run('chmod -R 775 %s/www/static/upload/img' % REMOTE_PATH)
-    run('mkdir -p %s/www/static/upload/file' % REMOTE_PATH)
-    run('chmod -R 775 %s/www/static/upload/file' % REMOTE_PATH)
-
-@task
-def deploy(version=None, fast=False, delete=False):
-    REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
-    if not fast:
-        mkdir(version)
-        # version - production or staging
-        requirements = '%s/server/requirements.txt'
-        put(requirements % PROJECT_ROOT, requirements % REMOTE_PATH)
     delete = True if version == 'staging' or delete else False
+    print(red('BEGIN RSYNC'))
+    print(red('==========='))
     rsync_project('%s/' % REMOTE_PATH, SITE_ROOT,
                   delete=delete, exclude=["*.pyc", "upload"])    
-    if not fast:
-        remote_venv(REMOTE_PATH)
-        with cd(REMOTE_PATH):
-            run('apt-get install libxml2-dev libxslt1-dev')
-            run('venv/bin/pip install -r server/requirements.txt')
-            run("find . -name '*.pyc' -delete")    
-        chmod(version)
+    print(red('=========='))
+    print(red('END RSYNC'))
+    chmod(version)
+    # if upstart script exists - restart
+    if files.exists('/etc/init/uwsgi.conf'):
+        run('service uwsgi restart')
+
+@task
+def remote_venv(version):
+    REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
+    # upload requirements.txt
+    run('mkdir -p %s/server' % REMOTE_PATH)
+    requirements = '%s/server/requirements.txt'
+    put(requirements % PROJECT_ROOT, requirements % REMOTE_PATH)
+    # create venv if not exists
+    if not files.exists('%s/venv' % REMOTE_PATH):
+        run('virtualenv %s/venv' % REMOTE_PATH)
+    # install or update venv packages
+    with cd(REMOTE_PATH):
+        run('venv/bin/pip install -r server/requirements.txt')
+        run("find . -name '*.pyc' -delete")
+    # restart
     run('service uwsgi restart')
 
 @task
@@ -127,6 +128,8 @@ def backup_db(version):
 
 @task
 def get_db(version):
+    REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
+    run('mkdir -p %s/backup' % REMOTE_PATH)
     db = CONFIG[version].DB  
     backup_db(version)
     restore_from = path.abspath(path.join(PROJECT_ROOT, 'backup', db))
@@ -150,6 +153,8 @@ def migration(version, file=None):
 
 @task
 def put_db(version):
+    REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
+    run('mkdir -p %s/backup' % REMOTE_PATH)
     db = CONFIG[version].DB
     local('rm -rf /tmp/%s' % db)
     local('mongodump --db %s --out /tmp' % db)
@@ -164,7 +169,7 @@ def put_db(version):
         run('tar -xvf %s' % filename)
         run('mongorestore --drop --db %s %s' % (db, db))
 
-# INSTALLATION
+# COLLECT STATIC
 
 @task
 def collect_static():
@@ -193,10 +198,10 @@ def collect_static():
 def ds():
     """ shortcut for deploy:staging """
     collect_static()
-    deploy('staging', fast=True)
+    deploy('staging')
 
 @task
 def dp():
     """ shortcut for deploy:production """
     collect_static()
-    deploy('production', fast=True)
+    deploy('production')

@@ -26,8 +26,6 @@ Current structure, contains four components (root folders):
 
 ```bash
   /starter
-  --/ansible # Ansible playbooks, see DevOps page
-  --/fabrix # Fabric Extras, see DevOps page
   --/new_project # New project bootstrap
   ----/www
   ------/datafly # code from this folder is reused for all projects
@@ -39,45 +37,7 @@ Please install Fabric, Ansible, Virtualenv.
 
 More info on Ansible install in section *How to install Ansible*.
 
-Always go to project `script` dir to run Fabric tasks, Ansible playbooks.
-
-For existing project
---------------------
-
-For existing project you can copy other developer config:
-
-```bash
-  www/myconfig_ep.py > www/myconfig.py
-  script/mydevops_ep.yaml > script/mydevops.yaml # your path to project_root, starter
-```
-
-However, it's better to use symlinks ($developer means your nickname):
-
-```bash
-  ln -s myconfig_$developer.py myconfig.py
-  ln -s mydevops_$developer.yaml mydevops.yaml
-```
-
-For new project
----------------
-
-Edit configuration files:
-
-```bash
-  script/devops.yaml # deployment information for Fabric, Ansible
-  script/mydevops.yaml # path to project_root, starter
-```
-
-Add `www/mydevops.yaml` to `.gitignore`.
-
-Create `backup` directory under project root:
-
-```bash
-  /backup
-  /server
-  /script
-  /www
-```
+Always go to `script` dir to run Fabric tasks.
 
 How to install Ansible
 ----------------------
@@ -89,37 +49,13 @@ globally:
   $ sudo pip install paramiko PyYAML jinja2 ansible --upgrade
 ```
 
-This is required for Ansible Fireball mode (fast connection over 0mq):
+This is required for Ansible Accelerate mode:
 
 ```bash
-  $ sudo pip install pyzmq pyasn1 PyCrypto python-keyczar --upgrade
+  $ sudo pip install python-keyczar
 ```
 
 From Ansible documentation:
 
-> Fireball mode works by launching a temporary 0mq daemon from SSH that by
-default lives for only 30 minutes before shutting off.
-
-Add servers to /etc/ansible/hosts file, example:
-
-```ini
-  [local]
-  localhost
-
-  [datafly-all]
-  datafly.net
-  makeastand.com
-  evol.datafly.net
-
-  [datafly]
-  datafly.net
-
-  [mas]
-  makeastand.com
-
-  [evol]
-  evol.datafly.net
-```
-
-
-
+> Accelerated mode can be anywhere from 2-6x faster than SSH with ControlPersist
+enabled, and 10x faster than paramiko.

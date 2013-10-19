@@ -4,15 +4,3 @@
   action: apt pkg=nginx
 - name: ensure nginx is running
   action: service name=nginx state=started
-- name: copy production host
-  when: host is defined
-  template: src=$project_root/server/site.nginx
-            dest=/etc/nginx/sites-enabled/${project}
-  notify:
-    - restart nginx
-- name: copy stagin hosts
-  when: host_staging is defined
-  template: src=$project_root/server/site_staging.nginx
-            dest=/etc/nginx/sites-enabled/${project}_staging
-  notify:
-    - restart nginx

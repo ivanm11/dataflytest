@@ -34,6 +34,8 @@ After `git clone` operation view project in `/home/$USER/projects/evol`.
 New project
 -----------
 
+Please read [DataFly Starter](/datafly-starter) guide.
+
 To start use latest DataFly Starter (pull any updates) and
 just copy `new_project` dir:
 
@@ -42,7 +44,7 @@ just copy `new_project` dir:
   $ cd /home/$USER/projects/new
 ```
 
-Edit configuration files:
+Edit config:
 
 ```bash
   www/config/config.py # production, staging, development config
@@ -50,7 +52,19 @@ Edit configuration files:
 
 Add `www/myconfig.py` if needed (development config overrides).
 
-Make folders (and make sure they allow write access):
+For existing project you can copy other developer config:
+
+```bash
+  www/myconfig_ep.py > www/myconfig.py
+```
+
+However, it's better to use symlinks ($developer means your nickname):
+
+```bash
+  ln -s myconfig_$developer.py myconfig.py
+```
+
+Create folders (and make sure they allow write access):
 
 ```bash
     www/static/upload/img
@@ -59,12 +73,21 @@ Make folders (and make sure they allow write access):
 
 Also you can remove everything that you won't use for this project.
 
-Setup & run project manually
-----------------------------
+Setup & run project
+-------------------
 
 Install
 [latest](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/)
 MongoDB.
+
+```bash
+  cd /$PROJECT/script
+  fab venv # setup virtualenv
+  fab get_db:production # import staging or production database (if you have access)
+  fab runserver # python app.py
+```
+
+Fab `venv` and `runserver` commands are equivalent to following
 
 ```bash  
   cd $PROJECT
@@ -75,20 +98,20 @@ MongoDB.
   (venv) python app.py
 ```
 
-Setup & run project with DataFly Starter
-----------------------------------------
-
-Install
-[latest](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/)
-MongoDB.
-
-Please read [DataFly Starter](/datafly-starter) guide.
+Deploy project to a new server
+------------------------------
 
 You need to edit `devops.yaml` files before using Ansible and Fabric.
 
-```bash
+```bash  
   cd /$PROJECT/script
-  fab venv # setup virtualenv
-  fab get_db:production # import database (if you have access)
-  fab runserver # python app.py
+  # rsync www folder
+  fab deploy:staging
+  # Ansible: install Nginx, MongoDB, uWSGI
+  fab ansible:local
+  fab ansible:accelerate
+  fab ansible:server
+  # install/update packages for venv, create if needed
+  fab remote_venv:staging
+  fab put_db:staging # optional, if you need to upload db
 ```

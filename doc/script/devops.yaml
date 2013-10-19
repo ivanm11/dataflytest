@@ -9,8 +9,10 @@ project_root: '..'
 # EDIT BELOW
 
 project: 'doc'
-server: ['root@datafly.net']
+hosts: ['root@datafly.net']
+
 # trailing slash is important
 remote_path: '/home/datafly/doc/'
+
 # production host
 host: 'doc.datafly.net'

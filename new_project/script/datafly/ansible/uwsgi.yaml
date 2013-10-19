@@ -1,6 +1,3 @@
-- name: install libxml2-dev for uwsgi compilation
-  action: apt pkg=libxml2-dev
-
 - name: install uwsgi
   action: pip name=uwsgi
 
@@ -10,26 +7,16 @@
 
 - name: ensure uWSGI has proper permission for writing log files
         and reading vassals directory
-  action: file name=/etc/uwsgi/vassals state=directory
-               owner=www-data group=www-data
-  action: command touch /var/log/uwsgi.log
-  action: file name=/var/log/uwsgi.log state=file
-               owner=www-data group=www-data
-  action: file name=/var/log/uwsgi state=directory
-               owner=www-data group=www-data
-  action: command touch /var/log/uwsgi/emperor.log
-  action: file name=/var/log/uwsgi/emperor.log state=file
-               owner=www-data group=www-data
-
-- name: upload production uWSGI ini configuration file
-  when: host is defined
-  template: src=$project_root/server/uwsgi.ini
-            dest=/etc/uwsgi/vassals/${project}.ini
-
-- name: upload staging uWSGI configuration file
-  when: host_staging is defined
-  template: src=$project_root/server/uwsgi_staging.ini
-            dest=/etc/uwsgi/vassals/${project}_staging.ini
+  file: path=/etc/uwsgi/vassals state=directory
+        owner=www-data group=www-data
+- action: command touch /var/log/uwsgi.log
+- file: path=/var/log/uwsgi.log state=file
+        owner=www-data group=www-data
+- file: path=/var/log/uwsgi state=directory
+        owner=www-data group=www-data
+- action: command touch /var/log/uwsgi/emperor.log
+- file: path=/var/log/uwsgi/emperor.log state=file
+        owner=www-data group=www-data
 
 - name: start uWSGI
   action: service name=uwsgi state=started
