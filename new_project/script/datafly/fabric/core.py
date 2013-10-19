@@ -30,7 +30,7 @@ if hasattr(env, 'PROJECT_ROOT'):
     # project specific variables from yaml
     stream = file(path.join(PROJECT_ROOT, 'script', 'devops.yaml'), 'r')
     DEVOPS = yaml.load(stream)
-    env.hosts = DEVOPS['server']
+    env.hosts = DEVOPS['hosts']
 
 @task
 def ansible(playbook): 

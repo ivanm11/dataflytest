@@ -5,7 +5,7 @@ project_root: '..'
 # EDIT BELOW
 
 project: 'starter'
-server: ['root@datafly.net']
+hosts: ['root@datafly.net']
 
 # trailing slash is important
 remote_path: '/home/datafly/starter/'
