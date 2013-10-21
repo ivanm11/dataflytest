@@ -8,6 +8,9 @@ SITE_ROOT = abspath(join(CONFIG_ROOT, '..'))
 PROJECT_ROOT = abspath(join(SITE_ROOT, '..'))
 
 class Default(object):
+    """ Uncomment SYNC to download db and `static/upload` only once
+        with "fab runserver" command from specified remote version """
+    # SYNC = 'Staging'
     CACHE_TIMESTAMP = 'Sep14-0225' 
     WEBSITE = 'DataFly'    
     MONGO = {
@@ -32,7 +35,7 @@ class Development(Default):
     BASE_URL = 'http://127.0.0.1:8080'
     HOST = '127.0.0.1'
     PORT = 8080    
-    LESSJS = False
+    LESSJS = True
 
 """
     please, define class Development(Default) in myconfig.py

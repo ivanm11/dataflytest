@@ -34,5 +34,13 @@
 
     {% include scripts %}
 
+    {% if env == 'Development' %}
+        {% for path in assets.js.public %}
+            <script src="/{{ path }}.js"></script>
+        {% endfor %}
+    {% else %}  
+        <script src="/static/public.min.js?{{ config.CACHE_TIMESTAMP }}"></script>        
+    {% endif %}
+
 </body>
 </html>

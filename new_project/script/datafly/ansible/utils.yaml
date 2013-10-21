@@ -1,3 +1,5 @@
+- action: command apt-get update
+
 - name: install add-apt-repository and rsync
   action: apt pkg=$item
   with_items:

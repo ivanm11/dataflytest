@@ -4,6 +4,7 @@
   user: root
   gather_facts: no
   tasks:
+    - action: command apt-get update
     - name: install pip and python-dev
       action: apt pkg=$item
       with_items:

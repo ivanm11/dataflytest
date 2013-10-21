@@ -69,10 +69,10 @@
         {% endblock %}        
     </div>
 
-    <footer>
+    <footer></footer>
 
-    </footer>
     {% include scripts %}
+
     {% if env == 'Development' %}
         {% for path in assets.js.admin %}
             <script src="/{{ path }}.js"></script>
@@ -80,8 +80,10 @@
     {% else %}
         <script src="/static/admin.min.js?{{ config.CACHE_TIMESTAMP }}"></script>
     {% endif %}    
+
     <!-- Redactor.JS -->    
     <script src="/static/redactor-9.0.3/redactor.min.js"></script>
     <script src="/static/redactor-9.0.3/externalswitcher.js"></script>
+    
 </body>
 </html>
