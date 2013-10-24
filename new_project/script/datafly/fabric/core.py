@@ -172,9 +172,9 @@ def backup_db(version):
 
 def get_upload(version):
     REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
-    remote_upload = path.join(REMOTE_PATH, 'www', 'static')
-    local_upload = path.join(STATIC_ROOT, 'upload')
-    rsync_project(remote_upload + '/', local_upload, upload=False)
+    remote_upload = path.join(REMOTE_PATH, 'www', 'static', 'upload')
+    local_upload = path.join(STATIC_ROOT)
+    rsync_project(remote_upload, local_upload + '/', upload=False)
 
 @task
 def get_db(version):
