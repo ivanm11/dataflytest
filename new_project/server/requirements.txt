@@ -2,10 +2,18 @@
 bottle
 Jinja2
 pymongo
-passlib
-mailer
 
-# stdlib
+# password hashing
+passlib
+
+# imaging library
 pillow
+
+# extensions to datetime
 python-dateutil
+
+# timezone calculations
 pytz
+
+# Sentry
+raven

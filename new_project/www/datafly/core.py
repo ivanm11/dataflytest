@@ -7,7 +7,7 @@ import inspect
 import functools
 import json
 from datetime import timedelta
-from bottle import (Bottle, request, response, template,
+from bottle import (Bottle, load, request, response, template,
                     static_file, Jinja2Template, html_escape)
 import pymongo
 from bson.json_util import dumps
@@ -53,14 +53,60 @@ def debug(error=None):
     if error:        
         return '<pre>%s</pre>' %  html_escape(msg)
 
+# default before_request
+
+def default_hook():
+    g._reset()
+    g.template_context = c = dict(
+        env = Config.__name__,
+        config = Config,
+        base_url = Config.BASE_URL,
+        request_path = request.path,
+        request_query_string = request.query_string              
+    )
+    if Config.__name__ == 'Development':
+        c['assets'] = get_assets()
+    sentry = request.query.get('sentry', None)
+    if sentry:
+        raise Exception('Testing Sentry...')
+
+# merging default_app and sub_app is very similiar
+# to Blueprint concept in Flask
+
+def merge(default_app, sub_app, hooks=[], config=None):
+    sub_app = load('%s_app' % sub_app)
+    sub_app.hooks.add('before_request', default_hook)
+    for hook in hooks:
+        sub_app.hooks.add('before_request', hook)
+    if Config.__name__ == 'Production':
+        sub_app.catchall = False
+    else:
+        sub_app.hooks.add('after_request', debug)
+    default_app.merge(sub_app)
+
+# SENTRY
+
+def log_errors(default_app):
+    from raven import Client
+    from raven.middleware import Sentry
+    default_app.catchall = False
+    return Sentry(
+        default_app,
+        Client(Config.SENTRY['Python'])
+    )
+
 # static assets helpers
 
 def get_assets():
-    """ Development only. Return list of relative paths for LESS, JS assets"""    
+    """ Development mode only.
+        Return a list of relative paths for LESS, JS files."""    
     return dict(
         less = assets.LESS,
         js = assets.JS
     )
+
+# for development mode these files are served by Bottle webserver
+# production / staging = only `/static` folder using Nginx
 
 assets_app = Bottle()
 

@@ -3,15 +3,6 @@ from bottle import Bottle, request, redirect, TemplateError
 from datafly.core import g, template
 from datafly.pages.models import Page
 
-from config import db
-
-def init_admin():
-    g.template_context.update(dict(
-        admin_title = 'Starter',
-        admin = True,
-        layout = 'admin/layout.html'        
-    ))
-
 admin_app = Bottle()
 
 @admin_app.get('/admin')

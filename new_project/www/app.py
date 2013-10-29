@@ -1,57 +1,54 @@
 from bottle import Bottle
 
-from datafly.core import template, debug
+from datafly.core import merge, template, debug, log_errors
 
 from config import Config, init_db
-from views.hooks import init_globals, login_required
+from views.hooks import init_global, init_admin
 
 init_db()
 
-# Main Application
+### Main Application
+
 app = Bottle()
 
 @app.error(404)
 def page404(code):
-    init_globals()
     return template('404.html')
 
-### Import / Configure applications
+
+### Import & configure applications
 
 # /<page>
-from views.pages import pages_app
+merge(app, 'views.public:public', hooks=[init_global])
+
 # /admin
-from views.admin import admin_app, init_admin
+merge(app, 'views.admin:admin', hooks=[init_global, init_admin])
+
 # /admin/login
-from datafly.users.app import users_app
-users_app.config(dict(
+merge(app, 'datafly.users.app:users', hooks=[init_global], config=dict(
     redirect = '/admin/home'
 ))
+
 # /admin/api/pages, /admin/upload
-from datafly.pages.app import editor_app
+merge(app, 'datafly.pages.app:editor', hooks=[init_global, init_admin])
+
 # /admin/api/
-from datafly.admin.app import admin_api_app
+merge(app, 'datafly.admin.app:admin_api', hooks=[init_global, init_admin])
 
-### Merge / Mount applications
 
-apps = [pages_app, admin_app, users_app, editor_app, admin_api_app]
-for a in apps:    
-    a.hooks.add('before_request', init_globals)
-    if a in (editor_app, admin_app, admin_api_app):
-        a.hooks.add('before_request', init_admin)
-        a.hooks.add('before_request', login_required)   
-    if Config.__name__ == 'Production':
-        a.catchall = False
-    else:
-        a.hooks.add('after_request', debug)
-    app.merge(a)
+### Development mode
 
-# For local development
 if __name__ == "__main__":
-    from datafly.core import assets_app
-    app.merge(assets_app)
+    merge(app, 'datafly.core:assets')
 
     @app.error(500)
     def custom500(error):    
         return debug(error)
 
     app.run(host=Config.HOST, port=Config.PORT, debug=True, reloader=True)
+
+
+### Production / Staging mode
+
+if Config.__name__ != 'Development': 
+    app = log_errors(app)

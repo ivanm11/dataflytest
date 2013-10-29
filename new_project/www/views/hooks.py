@@ -1,40 +1,38 @@
 from bottle import request, redirect
 
-from datafly.core import g, get_assets
+from datafly.core import g
 
 from models import User, data
-from config import Config
 
-def init_globals():    
-    # g - global vars for Bottle
-    g._reset()    
 
-    # global template context
-    g.template_context = c = dict(      
+# before_request - all pages
+def init_global():    
+    c = g.template_context   
+
+    c.update(dict(      
         layout = 'public/layout.html',        
         head = 'layout_head.html',
-        scripts = 'layout_scripts.html',          
-        config = Config,
-        base_url = Config.BASE_URL,
-        data = data,
-        request_path = request.path,
-        request_query_string = request.query_string,    
-        env = Config.__name__
-    )
+        scripts = 'layout_scripts.html',
+        data = data       
+    )) 
 
-    if Config.__name__ == 'Development':
-        c['assets'] = get_assets()
 
-    # user from token or cookie
-    token = request.query.get('t', False)
-    if token:
-        g.user = User.from_token(token)
-        g.user.set_as_current()
-    else:
-        g.user = User.get_current()
-    c['user'] = g.user
+# before_request - admin pages
+def init_admin():
+    c = g.template_context
     
-
-def login_required():
+    g.user = c['user'] = User.get_current()
+    # login required for all admin pages / API requests
     if not g.user and request.path != '/admin/login':
         return redirect('/admin/login')
+
+    """
+        By default we use the same template for simple page and admin version
+        of that page.
+        We change layout (header, content wrapper, footer) using layout var
+    """
+    c.update(dict(
+        admin = True,
+        admin_title = 'Starter',
+        layout = 'admin/layout.html'        
+    ))    

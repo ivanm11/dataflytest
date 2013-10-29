@@ -24,6 +24,10 @@ class Default(object):
     DB = 'starter'
     IMG_PREFIX = ''
     SECRET = 'EJdDcCRXHTyW8UXcQnRhWyujGWnK7Bjf4ZD68ve9Heu9tvCwacPc9zYjwJrb'
+    SENTRY = {
+        'Python': 'http://5bed9d39ccc34c24999e328032e16557:d70098e241204a9591a0e1a5bab4f8a7@sentry.datafly.net/5',
+        'JS': 'http://5bed9d39ccc34c24999e328032e16557@sentry.datafly.net/5'
+    }  
 
 class Production(Default):
     BASE_URL = 'http://starter.datafly.net'
