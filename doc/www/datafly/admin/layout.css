@@ -57,6 +57,14 @@ body.admin > aside .nav-list > li > a {
 body.admin > aside .nav-list > li > a {
   font-size: 13px;
 }
+body.admin > aside p.password {
+  display: block;
+  margin-top: -5px;
+  margin-left: 14px;
+  margin-bottom: 20px;
+  color: #888;
+  font-size: 12px;
+}
 body.admin > .content {
   padding-left: 250px;
   width: 700px;

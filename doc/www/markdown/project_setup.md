@@ -18,26 +18,48 @@ Typical setup for domain names:
 Get project for development
 ---------------------------
 
+Please read [Requirements](/requirements) page first.
+
 All you need to know is repository url.
 
 ```bash
   cd /home/$USER/projects
-  git clone git@bitbucket.org:df-sean/script-house.git  
+  git clone git@bitbucket.org:df-sean/1492.git
+  cd 1492/script
+  fab runserver   
 ```
 
-Example - [Script House](http://evol.datafly.net/).
+If `www/config/config.py` has `SYNC = $version` attribute and your local database is empty...
 
-$PROJECT will be `evol` in this case.
+```python
+  class Default(object):
+    SYNC = 'Staging' # for example, Staging
+```
 
-After `git clone` operation view project in `/home/$USER/projects/evol`.
+Then on first use of `fab runserver` you will automatically:
+
+1. get a new virtualenv in `/venv` with everything installed
+
+2. download and import database from Staging
+
+3. download `/static/upload` from Staging
+
+Add `www/myconfig.py` if needed (your local Development configuration, not
+versioned by Git).
+
+```bash
+  # it's better to use symlinks ($developer means your short nickname)
+  ln -s myconfig_$developer.py myconfig.py
+  # also you can copy and edit other developer config
+  www/myconfig_ep.py > www/myconfig.py
+```
 
 New project
 -----------
 
 Please read [DataFly Starter](/datafly-starter) guide.
 
-To start use latest DataFly Starter (pull any updates) and
-just copy `new_project` dir:
+Copy `new_project` dir:
 
 ```bash
   $ cp -r new_project /home/$USER/projects/new
@@ -50,68 +72,16 @@ Edit config:
   www/config/config.py # production, staging, development config
 ```
 
-Add `www/myconfig.py` if needed (development config overrides).
-
-For existing project you can copy other developer config:
+Add `www/myconfig.py` if needed.
 
 ```bash
-  www/myconfig_ep.py > www/myconfig.py
-```
-
-However, it's better to use symlinks ($developer means your nickname):
-
-```bash
-  ln -s myconfig_$developer.py myconfig.py
-```
-
-Create folders (and make sure they allow write access):
-
-```bash
-    www/static/upload/img
-    www/static/upload/file  
-```
-
-Also you can remove everything that you won't use for this project.
-
-Setup & run project
--------------------
-
-Install
-[latest](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/)
-MongoDB.
-
-```bash
-  cd /$PROJECT/script
-  fab venv # setup virtualenv
-  fab get_db:production # import staging or production database (if you have access)
   fab runserver # python app.py
-```
-
-Fab `venv` and `runserver` commands are equivalent to following
-
-```bash  
-  cd $PROJECT
-  virtualenv venv  
-  source venv/bin/activate
-  (venv) pip install -r server/requirements.txt
-  (venv) cd www
-  (venv) python app.py
 ```
 
 Deploy project to a new server
 ------------------------------
 
-You need to edit `devops.yaml` files before using Ansible and Fabric.
+Edit `devops.yaml` and `hosts` in your `/script`
+folder before running `fab deploy` command.
 
-```bash  
-  cd /$PROJECT/script
-  # rsync www folder
-  fab deploy:staging
-  # Ansible: install Nginx, MongoDB, uWSGI
-  fab ansible:local
-  fab ansible:accelerate
-  fab ansible:server
-  # install/update packages for venv, create if needed
-  fab remote_venv:staging
-  fab put_db:staging # optional, if you need to upload db
-```
+Read [DevOps](/devops) guide for more information.

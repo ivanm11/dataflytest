@@ -8,11 +8,11 @@ from datetime import timedelta
 from bottle import (Bottle, request, response, template,
                     static_file, Jinja2Template)
 
-from config import Config
+from config import Config, assets
 from .jinja2_ext import filters, _globals
 
 try:
-    from jinja2_ext import extended_filters, extended_globals
+    from utils.jinja2_ext import extended_filters, extended_globals
 except ImportError:
     extended_filters = extended_globals = {}
 
@@ -21,8 +21,8 @@ except ImportError:
 def get_assets():
     """ Development only. Return list of relative paths for LESS, JS assets"""    
     return dict(
-        less = Config.LESS,
-        js = Config.JS
+        less = assets.LESS,
+        js = assets.JS
     )
 
 assets_app = Bottle()

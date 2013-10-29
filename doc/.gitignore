@@ -4,6 +4,7 @@ venv
 tags
 _private
 
+www/less/*.css
 www/myconfig.py
 www/static/upload
 

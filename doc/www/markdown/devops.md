@@ -8,19 +8,34 @@ Useful local and server deployment / orchestration commands for
 [Fabric](http://http://docs.fabfile.org/)
 and [Ansible](http://ansible.cc)
 
-* Setup local and remote git repositories, virtualenv
+* Setup local and remote virtualenv
 
 * Install and configure Nginx, uWSGI, MongoDB
 
 * Safely deploy updates to remote production and staging env
 
+* Get current version from remote (database and static files)
+
 ---
 
-*Getting errors?*  
-Make sure you properly configured `devops.yaml` in `script` folder.
+Go to `/script` folder to run Fabric and Ansible commands.
+
+Make sure you properly configured `devops.yaml` and `hosts` in your `/script`
+folder.
 
 Fabric
 -------
+
+`runserver` command is equivalent to following:
+
+```bash  
+  cd $PROJECT
+  virtualenv venv  
+  source venv/bin/activate
+  (venv) pip install -r server/requirements.txt
+  (venv) cd www
+  (venv) python app.py
+```
 
 Compile assets for deployment:
 
@@ -28,12 +43,18 @@ Compile assets for deployment:
   fab collect_static
 ```
 
+Update packages (from `requirements.txt`) for local virtualenv:
+
+```bash
+  fab venv
+```
+
 To upload project files (and any update in the future):
 
 ```bash
   $ fab deploy:staging
   or
-  $ fab ds # shortcut, collect static, no requirements.txt check
+  $ fab ds # collect_static and deploy to staging
 ```
 
 For production version:
@@ -41,10 +62,45 @@ For production version:
 ```bash
   $ fab deploy:production
   or
-  $ fab dp # shortcut, collect static, no requirements.txt check
+  $ fab dp # collect_static and deploy to production
 ```
 
-Permissions (`www-data` user, `upload` dir):
+`deploy` command is smart: if remote virtualenv is absent (no `/venv` folder),
+then the whole process of a "first deploy" automatically starts:
+
+1. rsync www folder to remote
+
+2. generate uWSGI and Nginx config files if not already exists in local /server folder
+
+3. install Nginx, MongoDB, uWSGI if not present on server
+
+4. new virtualenv with everything installed
+
+5. upload database and /static/upload
+
+It's possible to run every step above individially:
+
+```bash  
+  # 2. generate uWSGI and Nginx config files
+  fab ansible:local
+  # setup Accelerate mode
+  fab ansible:accelerate
+  # 3. Ansible: install Nginx, MongoDB, uWSGI
+  fab ansible:server
+  # 4. new virtualenv with everything installed
+  fab remote_venv:staging
+  # 5. upload database and /static/upload
+  fab put_db:staging
+```
+
+Update packages (from `requirements.txt`) for remote virtualenv:
+
+```bash
+  fab remote_venv:staging
+```
+
+Set permissions on server (`www-data` user, `upload` dir),
+already a part of `deploy` command:
 
 ```bash
   $ fab chmod:production
@@ -54,7 +110,7 @@ Permissions (`www-data` user, `upload` dir):
 Download or upload database:
 
 ```bash
-  # just download
+  # download to local /backup folder
   $ fab backup_db:production
   $ fab backup_db:staging
 
@@ -67,15 +123,6 @@ Download or upload database:
   # (WARNING: remote db will be dropped)
   $ fab put_db:production
   $ fab put_db:staging
-```
-
-Database migration:
-
-```bash
-  # always test on local db first
-  (venv) python migrations/0002_fix_tz.py
-  # run on production
-  fab migration:production,file=0002_fix_tz.py
 ```
 
 Ansible
@@ -98,14 +145,8 @@ Please look inside `/setup` folder.
   /uwsgi_staging.ini
 ```  
 
-You are ready to install and launch Nginx, uWSGI:
-
-```bash
-  $ fab ansible:server
-```
-
-To upload again Nginx/uWSGI configuration files from local */server*
-folder to production/staging just repeat:
+To upload Nginx/uWSGI configuration files from local */server*
+folder to production/staging use:
 
 ```bash
   $ fab ansible:server

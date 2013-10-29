@@ -18,7 +18,7 @@ Bootstrap 3:
 LESS:  
 [http://lesscss.org/#docs](http://lesscss.org/#docs)
 
-Setup LiveReload (compile .less file on save event and update page CSS without refresh)  
+Setup LiveReload (.less files are comiled on save and website CSS is updated without refresh)  
 [Example - Sublime Text 3 Plugin](https://github.com/dz0ny/LiveReload-sublimetext2)
 
 Run Application
@@ -62,7 +62,7 @@ Check following links:
 
 * [Home page](http://localhost:8080/)
 
-* [Home page - change text/images in Admin](http://localhost:8080/)
+* [Home page - change text/images in Admin](http://localhost:8080/admin)
 
 Edit public/admin nav:
 
@@ -125,7 +125,7 @@ To test responsive/mobile layout install following extensions for Google Chrome:
 
 For example, test our website - [http://datafly.net](http://datafly.net)
 
-For IE you need to download IE8, IE9, IE10.
+For IE testing you need to download IE8, IE9, IE10.
 
 IE8 is the most important (more bugs) and you need at least this version to test.
 

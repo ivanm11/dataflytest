@@ -4,13 +4,9 @@ venv
 tags
 _private
 
-www/static/upload
-www/static/*.less
 www/config/myconfig.py
 www/less/*.css
 www/datafly/*/*.css
-# uncomment for real project
-# script/mydevops.yaml
 
 *.py[co~]
 *.swp

@@ -1,26 +1,15 @@
 import os
 from os.path import abspath, join, dirname
 
+CONFIG_ROOT = abspath(dirname(__file__))
 # SITE ROOT - /www
-SITE_ROOT = abspath(dirname(__file__))
+SITE_ROOT = abspath(join(CONFIG_ROOT, '..'))
 # one level above site
 PROJECT_ROOT = abspath(join(SITE_ROOT, '..'))
 
 class Default(object):
     CACHE_TIMESTAMP = 'July17_2013_0533' 
     WEBSITE = 'Documentation / Datafly'    
-    # STATIC ASSETS
-    # TYPE = { result: [files] }
-    # files - list of files to compile, concat, minify (relative to /www directory)
-    LESS = {
-        'public': [
-            'datafly/admin/layout',
-            'less/docs'        
-        ]
-    }
-    JS = {
-        'public': []
-    }
     PASSWORD = 'WeL1C00Me'
     SECRET = 'VGRxWrQ[,;6><lw3[lGs8etxsB{r)rlW6b]db|Y-Jz~paTEB2'
 
@@ -28,7 +17,6 @@ class Production(Default):
     pass
 
 class Development(Default):
-    pass
     HOST = '127.0.0.1'
     PORT = 9080    
 

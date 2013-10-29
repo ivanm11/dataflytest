@@ -4,7 +4,7 @@ PROJECT SETUP
 To create new project and setup basic workspace for frontend developer follow
 these steps:
 
-1) Create new Bitbucket repo under *df-sean* user  
+1) Create new Bitbucket repo under *df-sean* user (let's call it `new-project.git`) 
 [https://bitbucket.org/repo/create](https://bitbucket.org/repo/create)
 
 2) Follow "I'm starting from scratch" Bitbucket guide:  

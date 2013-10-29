@@ -5,18 +5,25 @@
 {% endmacro %}
 
 <ul class="nav nav-list">
-    <li class="nav-header">Site</li>
-        {{ a('http://starter.datafly.net/', 'Demo') }}
-    <li class="nav-header">Dashboard</li>    
-        {{ a('http://starter.datafly.net/admin', 'Demo') }}
+    <li class="nav-header">Demo</li>
+        {{ a('http://starter.datafly.net/', 'Website') }}
+        <li>
+            <a href="http://starter.datafly.net/admin">
+                Dashboard 
+            </a>            
+            <p class="password">
+                (demo@datafly.net / demo)
+            </p>
+        </li>
     <li class="nav-header">Frontend Development</li>
         {{ a('/new-frontend', 'Project Setup') }}
         {{ a('/frontend-guide', 'Developer Guide') }}
-    <li class="nav-header">Python/MongoDB</li>
+    <li class="nav-header">Working with projects</li>
         {{ a('/getting-started', 'Getting Started') }}
+        {{ a('/requirements', 'Requirements') }}
         {{ a('/datafly-starter', 'DataFly Starter') }}
-        {{ a('/project-setup', 'Project Setup') }}
-        {{ a('/best-practices', 'Best Practices') }}
+        {{ a('/project-setup', 'Project Setup') }}        
         {{ a('/devops', 'DevOps') }}
-        {{ a('/tools', 'Tools') }}
+    <li class="nav-header">Tutorial</li>
+        {{ a('/best-practices', 'Best Practices') }}
 </ul>

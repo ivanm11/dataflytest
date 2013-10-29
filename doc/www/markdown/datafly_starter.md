@@ -1,12 +1,14 @@
 DataFly Starter
 ===============
 
+Please read [Requirements](/requirements) page first.
+
 Download
 --------
 
-Open your projects home folder or special folder for DataFly projects.
+Open your main projects folder or special folder for DataFly projects.
 
-To install & update we simply using Git:
+To install or update simply use Git:
 
 ```bash
   $ cd /home/user/projects
@@ -16,46 +18,32 @@ To install & update we simply using Git:
 How to use
 ----------
 
-DataFly Starter should be placed somewhere outside of your new/existing project
-folder.
-
-Starter is used for development only (no need to upload to remote or
+Starter is used as a base for development (no need to upload to remote server or
 install as package).
 
-Current structure, contains four components (root folders):
+Current structure:
 
 ```bash
-  /starter
-  --/new_project # New project bootstrap
+  /datafly-starter  
+  --/new_project # New project boilerplate, copy & make "initial commit"
+  # tools to deploy project (Fabric & Ansible scripts)
+  ----/script
+  ------/datafly # code from this folder is reused for all projects
+  ------fabfile.py
+  ------hosts
+  ------devops.yaml
+  # requirements.txt, Nginx and uWSGI configuration files
+  ----/server
+  # models, views, templates
   ----/www
   ------/datafly # code from this folder is reused for all projects
-  ------/static # full set of HTML, JS libs we use frequently
-  --/doc # Documentation website (and Markdown files)
+  ------/static # served by Nginx as static files (/static/<file_path>)
+  ------/less
+  ------/js
+  ------/models
+  ------/templates
+  ------/views
+  ------app.py
+  --/doc # Documentation website (and Markdown source files)
 ```
 
-Please install Fabric, Ansible, Virtualenv.
-
-More info on Ansible install in section *How to install Ansible*.
-
-Always go to `script` dir to run Fabric tasks.
-
-How to install Ansible
-----------------------
-
-Please install latest Ansible and all required dependencies
-globally:
-
-```bash
-  $ sudo pip install paramiko PyYAML jinja2 ansible --upgrade
-```
-
-This is required for Ansible Accelerate mode:
-
-```bash
-  $ sudo pip install python-keyczar
-```
-
-From Ansible documentation:
-
-> Accelerated mode can be anywhere from 2-6x faster than SSH with ControlPersist
-enabled, and 10x faster than paramiko.
