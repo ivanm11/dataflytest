@@ -25,15 +25,15 @@ merge(app, 'views.public:public', hooks=[init_global])
 merge(app, 'views.admin:admin', hooks=[init_global, init_admin])
 
 # /admin/login
-merge(app, 'datafly.users.app:users', hooks=[init_global], config=dict(
+merge(app, 'datafly.views.users:users', hooks=[init_global], config=dict(
     redirect = '/admin/home'
 ))
 
 # /admin/api/pages, /admin/upload
-merge(app, 'datafly.pages.app:editor', hooks=[init_global, init_admin])
+merge(app, 'datafly.views.editor:editor', hooks=[init_global, init_admin])
 
 # /admin/api/
-merge(app, 'datafly.admin.app:admin_api', hooks=[init_global, init_admin])
+merge(app, 'datafly.views.api:api', hooks=[init_global, init_admin])
 
 
 ### Development mode

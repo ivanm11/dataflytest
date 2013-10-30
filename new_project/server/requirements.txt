@@ -15,5 +15,8 @@ python-dateutil
 # timezone calculations
 pytz
 
+# mailer
+mandrill
+
 # Sentry
 raven

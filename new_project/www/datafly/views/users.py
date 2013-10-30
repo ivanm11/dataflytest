@@ -2,13 +2,14 @@ from bottle import Bottle, request, redirect
 
 from datafly.core import g
 
-from models import User
+# needs refactoring
+from models import Admin
 
 users_app = Bottle()
 
 @users_app.post('/login')
 def login():    
-    user = User.find_one({
+    user = Admin.find_one({
         'email': request.forms.email
     })
     password = request.forms.get('password', None)

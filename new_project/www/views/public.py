@@ -1,7 +1,7 @@
 from bottle import Bottle, request, abort, TemplateError
 
 from datafly.core import template
-from datafly.pages.models import Page
+from datafly.models.page import Page
 
 public_app = Bottle()
 

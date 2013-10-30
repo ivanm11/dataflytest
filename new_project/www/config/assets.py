@@ -2,17 +2,17 @@
 # TYPE = { result: [files] }
 # files - list of files to compile, concat, minify (relative to /www directory)
 
-LESS = {
+CSS = {
     'public': [
-        'less/bootstrap-public',    
-        'less/public',
-        'less/shared'
+        'css/bootstrap-public',    
+        'css/public',
+        'css/shared'
     ],
     'admin': [
-        'less/bootstrap-admin',    
-        'datafly/admin/layout',
-        'less/shared',
-        'less/admin'
+        'css/bootstrap-admin',    
+        'datafly/css/layout',
+        'css/shared',
+        'css/admin'
     ]
 }
 JS = {
@@ -22,9 +22,9 @@ JS = {
     ],
     'admin': [
         'static/can-1.1.16/can.control',
-        'datafly/widgets/ajax',
-        'datafly/pages/redactor',
-        'datafly/users/login',
+        'datafly/js/ajax',
+        'datafly/js/redactor',
+        'datafly/js/login',
         'js/shared',
         'js/admin'
     ]

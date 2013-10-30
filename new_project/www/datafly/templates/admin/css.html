@@ -1,0 +1,14 @@
+<link href="/static/redactor-9.0.3/redactor.css?{{ config.CACHE_TIMESTAMP }}"
+      rel="stylesheet">
+{% if env == 'Development' %}
+    {% for path in assets.css.admin %}
+        {% if config.LESSJS %}
+            <link href="/{{ path }}.less" rel="stylesheet/less">
+        {% else %}    
+            <link href="/{{ path }}.css" rel="stylesheet">
+        {% endif %}  
+    {% endfor %}    
+{% else %}        
+    <link href="/static/compiled/admin.min.css?{{ config.CACHE_TIMESTAMP }}"
+          rel="stylesheet">        
+{% endif %} 

@@ -6,9 +6,9 @@ from PIL import ImageOps, Image
 from bottle import Bottle, request
 
 from datafly.core import FileUpload
+from datafly.models.page import Page
 
 from config import Config, SITE_ROOT
-from .models import Page
 
 editor_app = Bottle()
 

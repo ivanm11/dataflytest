@@ -4,20 +4,7 @@
 <head>
     <title>Admin / {{ title }}</title>
     {% include head %}
-    <link href="/static/redactor-9.0.3/redactor.css?{{ config.CACHE_TIMESTAMP }}"
-          rel="stylesheet">
-    {% if env == 'Development' %}
-        {% for path in assets.less.admin %}
-            {% if config.LESSJS %}
-                <link href="/{{ path }}.less" rel="stylesheet/less">
-            {% else %}    
-                <link href="/{{ path }}.css" rel="stylesheet">
-            {% endif %}  
-        {% endfor %}    
-    {% else %}        
-        <link href="/static/admin.min.css?{{ config.CACHE_TIMESTAMP }}"
-              rel="stylesheet">        
-    {% endif %}    
+    {% include 'admin/css.html' %}
 </head>
 
 <body class="admin {{ namespace }}">
@@ -26,8 +13,8 @@
     <header>
         <h1>{{ admin_title }}</h1>
         <div class="toolbar">
-            {% if editor %}
-                {% include 'pages/toolbar.html' %}
+            {% if show_editor %}
+                {% include 'admin/toolbar.html' %}
             {% endif %}            
             {% block header %}                    
             {% endblock %}
@@ -51,7 +38,7 @@
                 <input type="hidden" name="created"
                        value="{{ page.meta.created.strftime('%Y-%m-%d %H:%M:%S') }}">
             {% endif %}   
-            <div class="meta">{% if editor %}
+            <div class="meta">{% if show_editor %}
                 <label>Meta Title:</label>
                 <input type="text" name="title"
                        value="{{ page.meta.title if page and page.meta }}"
@@ -73,17 +60,7 @@
 
     {% include scripts %}
 
-    {% if env == 'Development' %}
-        {% for path in assets.js.admin %}
-            <script src="/{{ path }}.js"></script>
-        {% endfor %}
-    {% else %}
-        <script src="/static/admin.min.js?{{ config.CACHE_TIMESTAMP }}"></script>
-    {% endif %}    
-
-    <!-- Redactor.JS -->    
-    <script src="/static/redactor-9.0.3/redactor.min.js"></script>
-    <script src="/static/redactor-9.0.3/externalswitcher.js"></script>
+    {% include 'admin/js.html' %}    
     
 </body>
 </html>

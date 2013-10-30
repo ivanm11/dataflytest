@@ -6,13 +6,26 @@
 
 <ul class="nav nav-list">
     <li class="nav-header">Demo</li>
-        {{ a('http://starter.datafly.net/', 'Website') }}
         <li>
-            <a href="http://starter.datafly.net/admin">
+            <a href="http://starter.datafly.net" target="_blank">
+                Website 
+            </a>
+        </li>
+        <li>
+            <a href="http://starter.datafly.net/admin" target="_blank">
                 Dashboard 
             </a>            
             <p class="password">
                 (demo@datafly.net / demo)
+            </p>
+        </li>
+    <li class="nav-header">Sentry</li>
+        <li>
+            <a href="http://sentry.datafly.net" target="_blank">
+                Dashboard 
+            </a>            
+            <p class="password">
+                (root / 2ZH1ENI3)
             </p>
         </li>
     <li class="nav-header">Frontend Development</li>
@@ -25,5 +38,6 @@
         {{ a('/project-setup', 'Project Setup') }}        
         {{ a('/devops', 'DevOps') }}
     <li class="nav-header">Tutorial</li>
-        {{ a('/best-practices', 'Best Practices') }}
+        {{ a('/overview', 'Overview') }}
+        {{ a('/views', 'Views') }}
 </ul>

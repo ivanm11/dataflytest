@@ -2,14 +2,7 @@
 <html>
 <head>
     {% include head %}
-    {% if env != 'Development' or livereload %}
-        <link href="/static/public.min.css?{{ config.CACHE_TIMESTAMP }}" rel="stylesheet">
-    {% else %}
-        {% for path in assets.less.public %}
-            <link href="/{{ path }}.{{ 'less' if config.LESSJS else 'css' }}"
-                  rel="stylesheet{{ '/less' if config.LESSJS}}">
-        {% endfor %}
-    {% endif %}
+    {% include 'public/css.html' %}
 </head>
 
 <body class="{{ namespace }}">
@@ -33,14 +26,7 @@
     </footer>
 
     {% include scripts %}
-
-    {% if env == 'Development' %}
-        {% for path in assets.js.public %}
-            <script src="/{{ path }}.js"></script>
-        {% endfor %}
-    {% else %}  
-        <script src="/static/public.min.js?{{ config.CACHE_TIMESTAMP }}"></script>        
-    {% endif %}
+    {% include 'public/js.html' %}
 
 </body>
 </html>

@@ -2,7 +2,7 @@ from datetime import datetime
 from bottle import cached_property
 
 from datafly.odm import Document
-from datafly.utils import slugify
+from datafly.utils.editor import slugify
 
 from config import db
 

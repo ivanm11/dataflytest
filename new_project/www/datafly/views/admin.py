@@ -4,10 +4,10 @@ from bson.json_util import dumps
 
 from config import db
 
-admin_api_app = Bottle()
+api_app = Bottle()
 
-@admin_api_app.post('/admin/api/<collection>')
-@admin_api_app.post('/admin/api/<collection>/<_id>')
+@api_app.post('/admin/api/<collection>')
+@api_app.post('/admin/api/<collection>/<_id>')
 def update_resource(collection, _id=None):
     data = dict(request.forms.items())
     for key, value in data.items():
@@ -23,7 +23,7 @@ def update_resource(collection, _id=None):
         new=True
     ))
 
-@admin_api_app.post('/admin/api/<collection>/<_id>/delete')
+@api_app.post('/admin/api/<collection>/<_id>/delete')
 def delete_resource(collection, _id):
     collection = db[collection]
     collection.remove(

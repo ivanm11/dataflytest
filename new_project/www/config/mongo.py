@@ -7,9 +7,9 @@ connection = Connection(Config.MONGO['host'], Config.MONGO['port'])
 db = connection[Config.DB]
 
 def init_db():
-    from models import User
+    from models import Admin
     admin = { 'email': Config.ADMIN_USER['login'] }
-    exists = User.find_one(admin)
+    exists = Admin.find_one(admin)
     if not exists:
-        u = User(admin)
+        u = Admin(admin)
         u.encrypt_password(Config.ADMIN_USER['password'])

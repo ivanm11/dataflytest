@@ -66,6 +66,12 @@ def venv(debug=False):
             local('venv/bin/pip install pudb bpython chromelogger')
 
 @task
+def devtools():
+    """ You won't need this on server, excluded from requirements.txt """
+    with lcd(PROJECT_ROOT):
+        local('venv/bin/pip install pudb bpython chromelogger')
+
+@task
 def ansible(playbook): 
     """ Ansible shortcut """
     if playbook == 'accelerate':
@@ -92,18 +98,20 @@ def collect_static():
     """ Collect multiple static files (LESS, JS) into one. Compile LESS. """        
     # Needs refactoring
     # LESS
-    for result in assets.LESS:
-        output_less = path.join(SITE_ROOT, 'less', '%s.tmp.less' % result)
+    for result in assets.CSS:
+        output_less = path.join(SITE_ROOT, 'css', '%s.tmp.less' % result)
         output_less = open(output_less, 'w')
-        for file in assets.LESS[result]:
+        for file in assets.CSS[result]:
             less = path.join(SITE_ROOT, file+'.less')
             file = open(less, 'r')
             output_less.write(file.read())
         output_less.close()
-        local('lessc %s/less/%s.tmp.less -o %s/%s.min.css' % (SITE_ROOT, result, STATIC_ROOT, result))
+        local('lessc %s/css/%s.tmp.less -o %s/compiled/%s.min.css' % (SITE_ROOT, result, STATIC_ROOT, result))
+        local('rm %s/css/%s.tmp.less' % (SITE_ROOT, result))
+
     # JS
     for result in assets.JS:
-        output_js = path.join(STATIC_ROOT, '%s.min.js' % result)
+        output_js = path.join(STATIC_ROOT, 'compiled', '%s.min.js' % result)
         output_js = open(output_js, 'w')
         for file in assets.JS[result]:
             js = path.join(SITE_ROOT, file+'.js')

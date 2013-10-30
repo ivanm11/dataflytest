@@ -5,8 +5,8 @@ tags
 _private
 
 www/config/myconfig.py
-www/less/*.css
-www/datafly/*/*.css
+www/css/*.css
+www/datafly/css/*.css
 
 *.py[co~]
 *.swp

@@ -1,7 +1,7 @@
 Requirements
 ============
 
-Install *pip*, *Fabric*, *Virtualenv* packages globally.
+Install *pip* and then *fabric*, *virtualenv* packages globally using *pip*.
 
 Pillow
 ------
@@ -30,16 +30,22 @@ LESS compiler
 
 [LESS documentation](http://lesscss.org/#docs)
 
-Node.js required.
-
-For asset pipeline install LESS compiler with [npm](https://npmjs.org/):
+Node.js required. Install with [npm](https://npmjs.org/):
 
 ```bash
   $ sudo npm install -g less
 ```
 
+`fab collect_static` command is using LESS compiler.
+
 MongoDB
 -------
+
+Install latest stable release of MongoDB.
+
+For Ubuntu you have to add MongoDB downloads repository and install *mongodb-10gen*
+package. Although Ubuntu does include MongoDB packages, the official
+packages are generally more up to date.
 
 *Robomongo*
 

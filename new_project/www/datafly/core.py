@@ -13,7 +13,7 @@ import pymongo
 from bson.json_util import dumps
 
 from config import Config, assets
-from .jinja2_ext import filters, _globals
+from datafly.utils.jinja2_ext import filters, _globals
 
 try:
     from utils.jinja2_ext import extended_filters, extended_globals
@@ -25,35 +25,8 @@ try:
 except:
     console = False
 
-# debug
 
-def log(*args):    
-    if Config.__name__ != 'Development':
-        return
-    r = get_route()
-    if r and '/static' in r.rule:
-        return
-    # logging only on staging / development env
-    if console:
-        console.log(*args)
-
-def debug(error=None):
-    if hasattr(error, 'traceback'):
-        msg = error.traceback
-        if not msg:
-            # Bottle raised exception
-            msg = error.body
-    else:
-        msg = error
-    if console:
-        header = console.get_header()
-        if header:
-            k,v = header
-            response.headers[k] = v
-    if error:        
-        return '<pre>%s</pre>' %  html_escape(msg)
-
-# default before_request
+### DEFAULT BEFORE_REQUEST
 
 def default_hook():
     g._reset()
@@ -70,6 +43,9 @@ def default_hook():
     if sentry:
         raise Exception('Testing Sentry...')
 
+
+### INSTALL (MERGE) APPLICATIONS
+
 # merging default_app and sub_app is very similiar
 # to Blueprint concept in Flask
 
@@ -78,47 +54,39 @@ def merge(default_app, sub_app, hooks=[], config=None):
     sub_app.hooks.add('before_request', default_hook)
     for hook in hooks:
         sub_app.hooks.add('before_request', hook)
+    if config:
+        sub_app.config(config)
     if Config.__name__ == 'Production':
         sub_app.catchall = False
     else:
         sub_app.hooks.add('after_request', debug)
     default_app.merge(sub_app)
 
-# SENTRY
 
-def log_errors(default_app):
-    from raven import Client
-    from raven.middleware import Sentry
-    default_app.catchall = False
-    return Sentry(
-        default_app,
-        Client(Config.SENTRY['Python'])
-    )
-
-# static assets helpers
+### ASSETS - DEVELOPMENT MODE
 
 def get_assets():
-    """ Development mode only.
-        Return a list of relative paths for LESS, JS files."""    
+    """ Return a list of relative paths for LESS, JS files """    
     return dict(
-        less = assets.LESS,
+        css = assets.CSS,
         js = assets.JS
     )
 
-# for development mode these files are served by Bottle webserver
-# production / staging = only `/static` folder using Nginx
-
 assets_app = Bottle()
 
+# production & staging mode - only `/static` folder is served by Nginx
+# for development mode all these files are served by Bottle webserver
+
 @assets_app.get('/js/<filename:path>')
-@assets_app.get('/less/<filename:path>')
+@assets_app.get('/css/<filename:path>')
 @assets_app.get('/static/<filename:path>')
 @assets_app.get('/datafly/<filename:path>')
 def static(filename):
     d, filename = os.path.split(request.path)
     return static_file(filename, '.' + d + '/')
 
-# shortcuts to cookie methods
+
+### COOKIES
 
 def get_cookie(name):
     return request.get_cookie(name, secret=Config.SECRET)
@@ -131,15 +99,11 @@ def set_cookie(name, value, temporary=False, **options):
 def delete_cookie(name):
     return response.delete_cookie(name, secret=Config.SECRET, path='/')
 
-def get_route():
-    return request.environ.get('bottle.route', None)
 
-# thread-safe global variables for Bottle
+### GLOBAL VARIABLES
 
 class _AppCtxGlobals(object):
-    """ Globals for Bottle - thread safe data storage
-        Shortcut to request.g
-    """
+    """ Thread-safe global variables for Bottle. Shortcut to request.g """
 
     def __getattr__(self, name):
         return request.g.get(name, None)
@@ -157,7 +121,8 @@ class _AppCtxGlobals(object):
 
 g = _AppCtxGlobals()
 
-# Jinja2 configuration
+
+### JINJA2 CONFIGURATION
 
 # add project specific filters to default filters
 filters.update(extended_filters)
@@ -170,7 +135,7 @@ template_settings = {
 
 template_lookup = [
     './templates',
-    './datafly/',
+    './datafly/templates',
     '.'
 ]
 
@@ -226,7 +191,41 @@ template = functools.partial(template,
                              template_lookup=template_lookup,
                              template_settings=template_settings)
 
-# various Bottle helpers
+
+### DEBUG
+
+def get_route():
+    return request.environ.get('bottle.route', None)
+
+def log(*args):    
+    if Config.__name__ != 'Development':
+        return
+    r = get_route()
+    if r and '/static' in r.rule:
+        return
+    # logging only on staging / development env
+    if console:
+        console.log(*args)
+
+def debug(error=None):
+    if hasattr(error, 'traceback'):
+        msg = error.traceback
+        if not msg:
+            # Bottle raised exception
+            msg = error.body
+    else:
+        msg = error
+    if console:
+        header = console.get_header()
+        if header:
+            k,v = header
+            response.headers[k] = v
+    if error:    
+        if request.is_xhr and console:
+            console.log(msg)
+            return { 'error': True }
+        else:
+            return '<pre>%s</pre>' %  html_escape(msg)
 
 def print_routes(app):
     """ Inspect all the routes (including mounted sub-apps)
@@ -246,7 +245,20 @@ def print_routes(app):
         abs_prefix = '/'.join(part for p in prefixes for part in p.split('/'))
         print abs_prefix, route.name, route.rule, route.method, route.callback
 
-# FileUpload - taken from Bottle 0.12 dev
+
+### SENTRY
+
+def log_errors(default_app):
+    from raven import Client
+    from raven.middleware import Sentry
+    default_app.catchall = False
+    return Sentry(
+        default_app,
+        Client(Config.SENTRY['Python'])
+    )
+
+
+### FileUpload - taken from Bottle 0.12 dev
 
 import re
 from bottle import cached_property, HeaderDict, HeaderProperty

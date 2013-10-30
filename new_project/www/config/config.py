@@ -28,6 +28,8 @@ class Default(object):
         'Python': 'http://5bed9d39ccc34c24999e328032e16557:d70098e241204a9591a0e1a5bab4f8a7@sentry.datafly.net/5',
         'JS': 'http://5bed9d39ccc34c24999e328032e16557@sentry.datafly.net/5'
     }  
+    # add BugHerd API key, e.g. '//www.bugherd.com/sidebarv2.js?apikey=[KEY]'
+    BUGHERD = None
 
 class Production(Default):
     BASE_URL = 'http://starter.datafly.net'

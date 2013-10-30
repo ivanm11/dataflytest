@@ -1,0 +1,8 @@
+{% if env != 'Development' %}
+    <link href="/static/compiled/public.min.css?{{ config.CACHE_TIMESTAMP }}" rel="stylesheet">
+{% else %}
+    {% for path in assets.css.public %}
+        <link href="/{{ path }}.{{ 'less' if config.LESSJS else 'css' }}"
+              rel="stylesheet{{ '/less' if config.LESSJS}}">
+    {% endfor %}
+{% endif %}

@@ -2,7 +2,7 @@ from bottle import request, redirect
 
 from datafly.core import g
 
-from models import User, data
+from models import Admin, data
 
 
 # before_request - all pages
@@ -21,9 +21,9 @@ def init_global():
 def init_admin():
     c = g.template_context
     
-    g.user = c['user'] = User.get_current()
+    g.admin = c['user'] = Admin.get_current()
     # login required for all admin pages / API requests
-    if not g.user and request.path != '/admin/login':
+    if not g.admin and request.path != '/admin/login':
         return redirect('/admin/login')
 
     """
