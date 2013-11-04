@@ -3,6 +3,18 @@ Requirements
 
 Install *pip* and then *fabric*, *virtualenv* packages globally using *pip*.
 
+Requirements.txt
+----------------
+
+List of required packages for a project - `server/requirements.txt`.
+
+To get a nice output for currently installed packages use:
+
+```bash
+  # run from virtualenv
+  pip freeze -r requirements.txt > freeze.txt
+```
+
 Pillow
 ------
 

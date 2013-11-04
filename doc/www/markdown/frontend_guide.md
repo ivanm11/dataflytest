@@ -73,7 +73,7 @@ Edit public/admin nav:
 For `/frontend` app "Save and Publish" button doesn't really work - because MongoDB
 backend is required. However, you can easily check how editor is working.
 
-Define editable text in templates:
+Define editable text in templates (<div> and data-clip attribute are required):
 
 ```HTML
   <div class="desc" data-clip="uniqueid">

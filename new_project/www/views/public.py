@@ -6,14 +6,13 @@ from datafly.models.page import Page
 public_app = Bottle()
 
 @public_app.get('/')
-def home():    
-    return template('home.html',
-                    page = Page.get_latest('home'),)
-
 @public_app.get('/:page')
 @public_app.get('/<section:re:(news)>/:page')
 def simple_page(page=None, section=None):
-    page_id = request.path.strip('/')
+    if page:
+        page_id = request.path.strip('/')
+    else:
+        page_id = 'home'
     page = Page.get_latest(page_id)    
     try:
         return template('%s.html' % page_id, page=page)        

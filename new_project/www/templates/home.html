@@ -1,4 +1,6 @@
 {% set namespace = 'home' %}
+
+{% import 'editor.html' as editor with context %}
 {% extends layout %}
 
 {% block content %}
@@ -17,12 +19,11 @@
 <div class="person">
 
     <div class="photo">
-        <img src="http://placehold.it/200x200" alt="Dennis the Peasant"
-             data-clip="person{{ loop.index }}"
-             data-fit-width="200" data-fit-height="200">
+        {{ editor.img('person'+loop.index|string, 'http://placehold.it/200x200',
+                      width="200", height="200") }}
     </div>
 
-    <div class="desc" data-clip="person{{ loop.index }}">
+    {% call editor.html('person'+loop.index|string, class='desc') %}
         <h3>
             <strong>Dennis the Peasant</strong>
             <small>Monty Python</small>
@@ -34,7 +35,7 @@
         you, so-called Ah-thoor Keeng, you and all your silly English
         K-n-n-n-n-n-n-n-niggits! I dunno. Must be a king. Be quiet!
         </p>
-    </div>
+    {% endcall %}    
 
 </div>
 

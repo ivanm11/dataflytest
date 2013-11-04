@@ -49,10 +49,10 @@ def default_hook():
 # merging default_app and sub_app is very similiar
 # to Blueprint concept in Flask
 
-def merge(default_app, sub_app, hooks=[], config=None):
+def merge(default_app, sub_app, before_request=[], config=None):
     sub_app = load('%s_app' % sub_app)
     sub_app.hooks.add('before_request', default_hook)
-    for hook in hooks:
+    for hook in before_request:
         sub_app.hooks.add('before_request', hook)
     if config:
         sub_app.config(config)

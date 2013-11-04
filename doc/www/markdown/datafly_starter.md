@@ -38,7 +38,7 @@ Current structure:
   ----/www
   ------/datafly # code from this folder is reused for all projects
   ------/static # served by Nginx as static files (/static/<file_path>)
-  ------/less
+  ------/css
   ------/js
   ------/models
   ------/templates
