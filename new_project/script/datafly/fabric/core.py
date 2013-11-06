@@ -99,22 +99,27 @@ def collect_static():
     # Needs refactoring
     # LESS
     for result in assets.CSS:
-        output_less = path.join(SITE_ROOT, 'css', '%s.tmp.less' % result)
-        output_less = open(output_less, 'w')
+        output_css = path.join(SITE_ROOT, 'less', '%s.tmp.less' % result)
+        output_css = open(output_css, 'w')
         for file in assets.CSS[result]:
-            less = path.join(SITE_ROOT, file+'.less')
-            file = open(less, 'r')
-            output_less.write(file.read())
-        output_less.close()
-        local('lessc %s/css/%s.tmp.less -o %s/compiled/%s.min.css' % (SITE_ROOT, result, STATIC_ROOT, result))
-        local('rm %s/css/%s.tmp.less' % (SITE_ROOT, result))
-
+            if 'less' in file:
+                file = 'static/compiled/%s.css' % path.basename(path.normpath(file))
+            else:
+                file = file + '.css'
+            css = path.join(SITE_ROOT, file)
+            file = open(css, 'r')
+            output_css.write(file.read())
+        output_css.close()
     # JS
     for result in assets.JS:
         output_js = path.join(STATIC_ROOT, 'compiled', '%s.min.js' % result)
         output_js = open(output_js, 'w')
         for file in assets.JS[result]:
-            js = path.join(SITE_ROOT, file+'.js')
+            if 'coffee' in file:
+                file = 'static/compiled/%s.js' % path.basename(path.normpath(file))
+            else:
+                file = file + '.js'
+            js = path.join(SITE_ROOT, file)
             file = open(js, 'r')
             output_js.write(file.read())
         output_js.close()
