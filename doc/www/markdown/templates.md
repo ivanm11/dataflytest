@@ -31,15 +31,18 @@ You can change paths for base HTML template and partials in `views/hooks.py` but
 usually url and templates are mapped this way:
 
 ```bash
-    \ => home() => templates/home.html + templates/public/layout.html
-    \ => home() => templates/home.html + datafly/templates/admin/layout.html
+  \page => simple_page() in views/public.py
+  templates/home.html + templates/public/layout.html
+
+  \admin\page => simple_page() in views/admin.py
+  templates/home.html + datafly/templates/admin/layout.html
 ```
 
 While we have default layout for admin (`datafly/templates/admin/layout.html`)
 you should edit `templates/public/layout.html` according to given design spec
 and PSD.
 
-Define editable text in templates (<div> and data-clip attribute are required):
+Define editable text in templates (`<div>` and data-clip attribute are required):
 
 ```django
   <div class="desc" data-clip="uniqueid">
@@ -62,7 +65,7 @@ bulletproof layout for WYSIWYG editor, separate images and text are much safer):
        data-fit-width="200" data-fit-height="200">
 ```
 
-It's nicer to use predefined macros:
+However it's nicer to use predefined macros:
 
 ```django
   {# before extends layout #}

@@ -41,3 +41,7 @@ Datafly.submit = (event) ->
             location.href = redirect or data.redirect
         else
             Datafly.alert(data.error)
+
+$ () ->
+
+    $('#login .btn').click(Datafly.submit)

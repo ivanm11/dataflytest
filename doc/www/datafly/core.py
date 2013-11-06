@@ -21,7 +21,7 @@ except ImportError:
 def get_assets():
     """ Development only. Return list of relative paths for LESS, JS assets"""    
     return dict(
-        less = assets.LESS,
+        less = assets.CSS,
         js = assets.JS
     )
 

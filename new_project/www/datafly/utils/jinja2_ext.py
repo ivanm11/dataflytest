@@ -1,4 +1,5 @@
 import urllib
+from os.path import basename, normpath
 from pytz import timezone, utc
 from operator import getitem
 from jinja2 import Markup
@@ -39,5 +40,15 @@ filters = dict(
     strftime = strftime
 )
 
-_globals = dict()
+def get_static_path(assets_path, ext):
+    """ convert assets.py path to /static/compiled """
+    if 'less' in assets_path:
+        return '/static/compiled/%s.css' % basename(normpath(assets_path))
+    if 'coffee' in assets_path:
+        return '/static/compiled/%s.js' % basename(normpath(assets_path))
+    return '/%s.%s' % (assets_path, ext)
+
+_globals = dict(
+    get_static_path = get_static_path
+)
 

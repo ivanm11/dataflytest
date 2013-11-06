@@ -52,3 +52,7 @@ Datafly.submit = function(event) {
     }
   });
 };
+
+$(function() {
+  return $('#login .btn').click(Datafly.submit);
+});

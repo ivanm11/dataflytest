@@ -1,0 +1,63 @@
+article.markdown {
+  font-family: Helvetica, Arial, Freesans, sans-serif;
+  color: #333;
+  padding: 20px 0px 40px 0px;
+}
+article.markdown pre {
+  padding: 10px;
+  margin: 15px 0px;
+  border-radius: 2px;
+  overflow: auto;
+}
+article.markdown code {
+  border: 0px;
+  color: #004125;
+  position: relative;
+  top: -1px;
+}
+article.markdown pre,
+article.markdown code,
+article.markdown div.codehilite pre,
+article.markdown div.codehilite code {
+  font-family: Monaco, Menlo, Consolas, "Ubuntu Mono", "Courier New", monospace;
+  font-size: 16px;
+}
+article.markdown blockquote {
+  border-left: 5px solid #EDEDED;
+  padding-left: 10px;
+  font-size: 14px;
+}
+article.markdown p {
+  margin-bottom: 12px;
+}
+article.markdown li p {
+  margin: 0.3em;
+}
+article.markdown ul > li {
+  list-style-type: disc;
+}
+article.markdown ol {
+  margin-bottom: 30px;
+}
+article.markdown a {
+  color: #C60000;
+}
+article.markdown a:hover {
+  color: #FF0030;
+}
+article.markdown em {
+  font-style: normal;
+  font-weight: bold;
+}
+article.markdown h1 {
+  color: #999;
+  font-weight: 400;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+article.markdown h2 {
+  border-bottom: 1px dotted #aaa;
+  color: #333;
+  font-size: 30px;
+  margin: 30px 0px;
+}

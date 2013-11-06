@@ -4,15 +4,15 @@
 
 CSS = {
     'public': [
-        'css/bootstrap-public',    
-        'css/public',
-        'css/shared'
+        'less/bootstrap-public',    
+        'less/public',
+        'less/shared'
     ],
     'admin': [
-        'css/bootstrap-admin',    
-        'datafly/css/layout',
-        'css/shared',
-        'css/admin'
+        'less/bootstrap-admin',    
+        'datafly/less/default-admin',
+        'less/shared',
+        'less/admin'
     ]
 }
 JS = {
@@ -21,10 +21,8 @@ JS = {
         'js/shared'
     ],
     'admin': [
-        'static/can-1.1.16/can.control',
-        'datafly/js/ajax',
-        'datafly/js/redactor',
-        'datafly/js/login',
+        'datafly/coffee/datafly',
+        'datafly/coffee/editor',
         'js/shared',
         'js/admin'
     ]

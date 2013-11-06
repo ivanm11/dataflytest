@@ -1,6 +1,6 @@
 {% if env == 'Development' %}
     {% for path in assets.js.public %}
-        <script src="/{{ path }}.js"></script>
+        <script src="{{ get_static_path(path, 'js') }}"></script>
     {% endfor %}
 {% else %}  
     <script src="/static/compiled/public.min.js?{{ config.CACHE_TIMESTAMP }}"></script>        

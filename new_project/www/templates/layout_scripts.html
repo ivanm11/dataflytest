@@ -1,10 +1,6 @@
 {% if env == 'Development' %}
-    <script src="/static/dev/jquery-1.10.2.js"></script>
-    <script src="/static/dev/underscore-1.4.4.js"></script>
-
-    {% if config.LESSJS %}
-        <script src="/static/dev/less-1.3.3.min.js"></script>        
-    {% endif %}
+    <script src="/static/jquery-1.10.2.js"></script>
+    <script src="/static/underscore-1.5.2.js"></script>
 
     {% if config.LIVERELOAD %}
         <script src="http://127.0.0.1:35729/livereload.js"></script>    
@@ -12,7 +8,7 @@
 
 {% else %}
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
 {% endif %}
 
 <script src="/static/bootstrap-3.0.0/bootstrap.min.js"></script>
