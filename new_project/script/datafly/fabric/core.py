@@ -99,7 +99,7 @@ def collect_static():
     # Needs refactoring
     # LESS
     for result in assets.CSS:
-        output_css = path.join(SITE_ROOT, 'less', '%s.tmp.less' % result)
+        output_css = path.join(STATIC_ROOT, 'compiled', '%s.min.css' % result)
         output_css = open(output_css, 'w')
         for file in assets.CSS[result]:
             if 'less' in file:
