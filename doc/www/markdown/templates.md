@@ -31,10 +31,10 @@ You can change paths for base HTML template and partials in `views/hooks.py` but
 usually url and templates are mapped this way:
 
 ```bash
-  \page => simple_page() in views/public.py
+  '\page' => simple_page() in views/public.py
   templates/home.html + templates/public/layout.html
 
-  \admin\page => simple_page() in views/admin.py
+  '\admin\page' => simple_page() in views/admin.py
   templates/home.html + datafly/templates/admin/layout.html
 ```
 

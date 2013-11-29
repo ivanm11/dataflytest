@@ -12,7 +12,7 @@ pre {
 .codehilite .x { color: #ffffff } /* Other */
 .codehilite .p { color: #ffffff } /* Punctuation */
 .codehilite .cm { color: #888; font-style: italic; background-color: #0f140f } /* Comment.Multiline */
-.codehilite .cp { color: #ff0007; font-weight: bold; font-style: italic; background-color: #0f140f } /* Comment.Preproc */
+.codehilite .cp { color: #ff0007; font-weight: bold; background-color: #0f140f } /* Comment.Preproc */
 .codehilite .c1 { color: #888; font-style: italic; background-color: #0f140f } /* Comment.Single */
 .codehilite .cs { color: #888; font-style: italic; background-color: #0f140f } /* Comment.Special */
 .codehilite .gd { color: #ffffff } /* Generic.Deleted */
