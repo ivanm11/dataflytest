@@ -11,16 +11,21 @@ article.markdown pre {
 }
 article.markdown code {
   border: 0px;
-  color: #004125;
+  background: #000;
+  color: #eed0d0;
   position: relative;
   top: -1px;
+}
+article.markdown p > code {
+  background: #f0f0f0;
+  color: #C60000;
 }
 article.markdown pre,
 article.markdown code,
 article.markdown div.codehilite pre,
 article.markdown div.codehilite code {
   font-family: Monaco, Menlo, Consolas, "Ubuntu Mono", "Courier New", monospace;
-  font-size: 16px;
+  font-size: 15px;
 }
 article.markdown blockquote {
   border-left: 5px solid #EDEDED;
@@ -38,12 +43,6 @@ article.markdown ul > li {
 }
 article.markdown ol {
   margin-bottom: 30px;
-}
-article.markdown a {
-  color: #C60000;
-}
-article.markdown a:hover {
-  color: #FF0030;
 }
 article.markdown em {
   font-style: normal;

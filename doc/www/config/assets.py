@@ -5,7 +5,7 @@
 CSS = {
     'public': [
         'datafly/admin/layout',    
-        'css/docs'
+        'less/docs'
     ]
 }
 JS = {

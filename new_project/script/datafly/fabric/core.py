@@ -57,6 +57,7 @@ def checkout(branch):
 @task
 def venv(debug=False):
     """ Install virtualenv or update packages from requirements.txt """
+    print PROJECT_ROOT
     with lcd(PROJECT_ROOT):
         if not path.exists(path.join(PROJECT_ROOT, 'venv')):
             local('virtualenv venv')

@@ -3,7 +3,7 @@
 # but it's still better than including "script/datafly" twice in repo
 
 ---
-ansible: '../../../starter/new_project/script/datafly/ansible'
+ansible: '../../new_project/script/datafly/ansible'
 project_root: '..'
 
 # EDIT BELOW
