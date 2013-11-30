@@ -138,6 +138,13 @@ def new_server(version):
     put_db(version)
 
 @task
+def auth_keys():
+    """ Upload ssh keys to new server """
+    auth_keys = file(path.join(PROJECT_ROOT, 'server', 'authorized_keys'), 'r')
+    run('mkdir -p /root/.ssh')
+    files.append('/root/.ssh/authorized_keys', auth_keys)
+
+@task
 def deploy(version=None, delete=False):
     """ Upload changes to remote. Fab deploy:production / deploy:staging. """
     REMOTE_PATH = path.join(DEVOPS['remote_path'], version)
