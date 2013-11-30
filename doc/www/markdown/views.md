@@ -8,8 +8,8 @@ facing pages there). A lot of files and folders named that way:
 ```bash
   views/public.py
   views/admin.py
-  css/public.less
-  css/admin.less
+  less/public.less
+  less/admin.less
   js/public.js
   js/admin.js
   templates/public/nav.html

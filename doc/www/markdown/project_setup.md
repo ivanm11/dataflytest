@@ -54,6 +54,9 @@ versioned by Git).
   www/myconfig_ep.py > www/myconfig.py
 ```
 
+Configure your LiveReload compiler: put CSS files into `www/static/compiled`
+folder.
+
 New project
 -----------
 
@@ -64,6 +67,7 @@ Copy `new_project` dir:
 ```bash
   $ cp -r new_project /home/$USER/projects/new
   $ cd /home/$USER/projects/new
+  $ rm /home/$USER/projects/new/server/*.nginx # delete starter.datafly.net conf
 ```
 
 Edit config:
@@ -77,6 +81,9 @@ Add `www/myconfig.py` if needed.
 ```bash
   fab runserver # python app.py
 ```
+
+Configure your LiveReload compiler: put CSS files into `www/static/compiled`
+folder.
 
 Deploy project to a new server
 ------------------------------

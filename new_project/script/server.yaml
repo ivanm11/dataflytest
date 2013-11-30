@@ -15,5 +15,6 @@
     - include: $ansible/nginx.yaml
     - include: $ansible/uwsgi.yaml
     - include: $ansible/mongo.yaml
+    - include: $ansible/conf.yaml
   handlers:
     - include: $ansible/handlers.yaml

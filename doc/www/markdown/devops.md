@@ -16,37 +16,18 @@ and [Ansible](http://ansible.cc)
 
 * Get current version from remote (database and static files)
 
----
+How to deploy project
+---------------------
 
 Go to `/script` folder to run Fabric and Ansible commands.
 
 Make sure you properly configured `devops.yaml` and `hosts` in your `/script`
 folder.
 
-Fabric
--------
-
-`runserver` command is equivalent to following:
+Upload (append) `server/authorized_keys` to server if it wasn't done before.
 
 ```bash  
-  cd $PROJECT
-  virtualenv venv  
-  source venv/bin/activate
-  (venv) pip install -r server/requirements.txt
-  (venv) cd www
-  (venv) python app.py
-```
-
-Compile assets for deployment:
-
-```bash
-  fab collect_static
-```
-
-Update packages (from `requirements.txt`) for local virtualenv:
-
-```bash
-  fab venv
+  fab auth_keys
 ```
 
 To upload project files (and any update in the future):
@@ -65,7 +46,10 @@ For production version:
   $ fab dp # collect_static and deploy to production
 ```
 
-`deploy` command is smart: if remote virtualenv is absent (no `/venv` folder),
+Fabric & Ansible helpers in depth
+---------------------------------
+
+`fab deploy` command is smart: if remote virtualenv is absent (no `/venv` folder),
 then the whole process of a "first deploy" automatically starts:
 
 1. rsync www folder to remote
@@ -91,6 +75,31 @@ It's possible to run every step above individially:
   fab remote_venv:staging
   # 5. upload database and /static/upload
   fab put_db:staging
+```
+
+`fab ansible` is a proxy to `ansible-playbook` command.
+
+`fab runserver` command (launch local webserver) is equivalent to following:
+
+```bash  
+  cd $PROJECT
+  virtualenv venv  
+  source venv/bin/activate
+  (venv) pip install -r server/requirements.txt
+  (venv) cd www
+  (venv) python app.py
+```
+
+Compile assets for deployment:
+
+```bash
+  fab collect_static
+```
+
+Update packages (from `requirements.txt`) for local virtualenv:
+
+```bash
+  fab venv
 ```
 
 Update packages (from `requirements.txt`) for remote virtualenv:
@@ -124,9 +133,6 @@ Download or upload database:
   $ fab put_db:production
   $ fab put_db:staging
 ```
-
-Ansible
--------
 
 Generate Nginx/uWSGI configuration files from `devops.yaml` information.
 

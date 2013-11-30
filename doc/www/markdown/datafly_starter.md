@@ -25,25 +25,26 @@ Current structure:
 
 ```bash
   /datafly-starter  
-  --/new_project # New project boilerplate, copy & make "initial commit"
+  -/new_project # New project boilerplate, copy & make "initial commit"
   # tools to deploy project (Fabric & Ansible scripts)
-  ----/script
-  ------/datafly # code from this folder is reused for all projects
-  ------fabfile.py
-  ------hosts
-  ------devops.yaml
+  --/script
+  ---/datafly # code from this folder is reused for all projects
+  ---fabfile.py
+  ---hosts
+  ---devops.yaml
   # requirements.txt, Nginx and uWSGI configuration files
-  ----/server
+  --/server
   # models, views, templates
-  ----/www
-  ------/datafly # code from this folder is reused for all projects
-  ------/static # served by Nginx as static files (/static/<file_path>)
-  ------/css
-  ------/js
-  ------/models
-  ------/templates
-  ------/views
-  ------app.py
+  --/www
+  ---/datafly # code from this folder is reused for all projects
+  ---/less
+  ---/js
+  ---/static # served by Nginx as static files (/static/<file_path>)
+  ----/compiled # combined, minified CSS & JS files
+  ---/models
+  ---/templates
+  ---/views
+  ---app.py
   --/doc # Documentation website (and Markdown source files)
 ```
 

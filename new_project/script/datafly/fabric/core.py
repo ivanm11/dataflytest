@@ -129,7 +129,7 @@ def collect_static():
 ### TRANSFER
 
 def new_server(version):
-    nginx = 'site.conf' if version == 'production' else 'site_staging.nginx'
+    nginx = 'site.nginx' if version == 'production' else 'site_staging.nginx'
     if not path.exists(path.join(PROJECT_ROOT, 'server', nginx)):
         ansible('local')
     ansible('accelerate')
