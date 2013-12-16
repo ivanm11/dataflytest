@@ -54,5 +54,8 @@ Datafly.submit = function(event) {
 };
 
 $(function() {
-  return $('#login .btn').click(Datafly.submit);
+  $('#login .btn').click(Datafly.submit);
+  return $('#post-logout').click(function(event) {
+    return $(this).next('form').submit();
+  });
 });

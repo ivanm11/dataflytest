@@ -45,3 +45,6 @@ Datafly.submit = (event) ->
 $ () ->
 
     $('#login .btn').click(Datafly.submit)
+
+    $('#post-logout').click (event) ->
+        $(this).next('form').submit()

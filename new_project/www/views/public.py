@@ -1,9 +1,26 @@
-from bottle import Bottle, request, abort, TemplateError
+from bottle import Bottle, response, request, abort, TemplateError
 
 from datafly.core import template
 from datafly.models.page import Page
 
+from config import db
+
 public_app = Bottle()
+
+@public_app.get('/sitemap.xml')
+def sitemap():   
+    urlset = []
+    pages = db.pages.find({ 'current': True, 'meta.hide': { '$ne': True } })
+    for page in pages:
+        if page['id'] == 'home':
+            continue
+        urlset.append(dict(
+            location = page['id'],
+            lastmod = page['published'].strftime('%Y-%m-%dT%H:%M:%S'),
+            changefreq = 'weekly'
+        ))    
+    response.headers['Content-Type'] = 'application/xml'
+    return template('sitemap.html', urlset=urlset)
 
 @public_app.get('/')
 @public_app.get('/:page')

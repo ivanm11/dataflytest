@@ -21,7 +21,10 @@ public_app = Bottle()
 @public_app.get('/blog/archive/<year:int>/<month:int>')
 @public_app.get('/blog/archive/<year:int>/<month:int>/page/<page:int>')
 def show_posts(page=1, slug=None, year=None, month=None):
-    c = template_context = {}
+    c = template_context = dict(
+        addthis_id = public_app.config.get('addthis_id'),
+        fb_id = public_app.config.get('fb_id')
+    )
     page = int(page)
 
     query = {
@@ -83,12 +86,13 @@ def show_posts(page=1, slug=None, year=None, month=None):
 
 @public_app.get('/blog/rss.xml')
 def rss():    
+    config = public_app.config['feed']
     fg = FeedGenerator()
     fg.id('%s/blog' % Config.BASE_URL)
-    fg.title('GameChanger Blog')
-    fg.author( {'name':'GameChanger','email':'info@gamechangersf.com'} )
-    fg.description(u'GameChanger Blog')
-    fg.link( href='http://gamechangersf.com', rel='alternate' )
+    fg.title(config['title'])
+    fg.author( {'name': config['author'],'email': config['email']} )
+    fg.description(config['desc'])
+    fg.link( href=Config.BASE_URL, rel='alternate' )
     query = {
         'id': { '$regex': 'blog' },
         'current': True,
@@ -99,9 +103,9 @@ def rss():
         fe = fg.add_entry()
         fe.title(post['meta']['title'])
         if 'author' in post['meta']:
-            fe.author( {'name': post['meta']['author'],'email':'info@gamechangersf.com'} )
+            fe.author( {'name': post['meta']['author'],'email': config['email']} )
         else:
-            fe.author( {'name': 'Conner Whitlock','email':'julie@connerwhitlock.com'} )
+            fe.author( {'name': config['author'],'email': config['email']} )
         fe.description(do_truncate(post['content'], 300))
         fe.link(href="%s/%s" % (Config.BASE_URL, post['id']), rel='alternate')
         fe.pubdate(utc.localize(post['meta']['created']))

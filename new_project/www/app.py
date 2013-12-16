@@ -22,7 +22,17 @@ def page404(code):
 merge(app, 'views.public:public')
 
 # /blog/<page>
-merge(app, 'datafly.views.blog:public')
+merge(app, 'datafly.views.blog:public',
+    config = {
+        'feed': {            
+            'title': 'Blog',
+            'desc': 'Blog about ...',
+            'email': 'info@datafly.net',
+            'author': 'DataFly'
+        },
+        # 'addthis_id': '0123456789',
+        # 'fb_id': '0123456789'
+})
 
 # /product/<page>
 merge(app, 'datafly.views.gallery:public')
@@ -34,7 +44,7 @@ merge(app, 'views.admin:admin')
 merge(app, 'datafly.views.users:users',
     config=dict(
         home = '/admin/home'
-    ))
+))
 
 # /admin/api/pages, /admin/upload
 merge(app, 'datafly.views.editor:editor')
