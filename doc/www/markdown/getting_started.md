@@ -6,8 +6,8 @@ Tools we use
 
 *Framework*
 
-[Bottle Microframework](http://bottle.readthedocs.org/en/release-0.11/)
-(0.11.6) with [Jinja 2](http://jinja.pocoo.org/docs/)
+[Bottle Microframework](http://bottle.readthedocs.org/en/latest/)
+(0.12) with [Jinja 2](http://jinja.pocoo.org/docs/)
 
 [MongoDB](http://docs.mongodb.org/manual/)
 (latest stable)

@@ -5,12 +5,16 @@
 CSS = {
     'public': [
         'less/bootstrap-public',    
-        'less/public',
-        'less/shared'
+        'datafly/less/blog-public',
+        'less/public',        
+        'less/shared',
+        'less/responsive'
     ],
     'admin': [
         'less/bootstrap-admin',    
         'datafly/less/default-admin',
+        'datafly/less/blog-admin',
+        'datafly/less/gallery-admin',
         'less/shared',
         'less/admin'
     ]
@@ -23,6 +27,8 @@ JS = {
     'admin': [
         'datafly/coffee/datafly',
         'datafly/coffee/editor',
+        'datafly/coffee/blog',
+        'datafly/coffee/gallery-admin',
         'js/shared',
         'js/admin'
     ]

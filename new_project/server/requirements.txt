@@ -20,3 +20,7 @@ mandrill
 
 # Sentry
 raven
+
+#rss
+lxml
+feedgen

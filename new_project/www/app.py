@@ -1,9 +1,9 @@
 from bottle import Bottle
 
-from datafly.core import merge, template, debug, log_errors
+from datafly.core import merge, template, init_globals, debug, log_errors
 
 from config import Config, init_db
-from views.hooks import init_global, init_admin
+from views.hooks import before_request
 
 init_db()
 
@@ -19,22 +19,43 @@ def page404(code):
 ### Import & configure applications
 
 # /<page>
-merge(app, 'views.public:public', before_request=[init_global])
+merge(app, 'views.public:public')
+
+# /blog/<page>
+merge(app, 'datafly.views.blog:public')
+
+# /product/<page>
+merge(app, 'datafly.views.gallery:public')
 
 # /admin
-merge(app, 'views.admin:admin', before_request=[init_global, init_admin])
+merge(app, 'views.admin:admin')
 
 # /admin/login
-merge(app, 'datafly.views.users:users', before_request=[init_global],
+merge(app, 'datafly.views.users:users',
     config=dict(
-        redirect = '/admin/home'
+        home = '/admin/home'
     ))
 
 # /admin/api/pages, /admin/upload
-merge(app, 'datafly.views.editor:editor', before_request=[init_global, init_admin])
+merge(app, 'datafly.views.editor:editor')
+
+# /admin/blog
+merge(app, 'datafly.views.blog:admin')
+
+# /admin/gallery
+merge(app, 'datafly.views.gallery:admin',
+    config=dict(
+        size = ['800', '600']
+))
 
 # /admin/api/
-merge(app, 'datafly.views.api:api', before_request=[init_global, init_admin])
+merge(app, 'datafly.views.api:api')
+
+
+### Hooks
+
+app.add_hook('before_request', init_globals)
+app.add_hook('before_request', before_request)
 
 
 ### Development mode

@@ -1,8 +1,9 @@
+import re
 import urllib
 from os.path import basename, normpath
 from pytz import timezone, utc
 from operator import getitem
-from jinja2 import Markup
+from jinja2 import evalcontextfilter, Markup
 
 try:
     import json
@@ -27,6 +28,17 @@ def money(value, usd=True, roundup=False):
     with_cents = '{:.2f}'.format(value)
     return '$' + with_cents if usd else with_cents
 
+_paragraph_re = re.compile(r'(?:\r\n|\r(?!\n)|\n){2,}')
+
+@evalcontextfilter
+def nl2br(eval_ctx, value):
+    if not len(value): return ''
+    result = u'\n\n'.join(u'<p>' + p.replace('\n', u'<br>\n') + '</p>' \
+                          for p in _paragraph_re.split(value))
+    if eval_ctx.autoescape:
+        result = Markup(result)
+    return result
+
 def strftime(value, fmt):
     pacific = timezone('US/Pacific')
     return utc.localize(value).astimezone(pacific).strftime(fmt)
@@ -35,6 +47,7 @@ filters = dict(
     urlencode = urlencode_filter,
     getkey = getkey,
     money = money,
+    nl2br = nl2br,
     to_json = json.dumps,
     from_json = json.loads,
     strftime = strftime

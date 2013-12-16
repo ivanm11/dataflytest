@@ -5,8 +5,13 @@
 {%- endmacro %}
 
 <ul class="nav nav-list">
-    {{ a('/admin', 'Home') }}
-    {{ a('/admin/news', 'News') }}
-    {{ a('/admin/gallery', 'Gallery') }}
+    {{ a('/admin/home', 'Home') }}
+    {{ a('/admin/blog', 'Blog') }}
+    {{ a('/admin/gallery/main', 'Gallery') }}
     {{ a('/admin/contact', 'Contact') }}
+    <li>
+        <hr>
+        <a href="#logout" id="post-logout">Logout</a>
+        <form action="/admin/logout" method="POST"></form>
+    </li>
 </ul>

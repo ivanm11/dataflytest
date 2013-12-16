@@ -21,7 +21,7 @@ Datafly.notify = function(msg) {
 
 Datafly.error = function(msg) {
   return $('.center').notify({
-    type: 'error',
+    type: 'danger',
     message: {
       text: msg
     }

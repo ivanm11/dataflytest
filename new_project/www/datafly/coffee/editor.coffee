@@ -81,6 +81,7 @@ $ () ->
             ),
             dataType: 'json',
             contentType: 'application/json'
+            success: (res) -> $('#save').data('page-id', res.id)
         )
         Datafly.notify 'New version published!'
 

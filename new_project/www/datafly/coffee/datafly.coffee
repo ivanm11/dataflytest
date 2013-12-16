@@ -16,7 +16,7 @@ Datafly.notify = (msg) ->
 
 Datafly.error = (msg) ->
     $('.center').notify(
-        type: 'error',
+        type: 'danger',
         message: 
             text: msg
     ).show()

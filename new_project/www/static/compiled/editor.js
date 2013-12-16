@@ -80,7 +80,10 @@ $(function() {
         page: page
       }),
       dataType: 'json',
-      contentType: 'application/json'
+      contentType: 'application/json',
+      success: function(res) {
+        return $('#save').data('page-id', res.id);
+      }
     });
     return Datafly.notify('New version published!');
   });

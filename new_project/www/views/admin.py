@@ -1,4 +1,4 @@
-from bottle import Bottle, request, redirect, TemplateError
+from bottle import Bottle, redirect, TemplateError
 
 from datafly.core import g, template
 from datafly.models.page import Page
@@ -16,8 +16,7 @@ def login():
         return redirect('/admin/home')
     return template('admin/login.html')
 
-@admin_app.get('/admin/news')
-@admin_app.get('/admin/gallery')
+@admin_app.get('/admin/custom')
 def custom_admin_page():    
     return template('admin/custom.html')
 
@@ -25,14 +24,11 @@ def custom_admin_page():
 @admin_app.get('/admin/<section:re:(section|another-section)>/:page')
 def simple_page(page, section=None):
     template_context = c = dict(
-        show_editor = True
+        show_editor = True,
+        page = Page.get_latest(g.page_id)
     )
-    c['page_id'] = page_id = request.path.replace('/admin', '').strip('/')
-    c['page'] = page = Page.get_latest(page_id)
-    if page:
-        c['versions'] = page.versions
     try:
-        return template('%s.html' % page_id, **template_context)
+        return template('%s.html' % g.page_id, **template_context)
     except TemplateError:
         c['default'] = True
         return template('default.html', **template_context)

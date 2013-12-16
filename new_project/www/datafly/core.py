@@ -28,7 +28,7 @@ except:
 
 ### DEFAULT BEFORE_REQUEST
 
-def default_hook():
+def init_globals():
     g._reset()
     g.template_context = c = dict(
         env = Config.__name__,
@@ -49,17 +49,14 @@ def default_hook():
 # merging default_app and sub_app is very similiar
 # to Blueprint concept in Flask
 
-def merge(default_app, sub_app, before_request=[], config=None):
+def merge(default_app, sub_app, config=None):
     sub_app = load('%s_app' % sub_app)
-    sub_app.hooks.add('before_request', default_hook)
-    for hook in before_request:
-        sub_app.hooks.add('before_request', hook)
     if config:
         sub_app.config(config)
     if Config.__name__ == 'Production':
         sub_app.catchall = False
     else:
-        sub_app.hooks.add('after_request', debug)
+        sub_app.add_hook('after_request', debug)
     default_app.merge(sub_app)
 
 

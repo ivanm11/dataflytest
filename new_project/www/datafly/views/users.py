@@ -7,7 +7,7 @@ from models import Admin
 
 users_app = Bottle()
 
-@users_app.post('/login')
+@users_app.post('/admin/login')
 def login():    
     user = Admin.find_one({
         'email': request.forms.email
@@ -25,13 +25,13 @@ def login():
         user.set_as_current(temporary=temporary_login)
         result = {
             'error': False,
-            'redirect': users_app.config['redirect']
+            'redirect': users_app.config['home']
         }
     else:
         result = { 'error': 'LoginError' }
     return result
 
-@users_app.post('/logout')
+@users_app.post('/admin/logout')
 def logout():
-    g.user.unset_current()
-    return redirect(users_app.config['redirect'])
+    g.admin.unset_current()
+    return redirect('/')

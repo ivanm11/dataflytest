@@ -22,7 +22,9 @@
     </header>
 
     <aside>       
-        {% include 'admin/nav.html' %}
+        {% if user %}
+            {% include 'admin/nav.html' %}
+        {% endif %}        
     </aside>   
 
     <div class="content {{ 'default-page' if default }}">  
