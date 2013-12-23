@@ -143,9 +143,13 @@ body.admin > .content.default-page .redactor_box {
 .redactor_toolbar li > a:hover {
   background-color: #fff;
 }
-.toolbar-save .btn-group {
+.toolbar-save .version {
   display: inline-block;
   background-color: #eee;
+  border-radius: 4px;
+}
+.toolbar-save .version a {
+  color: #000;
 }
 body.login form {
   margin-top: 50px;

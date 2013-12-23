@@ -7,12 +7,12 @@ admin_app = Bottle()
 
 @admin_app.get('/admin')
 def short_url():    
-    url = '/admin/home' if g.user else '/admin/login'
+    url = '/admin/home' if g.admin else '/admin/login'
     return redirect(url)
 
 @admin_app.get('/admin/login')
 def login():    
-    if g.user:
+    if g.admin:
         return redirect('/admin/home')
     return template('admin/login.html')
 

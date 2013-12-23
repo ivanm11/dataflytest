@@ -47,6 +47,9 @@ body.home div.person .desc {
     width: 66.66666666666666%;
   }
 }
+body.home div.person h3 strong {
+  margin-right: 10px;
+}
 body.news .row {
   margin-left: -15px;
   margin-right: -15px;
