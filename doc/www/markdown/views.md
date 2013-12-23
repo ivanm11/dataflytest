@@ -20,7 +20,8 @@ Trick is: both Admin and Public facing pages share `div.content` (admin user wil
 see & edit this area in Admin) and use different layout.html (from `/public` and
 `/admin` folders in `/templates`, `/datafly/templates`).
 
-Styles and JS for shared content:
+LESS and JS files for shared content between `public` and `admin` (usually for
+content inside `div.content`):
 
 ```bash
     css/shared.less
@@ -29,7 +30,7 @@ Styles and JS for shared content:
 
 For simple pages (admin can edit text in some areas and update images) you
 don't need to create new views. `views/public.py` and `views/admin.py` 
-already done everything for you:
+already did everything for you:
 
 ```bash
   `/` => show `templates/home.html`
@@ -51,9 +52,13 @@ hard to trace).
 ```python
   from datafly.core import g
 
+  # before_request - admin pages
   def init_admin():
     c = g.template_context
     g.admin = c['user'] = Admin.get_current()
+    # login required for all admin pages / API requests
+    if not g.admin and request.path != '/admin/login':
+        return redirect('/admin/login')
 ```
 
 Caveats

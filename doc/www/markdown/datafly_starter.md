@@ -25,6 +25,7 @@ Current structure:
 
 ```bash
   /datafly-starter  
+  -/doc # Documentation website (and Markdown source files)
   -/new_project # New project boilerplate, copy & make "initial commit"
   # tools to deploy project (Fabric & Ansible scripts)
   --/script
@@ -44,7 +45,6 @@ Current structure:
   ---/models
   ---/templates
   ---/views
-  ---app.py
-  --/doc # Documentation website (and Markdown source files)
+  ---app.py  
 ```
 

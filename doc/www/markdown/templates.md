@@ -1,27 +1,38 @@
 TEMPLATES AND STATIC ASSETS
 ===========================
 
-Instead of manually defining links to CSS in `<head>` and include `<script>`
-before body, please edit `www/config/assets.py`
+Instead of manually defining links to CSS files in the `<head>` and
+JS in the `<script>` before body, please edit `www/config/assets.py`
 
 ```python
   CSS = {
     'public': [
-      'css/bootstrap-public',    
-      ...
+        'less/bootstrap-public',    
+        ...
+        'less/public',        
+        'less/shared'
     ],
   ...
   JS = {
     ...
     'admin': [
-        'datafly/js/redactor',
+        'datafly/coffee/editor',
+        ...
+        'js/shared',
+        'js/admin'
     ]
   ...
 ```
 
-You should edit LESS or CSS files in `www/css` folder and JS in `www/js`. All
+You should edit LESS files in `www/less` folder and JS in `www/js`. All
 these files would be concatted, compiled and minified to `/static/compiled`
 folder (while running `fab collect_static` or `fab ds`, `fab dp` commands).
+
+Make sure your IDE / Editor compile any LESS / CoffeeScript file to
+`static/compiled` (usually files are compiled to the same folder)
+and exclude that folder from IDE / Editor. `static/compiled` is still included
+in Git - to avoid compile all step on first run after `git clone [some
+project]`.
 
 For development mode you have all these files served by development server
 but for production and staging only `/static` folder is served by Nginx as
@@ -36,11 +47,14 @@ usually url and templates are mapped this way:
 
   '\admin\page' => simple_page() in views/admin.py
   templates/home.html + datafly/templates/admin/layout.html
+
+  layout_head.html and layout_scripts.html are shared between public and admin area
 ```
 
-While we have default layout for admin (`datafly/templates/admin/layout.html`)
-you should edit `templates/public/layout.html` according to given design spec
+You should edit `templates/public/layout.html` according to given design spec
 and PSD.
+
+For admin we have default layout - `datafly/templates/admin/layout.html`
 
 Define editable text in templates (`<div>` and data-clip attribute are required):
 
@@ -65,7 +79,7 @@ bulletproof layout for WYSIWYG editor, separate images and text are much safer):
        data-fit-width="200" data-fit-height="200">
 ```
 
-However it's nicer to use predefined macros:
+However it's nicer to use predefined Jinja2 macros:
 
 ```django
   {# before extends layout #}

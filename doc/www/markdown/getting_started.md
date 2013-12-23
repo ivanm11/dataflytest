@@ -18,6 +18,12 @@ Tools we use
 [DataFly Starter](/datafly-starter)
 (new project boilerplate)
 
+*Framework: 3rd party services*
+
+[Sentry](https://getsentry.com/welcome/) (keep errors in one place)
+
+[Mandrill](http://mandrill.com/) (easily send emails)
+
 *Environment/revision control*
 
 [Virtualenv](http://www.virtualenv.org/en/latest)

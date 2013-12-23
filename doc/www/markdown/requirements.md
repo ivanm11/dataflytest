@@ -59,6 +59,13 @@ For Ubuntu you have to add MongoDB downloads repository and install *mongodb-10g
 package. Although Ubuntu does include MongoDB packages, the official
 packages are generally more up to date.
 
+It's important to install 64-bit OS for production server and it's better to 
+use 64-bit OS for development too: 
+
+```
+32-bit versions of MongoDB only support databases smaller than 2GB
+```
+
 *Robomongo*
 
 Shell-centric application, very useful to inspect current databases and collections:
