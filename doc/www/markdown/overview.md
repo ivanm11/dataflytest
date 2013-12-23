@@ -2,12 +2,17 @@ OVERVIEW
 ========
 
 Please always check `www/app.py` first.  
-This is the main file for your application. You will start development
-server by running `python app.py` (`fab runserver` does this under virtualenv)
-or, for production, uWSGI python loader will search for app variable which
+
+This is the main file and starting point for your application. You can launch
+development server by running `python app.py` (`fab runserver` does this under
+virtualenv).
+
+In production, uWSGI python loader will search for app variable which
 is Bottle instance and callable WSGI application.
 
 ```python
+  ### Main Application
+
   app = Bottle()
 
   @app.error(404)
@@ -15,43 +20,36 @@ is Bottle instance and callable WSGI application.
     return template('404.html')
 ```
 
-Variable `app` is the default application, doesn't have any views attached,
+Variable `app` is the default application and doesn't have any views attached,
 only error handlers (to keep this file clean and simple).  
-Other applications contain views and will be merged using `Bottle.merge` method.
 
-Whenever you mount or merge an application, Bottle creates a proxy-route on the
-main-application that forwards all requests to the sub-application (important
-side effect: you can't add before_request hook for default application and
-expect that this hook function will be called for sub-application). That's 
-why we have helper function `merge()`.
+Other applications (modules) contain views that will be added to default
+application using `Bottle.merge` method (`merge` function from `datafly.core` --
+wrapper).
 
 ```python
-  # /admin/login
-  merge(app, 'datafly.views.users:users', before_request=[init_global],
-      config=dict(
-           redirect = '/admin/home'
-      ))
+  ### Import & configure modules
+
+  # /blog/<page>
+  merge(app, 'datafly.views.blog:public',
+      config = {
+          'feed': {            
+              'title': 'Blog',
+              'desc': 'Blog about ...',
+              'email': 'info@datafly.net',
+              'author': 'DataFly'
+          },
+          'addthis_id': '0123456789',
+          'fb_id': '0123456789'
+  })
 ```
 
 What's happening here?
 
-1. From `datafly.views.users` import `users` (another Bottle application with a
+1. From `datafly.views.blog` import `public_app` (another Bottle application with a
 bunch of views attached)
 
-2. Configure these views (optional, great for reusable views from `datafly` folder).
-
-3. Run `init_global` function before any view from this file (usually it's something
-that common for a group of views - get user from cookie, for `/admin` views:
-check if user is logged in).
-
-For example, for `/home` url:
-
-1. Request will be forwarded to `public_app` application (url is matched to
-`home()` view from this application).
-
-2. `init_global` function is called from `views/hooks.py`
-
-3. Finally, `home()` view is called.
+2. Configure module (optional, great for reusable views from `datafly` folder).
 
 Reusable apps
 -------------
@@ -68,22 +66,26 @@ a) Copy modules or packages:
   "starter/new_project/script/datafly" => "script/datafly"
 ```
 
-b) Don't forget to update LESS/JS in `config/assets.py`.
+b) Check included LESS/JS in `config/assets.py`, update if needed.
 
-c) Check if something is broken.
+c) If something is broken `git diff` for `datafly` folder might help.
 
 Group imports
 -------------
 
-Imports should be grouped in the following order:
+Style guide for imports:
 
 ```python
   # standard library imports and related third party imports
+  import re
+  from datetime import datetime
   from bottle import Bottle
+  from jinja2.filters import do_truncate
 
-  # DataFly packages
-  from datafly.core import template
+  # DataFly folder
+  from datafly.core import g, template
+  from datafly.models.page import Page
 
-  # Local imports
+  # Project modules
   from config import Config, db
 ```

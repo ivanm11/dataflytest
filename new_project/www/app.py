@@ -16,7 +16,7 @@ def page404(code):
     return template('404.html')
 
 
-### Import & configure applications
+### Import & configure modules
 
 # /<page>
 merge(app, 'views.public:public')
