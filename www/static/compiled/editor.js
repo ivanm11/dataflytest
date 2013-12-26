@@ -41,7 +41,7 @@ $(function() {
   });
   $('div[data-clip]').first().redactor('focus');
   $('#save').click(function() {
-    var id, page, url, valid;
+    var id, page, valid;
     valid = true;
     $('form#meta [data-required]').each(function() {
       var label;
@@ -72,9 +72,8 @@ $(function() {
       }
     });
     page['id'] = id = $(this).data('page-id');
-    url = "/admin/api/pages/id/" + id;
     $.ajax({
-      url: url,
+      url: "/admin/api/pages/id/" + id,
       type: 'POST',
       data: JSON.stringify({
         page: page

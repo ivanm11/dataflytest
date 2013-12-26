@@ -121,8 +121,7 @@ admin_app = Bottle()
 def blog():
     posts = (
         db.pages
-          .find({ 'id': { '$regex': 'blog' }, 'current': True },
-                { 'id': 1, 'meta': 1 })
+          .find({ 'id': { '$regex': 'blog' }, 'current': True })
           .sort('meta.created', -1)
     )
     return template('admin/blog.html', posts=posts)

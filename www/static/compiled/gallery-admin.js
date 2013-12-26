@@ -26,17 +26,15 @@ $(document).ready(function() {
     }
     $.ajax({
       url: '/admin/api/gallery',
-      type: 'POST',
       data: JSON.stringify({
         'data': {
+          'id': $('[name=id]').val(),
           'title': title,
           'desc': $('[name=desc]').val(),
-          'pics': pics,
-          'id': $('[name=id]').val(),
-          'sort': Number($('[name=sort]').val()),
-          'category': $('#get-project-category').text()
+          'pics': pics
         }
       }),
+      type: 'POST',
       dataType: 'json',
       contentType: 'application/json'
     }).done(function(data) {

@@ -72,9 +72,8 @@ $ () ->
                 html = $(this).redactor('get')
                 page[clip] = html
         page['id'] = id = $(this).data('page-id')
-        url = "/admin/api/pages/id/#{ id }"
         $.ajax(
-            url: url
+            url: "/admin/api/pages/id/#{ id }"
             type: 'POST'
             data: JSON.stringify(
                 page: page

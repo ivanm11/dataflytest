@@ -22,17 +22,15 @@ $(document).ready ->
         if ( title == '' or pics.length == 0 )
             return Datafly.error 'You need to specify title and upload at least one image';
         $.ajax(
-            url: '/admin/api/gallery'
-            type: 'POST'
+            url: '/admin/api/gallery'            
             data: JSON.stringify(
                 'data':
+                    'id': $('[name=id]').val()
                     'title': title
                     'desc': $('[name=desc]').val()
-                    'pics': pics
-                    'id': $('[name=id]').val()
-                    'sort': Number($('[name=sort]').val())
-                    'category': $('#get-project-category').text()
+                    'pics': pics                    
             )
+            type: 'POST'
             dataType: 'json'
             contentType: 'application/json'
         ).done(
