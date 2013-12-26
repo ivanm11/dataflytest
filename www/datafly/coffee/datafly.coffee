@@ -6,7 +6,10 @@ $.fn.serializeObject = () ->
             .value()
 
 Datafly.alert = (el) ->
-    $('#alert' + el).slideDown('slow').delay(6000).slideUp('slow')
+    $('#alert' + el)
+        .removeClass('hidden')
+        .slideDown('slow')
+        .delay(6000).slideUp('slow')
 
 Datafly.notify = (msg) ->
     $('.center').notify(

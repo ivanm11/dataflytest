@@ -34,4 +34,4 @@ def login():
 @users_app.post('/admin/logout')
 def logout():
     g.admin.unset_current()
-    return redirect('/')
+    return redirect('/admin/login')

@@ -8,7 +8,7 @@ $.fn.serializeObject = function() {
 };
 
 Datafly.alert = function(el) {
-  return $('#alert' + el).slideDown('slow').delay(6000).slideUp('slow');
+  return $('#alert' + el).removeClass('hidden').slideDown('slow').delay(6000).slideUp('slow');
 };
 
 Datafly.notify = function(msg) {
