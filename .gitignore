@@ -1,5 +1,10 @@
+backup
+assets
+venv
 tags
 _private
+
+www/config/myconfig.py
 
 *.py[co~]
 *.swp
