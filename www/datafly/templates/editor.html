@@ -9,7 +9,7 @@
 {% endmacro %}
 
 {% macro img(id, default, class='', width='', height='') %}
-    <img src="{{ page|getkey('img'+id) or default }}" alt="Dennis the Peasant"
+    <img src="{{ page|getkey('img.'+id) or default }}" alt="Dennis the Peasant"
              data-clip="{{ id }}"
              data-fit-width="{{ widht }}" data-fit-height="{{ height }}">
 {% endmacro %}
