@@ -21,6 +21,9 @@ def page404(code):
 # /<page>
 merge(app, 'views.public:public')
 
+# /test/<page>
+merge(app, 'views.public:public')
+
 # /blog/<page>
 merge(app, 'datafly.views.blog:public',
     config = {

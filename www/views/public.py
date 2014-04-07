@@ -24,10 +24,14 @@ def sitemap():
 
 @public_app.get('/')
 @public_app.get('/:page')
+@public_app.get('/test/:page')
+#def test_page(page=None):
+#    page_id = re
 @public_app.get('/<section:re:(news)>/:page')
 def simple_page(page=None, section=None):
     page_id = request.path.strip('/') if page else 'home'
-    page = Page.get_latest(page_id)    
+    page = Page.get_latest(page_id)   
+    print('qwe') 
     try:
         return template('%s.html' % page_id, page=page)        
     except TemplateError:
