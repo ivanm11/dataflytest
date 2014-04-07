@@ -1,0 +1,19 @@
+{% set namespace = 'contact' %}
+{% extends layout %}
+
+{% block content %}
+
+<h2>Add blog record using ajax. Free for everyone!</h2>
+
+<form id="ajaxtest-form" action="/addblogrecord" method="post" class="form-horizontal">
+    <div class="form-group">
+        <label for="ajaxtest label" class="sr-only">Post body</label>
+        <textarea name="ajaxtest-text" rows="10" placeholder="Post add" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn">Send post</button>
+    </div>
+</form>
+
+
+{% endblock %}

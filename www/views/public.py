@@ -25,16 +25,29 @@ def sitemap():
 @public_app.get('/')
 @public_app.get('/:page')
 @public_app.get('/test/:page')
+
 #def test_page(page=None):
 #    page_id = re
 @public_app.get('/<section:re:(news)>/:page')
 def simple_page(page=None, section=None):
     page_id = request.path.strip('/') if page else 'home'
-    page = Page.get_latest(page_id)   
-    print('qwe') 
+    page = Page.get_latest(page_id)    
     try:
         return template('%s.html' % page_id, page=page)        
     except TemplateError:
         if not page:
             return abort(404, "Page not found")        
         return template('default.html', page=page, page_id=page_id)
+
+@public_app.get('/ajaxtest')
+def ajaxtest():
+    return template('ajaxtest.html')    
+
+@public_app.post('/addblogrecord')
+def add_blog_record():
+     q = 1
+     return 'Your data was successfully saved.'
+#    print(request)
+     page = Page(request.json)
+#    print(request.json)
+     page.save()
