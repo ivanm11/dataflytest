@@ -21,6 +21,7 @@ def custom_admin_page():
     return template('admin/custom.html')
 
 @admin_app.get('/admin/:page')
+#@admin_app.get('/admin/test/:page')
 @admin_app.get('/admin/<section:re:(section|another-section)>/:page')
 def simple_page(page, section=None):
     template_context = c = dict(

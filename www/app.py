@@ -24,6 +24,9 @@ merge(app, 'views.public:public')
 # /test/<page>
 merge(app, 'views.public:public')
 
+# /addblogrecord/<page>
+merge(app, 'views.public:public')
+
 # /blog/<page>
 merge(app, 'datafly.views.blog:public',
     config = {
@@ -63,6 +66,9 @@ merge(app, 'datafly.views.gallery:admin',
 
 # /admin/api/
 merge(app, 'datafly.views.api:api')
+
+
+
 
 
 ### Hooks

@@ -1,0 +1,313 @@
+Sat Apr  5 13:14:34 2014 - *** Starting uWSGI 1.9.17.1-debian (64bit) on [Sat Apr  5 13:14:34 2014] ***
+Sat Apr  5 13:14:34 2014 - compiled with version: 4.8.1 on 26 September 2013 23:59:28
+Sat Apr  5 13:14:34 2014 - os: Linux-3.2.0-4-amd64 #1 SMP Debian 3.2.51-1
+Sat Apr  5 13:14:34 2014 - nodename: debian-flask-test
+Sat Apr  5 13:14:34 2014 - machine: x86_64
+Sat Apr  5 13:14:34 2014 - clock source: unix
+Sat Apr  5 13:14:34 2014 - pcre jit disabled
+Sat Apr  5 13:14:34 2014 - detected number of CPU cores: 1
+Sat Apr  5 13:14:34 2014 - current working directory: /
+Sat Apr  5 13:14:34 2014 - writing pidfile to /run/uwsgi/app/flask3/pid
+Sat Apr  5 13:14:34 2014 - detected binary path: /usr/bin/uwsgi-core
+Sat Apr  5 13:14:34 2014 - setgid() to 33
+Sat Apr  5 13:14:34 2014 - setuid() to 33
+Sat Apr  5 13:14:34 2014 - your processes number limit is 3882
+Sat Apr  5 13:14:34 2014 - your memory page size is 4096 bytes
+Sat Apr  5 13:14:34 2014 -  *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+Sat Apr  5 13:14:34 2014 - detected max file descriptor number: 1024
+Sat Apr  5 13:14:34 2014 - lock engine: pthread robust mutexes
+Sat Apr  5 13:14:34 2014 - thunder lock: disabled (you can enable it with --thunder-lock)
+Sat Apr  5 13:14:34 2014 - uwsgi socket 0 bound to UNIX address /run/uwsgi/app/flask3/socket fd 3
+Sat Apr  5 13:14:34 2014 - Python version: 3.3.2+ (default, Sep 18 2013, 12:00:26)  [GCC 4.8.1]
+Sat Apr  5 13:14:34 2014 - Set PythonHome to /home/flask3/proj1/venv
+Fatal Python error: Py_Initialize: Unable to get the locale encoding
+ImportError: No module named 'encodings'
+Sat Apr  5 13:15:48 2014 - *** Starting uWSGI 1.9.17.1-debian (64bit) on [Sat Apr  5 13:15:48 2014] ***
+Sat Apr  5 13:15:48 2014 - compiled with version: 4.8.1 on 26 September 2013 23:59:28
+Sat Apr  5 13:15:48 2014 - os: Linux-3.2.0-4-amd64 #1 SMP Debian 3.2.51-1
+Sat Apr  5 13:15:48 2014 - nodename: debian-flask-test
+Sat Apr  5 13:15:48 2014 - machine: x86_64
+Sat Apr  5 13:15:48 2014 - clock source: unix
+Sat Apr  5 13:15:48 2014 - pcre jit disabled
+Sat Apr  5 13:15:48 2014 - detected number of CPU cores: 1
+Sat Apr  5 13:15:48 2014 - current working directory: /
+Sat Apr  5 13:15:48 2014 - writing pidfile to /run/uwsgi/app/flask3/pid
+Sat Apr  5 13:15:48 2014 - detected binary path: /usr/bin/uwsgi-core
+Sat Apr  5 13:15:48 2014 - setgid() to 33
+Sat Apr  5 13:15:48 2014 - setuid() to 33
+Sat Apr  5 13:15:48 2014 - your processes number limit is 3882
+Sat Apr  5 13:15:48 2014 - your memory page size is 4096 bytes
+Sat Apr  5 13:15:48 2014 -  *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+Sat Apr  5 13:15:48 2014 - detected max file descriptor number: 1024
+Sat Apr  5 13:15:48 2014 - lock engine: pthread robust mutexes
+Sat Apr  5 13:15:48 2014 - thunder lock: disabled (you can enable it with --thunder-lock)
+Sat Apr  5 13:15:48 2014 - uwsgi socket 0 bound to UNIX address /run/uwsgi/app/flask3/socket fd 3
+Sat Apr  5 13:15:48 2014 - Python version: 3.3.2+ (default, Sep 18 2013, 12:00:26)  [GCC 4.8.1]
+Sat Apr  5 13:15:48 2014 - Set PythonHome to /home/flask3/proj1/venv
+Sat Apr  5 13:15:48 2014 - Python main interpreter initialized at 0x10ccd40
+Sat Apr  5 13:15:48 2014 - python threads support enabled
+Sat Apr  5 13:15:48 2014 - your server socket listen backlog is limited to 100 connections
+Sat Apr  5 13:15:48 2014 - your mercy for graceful operations on workers is 60 seconds
+Sat Apr  5 13:15:48 2014 - mapped 304392 bytes (297 KB) for 2 cores
+Sat Apr  5 13:15:48 2014 - *** Operational MODE: preforking ***
+Sat Apr  5 13:15:48 2014 - added /home/flask3/proj1/www/ to pythonpath.
+Sat Apr  5 13:15:48 2014 - WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x10ccd40 pid: 6110 (default app)
+Sat Apr  5 13:15:48 2014 - *** uWSGI is running in multiple interpreter mode ***
+Sat Apr  5 13:15:48 2014 - spawned uWSGI master process (pid: 6110)
+Sat Apr  5 13:15:48 2014 - spawned uWSGI worker 1 (pid: 6144, cores: 1)
+Sat Apr  5 13:15:48 2014 - spawned uWSGI worker 2 (pid: 6145, cores: 1)
+Sat Apr  5 13:15:48 2014 - Python auto-reloader enabled
+Sat Apr  5 13:26:40 2014 - SIGINT/SIGQUIT received...killing workers...
+Sat Apr  5 13:26:41 2014 - worker 1 buried after 1 seconds
+Sat Apr  5 13:26:41 2014 - worker 2 buried after 1 seconds
+Sat Apr  5 13:26:41 2014 - goodbye to uWSGI.
+Sat Apr  5 13:27:11 2014 - *** Starting uWSGI 1.9.17.1-debian (64bit) on [Sat Apr  5 13:27:11 2014] ***
+Sat Apr  5 13:27:11 2014 - compiled with version: 4.8.1 on 26 September 2013 23:59:28
+Sat Apr  5 13:27:11 2014 - os: Linux-3.2.0-4-amd64 #1 SMP Debian 3.2.51-1
+Sat Apr  5 13:27:11 2014 - nodename: debian-flask-test
+Sat Apr  5 13:27:11 2014 - machine: x86_64
+Sat Apr  5 13:27:11 2014 - clock source: unix
+Sat Apr  5 13:27:11 2014 - pcre jit disabled
+Sat Apr  5 13:27:11 2014 - detected number of CPU cores: 1
+Sat Apr  5 13:27:11 2014 - current working directory: /
+Sat Apr  5 13:27:11 2014 - writing pidfile to /run/uwsgi/app/flask3/pid
+Sat Apr  5 13:27:11 2014 - detected binary path: /usr/bin/uwsgi-core
+Sat Apr  5 13:27:11 2014 - setgid() to 33
+Sat Apr  5 13:27:11 2014 - setuid() to 33
+Sat Apr  5 13:27:11 2014 - your processes number limit is 3882
+Sat Apr  5 13:27:11 2014 - your memory page size is 4096 bytes
+Sat Apr  5 13:27:11 2014 -  *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+Sat Apr  5 13:27:11 2014 - detected max file descriptor number: 1024
+Sat Apr  5 13:27:11 2014 - lock engine: pthread robust mutexes
+Sat Apr  5 13:27:11 2014 - thunder lock: disabled (you can enable it with --thunder-lock)
+Sat Apr  5 13:27:11 2014 - uwsgi socket 0 bound to UNIX address /run/uwsgi/app/flask3/socket fd 3
+Sat Apr  5 13:27:11 2014 - Python version: 3.3.2+ (default, Sep 18 2013, 12:00:26)  [GCC 4.8.1]
+Sat Apr  5 13:27:11 2014 - Set PythonHome to /home/flask3/proj1/venv
+Sat Apr  5 13:27:11 2014 - Python main interpreter initialized at 0xf197e0
+Sat Apr  5 13:27:11 2014 - python threads support enabled
+Sat Apr  5 13:27:11 2014 - your server socket listen backlog is limited to 100 connections
+Sat Apr  5 13:27:11 2014 - your mercy for graceful operations on workers is 60 seconds
+Sat Apr  5 13:27:11 2014 - mapped 304392 bytes (297 KB) for 2 cores
+Sat Apr  5 13:27:11 2014 - *** Operational MODE: preforking ***
+Sat Apr  5 13:27:11 2014 - added /home/flask3/proj1/www/ to pythonpath.
+Sat Apr  5 13:27:15 2014 - WSGI app 0 (mountpoint='') ready in 4 seconds on interpreter 0xf197e0 pid: 2794 (default app)
+Sat Apr  5 13:27:15 2014 - *** uWSGI is running in multiple interpreter mode ***
+Sat Apr  5 13:27:15 2014 - spawned uWSGI master process (pid: 2794)
+Sat Apr  5 13:27:15 2014 - spawned uWSGI worker 1 (pid: 2874, cores: 1)
+Sat Apr  5 13:27:15 2014 - spawned uWSGI worker 2 (pid: 2875, cores: 1)
+Sat Apr  5 13:27:15 2014 - Python auto-reloader enabled
+Sat Apr  5 13:30:32 2014 - SIGINT/SIGQUIT received...killing workers...
+Sat Apr  5 13:30:33 2014 - worker 1 buried after 1 seconds
+Sat Apr  5 13:30:33 2014 - worker 2 buried after 1 seconds
+Sat Apr  5 13:30:33 2014 - goodbye to uWSGI.
+Sat Apr  5 13:31:03 2014 - *** Starting uWSGI 1.9.17.1-debian (64bit) on [Sat Apr  5 13:31:03 2014] ***
+Sat Apr  5 13:31:03 2014 - compiled with version: 4.8.1 on 26 September 2013 23:59:28
+Sat Apr  5 13:31:03 2014 - os: Linux-3.2.0-4-amd64 #1 SMP Debian 3.2.51-1
+Sat Apr  5 13:31:03 2014 - nodename: debian-flask-test
+Sat Apr  5 13:31:03 2014 - machine: x86_64
+Sat Apr  5 13:31:03 2014 - clock source: unix
+Sat Apr  5 13:31:03 2014 - pcre jit disabled
+Sat Apr  5 13:31:03 2014 - detected number of CPU cores: 1
+Sat Apr  5 13:31:03 2014 - current working directory: /
+Sat Apr  5 13:31:03 2014 - writing pidfile to /run/uwsgi/app/flask3/pid
+Sat Apr  5 13:31:03 2014 - detected binary path: /usr/bin/uwsgi-core
+Sat Apr  5 13:31:03 2014 - setgid() to 33
+Sat Apr  5 13:31:03 2014 - setuid() to 33
+Sat Apr  5 13:31:03 2014 - your processes number limit is 3882
+Sat Apr  5 13:31:03 2014 - your memory page size is 4096 bytes
+Sat Apr  5 13:31:03 2014 -  *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+Sat Apr  5 13:31:03 2014 - detected max file descriptor number: 1024
+Sat Apr  5 13:31:03 2014 - lock engine: pthread robust mutexes
+Sat Apr  5 13:31:03 2014 - thunder lock: disabled (you can enable it with --thunder-lock)
+Sat Apr  5 13:31:03 2014 - uwsgi socket 0 bound to UNIX address /run/uwsgi/app/flask3/socket fd 3
+Sat Apr  5 13:31:03 2014 - Python version: 3.3.2+ (default, Sep 18 2013, 12:00:26)  [GCC 4.8.1]
+Sat Apr  5 13:31:03 2014 - Set PythonHome to /home/flask3/proj1/venv
+Sat Apr  5 13:31:03 2014 - Python main interpreter initialized at 0x22547e0
+Sat Apr  5 13:31:03 2014 - python threads support enabled
+Sat Apr  5 13:31:03 2014 - your server socket listen backlog is limited to 100 connections
+Sat Apr  5 13:31:03 2014 - your mercy for graceful operations on workers is 60 seconds
+Sat Apr  5 13:31:03 2014 - mapped 304392 bytes (297 KB) for 2 cores
+Sat Apr  5 13:31:03 2014 - *** Operational MODE: preforking ***
+Sat Apr  5 13:31:03 2014 - added /home/flask3/proj1/www/ to pythonpath.
+Sat Apr  5 13:31:05 2014 - WSGI app 0 (mountpoint='') ready in 2 seconds on interpreter 0x22547e0 pid: 2784 (default app)
+Sat Apr  5 13:31:05 2014 - *** uWSGI is running in multiple interpreter mode ***
+Sat Apr  5 13:31:05 2014 - spawned uWSGI master process (pid: 2784)
+Sat Apr  5 13:31:05 2014 - spawned uWSGI worker 1 (pid: 2864, cores: 1)
+Sat Apr  5 13:31:05 2014 - spawned uWSGI worker 2 (pid: 2865, cores: 1)
+Sat Apr  5 13:31:05 2014 - Python auto-reloader enabled
+[pid: 2865|app: 0|req: 1/1] 192.168.1.140 () {38 vars in 576 bytes} [Mon Apr  7 10:28:31 2014] GET / => generated 1957 bytes in 1966 msecs (HTTP/1.1 200) 1 headers in 44 bytes (2 switches on core 0)
+[pid: 2864|app: 0|req: 1/2] 192.168.1.140 () {38 vars in 598 bytes} [Mon Apr  7 10:28:34 2014] GET /favicon.ico => generated 1957 bytes in 587 msecs (HTTP/1.1 200) 1 headers in 44 bytes (2 switches on core 0)
+[pid: 2865|app: 0|req: 2/3] 192.168.1.140 () {38 vars in 598 bytes} [Mon Apr  7 10:28:34 2014] GET /favicon.ico => generated 1957 bytes in 2 msecs (HTTP/1.1 200) 1 headers in 44 bytes (1 switches on core 0)
+Mon Apr  7 11:28:51 2014 - SIGINT/SIGQUIT received...killing workers...
+Mon Apr  7 11:28:52 2014 - worker 1 buried after 1 seconds
+Mon Apr  7 11:28:52 2014 - worker 2 buried after 1 seconds
+Mon Apr  7 11:28:52 2014 - goodbye to uWSGI.
+Mon Apr  7 11:28:54 2014 - *** Starting uWSGI 1.9.17.1-debian (64bit) on [Mon Apr  7 11:28:54 2014] ***
+Mon Apr  7 11:28:54 2014 - compiled with version: 4.8.1 on 26 September 2013 23:59:28
+Mon Apr  7 11:28:54 2014 - os: Linux-3.2.0-4-amd64 #1 SMP Debian 3.2.51-1
+Mon Apr  7 11:28:54 2014 - nodename: debian-flask-test
+Mon Apr  7 11:28:54 2014 - machine: x86_64
+Mon Apr  7 11:28:54 2014 - clock source: unix
+Mon Apr  7 11:28:54 2014 - pcre jit disabled
+Mon Apr  7 11:28:54 2014 - detected number of CPU cores: 1
+Mon Apr  7 11:28:54 2014 - current working directory: /
+Mon Apr  7 11:28:54 2014 - writing pidfile to /run/uwsgi/app/flask3/pid
+Mon Apr  7 11:28:54 2014 - detected binary path: /usr/bin/uwsgi-core
+Mon Apr  7 11:28:54 2014 - setgid() to 33
+Mon Apr  7 11:28:54 2014 - setuid() to 33
+Mon Apr  7 11:28:54 2014 - your processes number limit is 3882
+Mon Apr  7 11:28:54 2014 - your memory page size is 4096 bytes
+Mon Apr  7 11:28:54 2014 -  *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+Mon Apr  7 11:28:54 2014 - detected max file descriptor number: 1024
+Mon Apr  7 11:28:54 2014 - lock engine: pthread robust mutexes
+Mon Apr  7 11:28:54 2014 - thunder lock: disabled (you can enable it with --thunder-lock)
+Mon Apr  7 11:28:54 2014 - uwsgi socket 0 bound to UNIX address /run/uwsgi/app/flask3/socket fd 3
+Mon Apr  7 11:28:54 2014 - Python version: 2.7.5+ (default, Sep 17 2013, 15:33:59)  [GCC 4.8.1]
+Mon Apr  7 11:28:54 2014 - Set PythonHome to /home/flask3/proj1/venv
+ImportError: No module named site
+Mon Apr  7 11:29:26 2014 - *** Starting uWSGI 1.9.17.1-debian (64bit) on [Mon Apr  7 11:29:26 2014] ***
+Mon Apr  7 11:29:26 2014 - compiled with version: 4.8.1 on 26 September 2013 23:59:28
+Mon Apr  7 11:29:26 2014 - os: Linux-3.2.0-4-amd64 #1 SMP Debian 3.2.51-1
+Mon Apr  7 11:29:26 2014 - nodename: debian-flask-test
+Mon Apr  7 11:29:26 2014 - machine: x86_64
+Mon Apr  7 11:29:26 2014 - clock source: unix
+Mon Apr  7 11:29:26 2014 - pcre jit disabled
+Mon Apr  7 11:29:26 2014 - detected number of CPU cores: 1
+Mon Apr  7 11:29:26 2014 - current working directory: /
+Mon Apr  7 11:29:26 2014 - writing pidfile to /run/uwsgi/app/flask3/pid
+Mon Apr  7 11:29:26 2014 - detected binary path: /usr/bin/uwsgi-core
+Mon Apr  7 11:29:26 2014 - setgid() to 33
+Mon Apr  7 11:29:26 2014 - setuid() to 33
+Mon Apr  7 11:29:26 2014 - your processes number limit is 3882
+Mon Apr  7 11:29:26 2014 - your memory page size is 4096 bytes
+Mon Apr  7 11:29:26 2014 -  *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+Mon Apr  7 11:29:26 2014 - detected max file descriptor number: 1024
+Mon Apr  7 11:29:26 2014 - lock engine: pthread robust mutexes
+Mon Apr  7 11:29:26 2014 - thunder lock: disabled (you can enable it with --thunder-lock)
+Mon Apr  7 11:29:26 2014 - uwsgi socket 0 bound to UNIX address /run/uwsgi/app/flask3/socket fd 3
+Mon Apr  7 11:29:26 2014 - Python version: 3.3.2+ (default, Sep 18 2013, 12:00:26)  [GCC 4.8.1]
+Mon Apr  7 11:29:26 2014 - Set PythonHome to /home/flask3/proj1/venv
+Mon Apr  7 11:29:26 2014 - *** Python threads support is disabled. You can enable it with --enable-threads ***
+Mon Apr  7 11:29:26 2014 - Python main interpreter initialized at 0x1659930
+Mon Apr  7 11:29:26 2014 - your server socket listen backlog is limited to 100 connections
+Mon Apr  7 11:29:26 2014 - your mercy for graceful operations on workers is 60 seconds
+Mon Apr  7 11:29:26 2014 - mapped 304392 bytes (297 KB) for 2 cores
+Mon Apr  7 11:29:26 2014 - *** Operational MODE: preforking ***
+Mon Apr  7 11:29:26 2014 - added /home/flask3/proj1/www/ to pythonpath.
+Mon Apr  7 11:29:26 2014 - WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x1659930 pid: 5000 (default app)
+Mon Apr  7 11:29:26 2014 - *** uWSGI is running in multiple interpreter mode ***
+Mon Apr  7 11:29:26 2014 - spawned uWSGI master process (pid: 5000)
+Mon Apr  7 11:29:26 2014 - spawned uWSGI worker 1 (pid: 5025, cores: 1)
+Mon Apr  7 11:29:26 2014 - spawned uWSGI worker 2 (pid: 5026, cores: 1)
+Mon Apr  7 11:29:26 2014 - Python auto-reloader enabled
+[pid: 5025|app: 0|req: 1/1] 192.168.1.140 () {38 vars in 576 bytes} [Mon Apr  7 10:29:28 2014] GET / => generated 1957 bytes in 355 msecs (HTTP/1.1 200) 1 headers in 44 bytes (1 switches on core 0)
+Mon Apr  7 11:34:13 2014 - SIGINT/SIGQUIT received...killing workers...
+Mon Apr  7 11:34:14 2014 - worker 1 buried after 1 seconds
+Mon Apr  7 11:34:14 2014 - worker 2 buried after 1 seconds
+Mon Apr  7 11:34:14 2014 - goodbye to uWSGI.
+Mon Apr  7 11:35:06 2014 - *** Starting uWSGI 1.9.17.1-debian (64bit) on [Mon Apr  7 11:35:06 2014] ***
+Mon Apr  7 11:35:06 2014 - compiled with version: 4.8.1 on 26 September 2013 23:59:28
+Mon Apr  7 11:35:06 2014 - os: Linux-3.2.0-4-amd64 #1 SMP Debian 3.2.51-1
+Mon Apr  7 11:35:06 2014 - nodename: debian-flask-test
+Mon Apr  7 11:35:06 2014 - machine: x86_64
+Mon Apr  7 11:35:06 2014 - clock source: unix
+Mon Apr  7 11:35:06 2014 - pcre jit disabled
+Mon Apr  7 11:35:06 2014 - detected number of CPU cores: 1
+Mon Apr  7 11:35:06 2014 - current working directory: /
+Mon Apr  7 11:35:06 2014 - writing pidfile to /run/uwsgi/app/flask3/pid
+Mon Apr  7 11:35:06 2014 - detected binary path: /usr/bin/uwsgi-core
+Mon Apr  7 11:35:06 2014 - setgid() to 33
+Mon Apr  7 11:35:06 2014 - setuid() to 33
+Mon Apr  7 11:35:06 2014 - your processes number limit is 3882
+Mon Apr  7 11:35:06 2014 - your memory page size is 4096 bytes
+Mon Apr  7 11:35:06 2014 -  *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+Mon Apr  7 11:35:06 2014 - detected max file descriptor number: 1024
+Mon Apr  7 11:35:06 2014 - lock engine: pthread robust mutexes
+Mon Apr  7 11:35:06 2014 - thunder lock: disabled (you can enable it with --thunder-lock)
+Mon Apr  7 11:35:06 2014 - uwsgi socket 0 bound to UNIX address /run/uwsgi/app/flask3/socket fd 3
+Mon Apr  7 11:35:06 2014 - Python version: 3.3.2+ (default, Sep 18 2013, 12:00:26)  [GCC 4.8.1]
+Mon Apr  7 11:35:06 2014 - Set PythonHome to /home/flask3/proj1/venv
+Mon Apr  7 11:35:09 2014 - *** Python threads support is disabled. You can enable it with --enable-threads ***
+Mon Apr  7 11:35:09 2014 - Python main interpreter initialized at 0x24c2d90
+Mon Apr  7 11:35:09 2014 - your server socket listen backlog is limited to 100 connections
+Mon Apr  7 11:35:09 2014 - your mercy for graceful operations on workers is 60 seconds
+Mon Apr  7 11:35:09 2014 - mapped 304392 bytes (297 KB) for 2 cores
+Mon Apr  7 11:35:09 2014 - *** Operational MODE: preforking ***
+Mon Apr  7 11:35:09 2014 - added /home/flask3/proj1/www/ to pythonpath.
+Mon Apr  7 11:35:15 2014 - WSGI app 0 (mountpoint='') ready in 6 seconds on interpreter 0x24c2d90 pid: 2796 (default app)
+Mon Apr  7 11:35:15 2014 - *** uWSGI is running in multiple interpreter mode ***
+Mon Apr  7 11:35:15 2014 - spawned uWSGI master process (pid: 2796)
+Mon Apr  7 11:35:15 2014 - spawned uWSGI worker 1 (pid: 2879, cores: 1)
+Mon Apr  7 11:35:15 2014 - spawned uWSGI worker 2 (pid: 2880, cores: 1)
+Mon Apr  7 11:35:15 2014 - Python auto-reloader enabled
+Mon Apr  7 10:37:03 2014 - !!! uWSGI process 2880 got Segmentation Fault !!!
+Mon Apr  7 10:37:03 2014 - *** backtrace of 2880 ***
+/usr/bin/uwsgi(uwsgi_backtrace+0x2e) [0x45132e]
+/usr/bin/uwsgi(uwsgi_segfault+0x21) [0x451701]
+/lib/x86_64-linux-gnu/libc.so.6(+0x35250) [0x7f25f763b250]
+/usr/lib/x86_64-linux-gnu/libpython3.3m.so.1.0(PyUnicode_InternInPlace+0x60) [0x7f25f5d5d070]
+/usr/lib/x86_64-linux-gnu/libpython3.3m.so.1.0(PyUnicode_InternFromString+0x1a) [0x7f25f5d5d25a]
+/usr/lib/x86_64-linux-gnu/libpython3.3m.so.1.0(PyObject_GetAttrString+0x28) [0x7f25f5d47688]
+/usr/lib/x86_64-linux-gnu/libpython3.3m.so.1.0(PyObject_HasAttrString+0x9) [0x7f25f5d47879]
+/usr/lib/uwsgi/plugins/python33_plugin.so(uwsgi_python_autoreloader_thread+0x10b) [0x7f25f644e90b]
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x7e0e) [0x7f25f90f7e0e]
+/lib/x86_64-linux-gnu/libc.so.6(clone+0x6d) [0x7f25f76ef0fd]
+*** end of backtrace ***
+Mon Apr  7 11:37:04 2014 - DAMN ! worker 2 (pid: 2880) died :( trying respawn ...
+Mon Apr  7 11:37:04 2014 - Respawned uWSGI worker 2 (new pid: 2974)
+Mon Apr  7 10:46:04 2014 - !!! uWSGI process 2879 got Segmentation Fault !!!
+Mon Apr  7 10:46:04 2014 - *** backtrace of 2879 ***
+/usr/bin/uwsgi(uwsgi_backtrace+0x2e) [0x45132e]
+/usr/bin/uwsgi(uwsgi_segfault+0x21) [0x451701]
+/lib/x86_64-linux-gnu/libc.so.6(+0x35250) [0x7f25f763b250]
+/usr/lib/x86_64-linux-gnu/libpython3.3m.so.1.0(PyUnicode_InternInPlace+0x60) [0x7f25f5d5d070]
+/usr/lib/x86_64-linux-gnu/libpython3.3m.so.1.0(PyUnicode_InternFromString+0x1a) [0x7f25f5d5d25a]
+/usr/lib/x86_64-linux-gnu/libpython3.3m.so.1.0(PyObject_GetAttrString+0x28) [0x7f25f5d47688]
+/usr/lib/x86_64-linux-gnu/libpython3.3m.so.1.0(PyObject_HasAttrString+0x9) [0x7f25f5d47879]
+/usr/lib/uwsgi/plugins/python33_plugin.so(uwsgi_python_autoreloader_thread+0x10b) [0x7f25f644e90b]
+/lib/x86_64-linux-gnu/libpthread.so.0(+0x7e0e) [0x7f25f90f7e0e]
+/lib/x86_64-linux-gnu/libc.so.6(clone+0x6d) [0x7f25f76ef0fd]
+*** end of backtrace ***
+Mon Apr  7 11:46:05 2014 - DAMN ! worker 1 (pid: 2879) died, killed by signal 11 :( trying respawn ...
+Mon Apr  7 11:46:05 2014 - Respawned uWSGI worker 1 (new pid: 7133)
+Mon Apr  7 11:46:05 2014 - Python auto-reloader enabled
+Mon Apr  7 11:46:14 2014 - SIGINT/SIGQUIT received...killing workers...
+Mon Apr  7 11:46:15 2014 - worker 2 buried after 1 seconds
+Mon Apr  7 11:46:15 2014 - worker 1 buried after 1 seconds
+Mon Apr  7 11:46:15 2014 - goodbye to uWSGI.
+Mon Apr  7 11:46:17 2014 - *** Starting uWSGI 1.9.17.1-debian (64bit) on [Mon Apr  7 11:46:17 2014] ***
+Mon Apr  7 11:46:17 2014 - compiled with version: 4.8.1 on 26 September 2013 23:59:28
+Mon Apr  7 11:46:17 2014 - os: Linux-3.2.0-4-amd64 #1 SMP Debian 3.2.51-1
+Mon Apr  7 11:46:17 2014 - nodename: debian-flask-test
+Mon Apr  7 11:46:17 2014 - machine: x86_64
+Mon Apr  7 11:46:17 2014 - clock source: unix
+Mon Apr  7 11:46:17 2014 - pcre jit disabled
+Mon Apr  7 11:46:17 2014 - detected number of CPU cores: 1
+Mon Apr  7 11:46:17 2014 - current working directory: /
+Mon Apr  7 11:46:17 2014 - writing pidfile to /run/uwsgi/app/flask3/pid
+Mon Apr  7 11:46:17 2014 - detected binary path: /usr/bin/uwsgi-core
+Mon Apr  7 11:46:17 2014 - setgid() to 33
+Mon Apr  7 11:46:17 2014 - setuid() to 33
+Mon Apr  7 11:46:17 2014 - your processes number limit is 3882
+Mon Apr  7 11:46:17 2014 - your memory page size is 4096 bytes
+Mon Apr  7 11:46:17 2014 -  *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+Mon Apr  7 11:46:17 2014 - detected max file descriptor number: 1024
+Mon Apr  7 11:46:17 2014 - lock engine: pthread robust mutexes
+Mon Apr  7 11:46:17 2014 - thunder lock: disabled (you can enable it with --thunder-lock)
+Mon Apr  7 11:46:17 2014 - uwsgi socket 0 bound to UNIX address /run/uwsgi/app/flask3/socket fd 3
+Mon Apr  7 11:46:17 2014 - Python version: 3.3.2+ (default, Sep 18 2013, 12:00:26)  [GCC 4.8.1]
+Mon Apr  7 11:46:17 2014 - Set PythonHome to /home/flask3/proj1/venv
+Mon Apr  7 11:46:17 2014 - *** Python threads support is disabled. You can enable it with --enable-threads ***
+Mon Apr  7 11:46:17 2014 - Python main interpreter initialized at 0x2434930
+Mon Apr  7 11:46:17 2014 - your server socket listen backlog is limited to 100 connections
+Mon Apr  7 11:46:17 2014 - your mercy for graceful operations on workers is 60 seconds
+Mon Apr  7 11:46:17 2014 - mapped 304392 bytes (297 KB) for 2 cores
+Mon Apr  7 11:46:17 2014 - *** Operational MODE: preforking ***
+Mon Apr  7 11:46:17 2014 - added /home/flask3/proj1/www/ to pythonpath.
+Mon Apr  7 11:46:18 2014 - WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x2434930 pid: 7535 (default app)
+Mon Apr  7 11:46:18 2014 - *** uWSGI is running in multiple interpreter mode ***
+Mon Apr  7 11:46:18 2014 - spawned uWSGI master process (pid: 7535)
+Mon Apr  7 11:46:18 2014 - spawned uWSGI worker 1 (pid: 7567, cores: 1)
+Mon Apr  7 11:46:18 2014 - spawned uWSGI worker 2 (pid: 7568, cores: 1)
+Mon Apr  7 11:46:18 2014 - Python auto-reloader enabled
+[pid: 7567|app: 0|req: 1/1] 192.168.1.140 () {38 vars in 576 bytes} [Mon Apr  7 10:46:19 2014] GET / => generated 1957 bytes in 1764 msecs (HTTP/1.1 200) 1 headers in 44 bytes (1 switches on core 0)

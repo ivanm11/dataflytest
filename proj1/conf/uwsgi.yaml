@@ -1,0 +1,15 @@
+uwsgi:
+    plugins: python2
+    pythonpath: /home/flask3/proj1/www
+    env: DJANGO_SETTINGS_MODULE=flask3.settings
+    virtualenv: /home/flask3/proj1/venv
+    module: flask3.wsgi
+    max-requests: 5000
+    buffer-size: 32768
+    harakiri: 30
+    reload-mercy: 8
+    master: 1
+    no-orphans: 1
+    touch-reload: /home/flask3/proj1/uwsgi-touch-reload
+    py-autoreload: 3
+

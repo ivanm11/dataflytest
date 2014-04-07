@@ -2936,7 +2936,7 @@ def load_app(target):
         NORUN = nr_old
 
 _debug = debug
-def run(app=None, server='wsgiref', host='127.0.0.1', port=8080,
+def run(app=None, server='wsgiref', host='0.0.0.0', port=8080,
         interval=1, reloader=False, quiet=False, plugins=None,
         debug=None, **kargs):
     """ Start a server instance. This method blocks until the server terminates.
@@ -3613,7 +3613,7 @@ if __name__ == '__main__':
     sys.path.insert(0, '.')
     sys.modules.setdefault('bottle', sys.modules['__main__'])
 
-    host, port = (opt.bind or 'localhost'), 8080
+    host, port = (opt.bind or '*'), 8080
     if ':' in host and host.rfind(']') < host.rfind(':'):
         host, port = host.rsplit(':', 1)
     host = host.strip('[]')

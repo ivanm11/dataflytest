@@ -1,0 +1,8 @@
+192.168.1.140 - - [07/Apr/2014:11:28:33 -0400] "GET / HTTP/1.1" 200 973 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+192.168.1.140 - - [07/Apr/2014:11:28:34 -0400] "GET /favicon.ico HTTP/1.1" 200 973 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+192.168.1.140 - - [07/Apr/2014:11:28:34 -0400] "GET /favicon.ico HTTP/1.1" 200 973 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+192.168.1.140 - - [07/Apr/2014:11:28:58 -0400] "GET / HTTP/1.1" 502 172 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+192.168.1.140 - - [07/Apr/2014:11:29:28 -0400] "GET / HTTP/1.1" 200 973 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+192.168.1.140 - - [07/Apr/2014:11:37:03 -0400] "GET / HTTP/1.1" 502 172 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+192.168.1.140 - - [07/Apr/2014:11:46:04 -0400] "GET / HTTP/1.1" 502 172 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+192.168.1.140 - - [07/Apr/2014:11:46:21 -0400] "GET / HTTP/1.1" 200 973 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"

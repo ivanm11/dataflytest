@@ -36,8 +36,8 @@ class Staging(Default):
     BASE_URL = 'http://staging.starter.datafly.net'
 
 class Development(Default):
-    BASE_URL = 'http://127.0.0.1:8080'
-    HOST = '127.0.0.1'
+    BASE_URL = 'http://0.0.0.0:8080'
+    HOST = '0.0.0.0'
     PORT = 8080    
 
 """
