@@ -1,0 +1,15 @@
+{% set namespace = 'test' %}
+
+{% import 'editor.html' as editor with context %}
+{% extends layout %}
+
+{% block content %}
+
+{% call editor.html('content') %}
+    <h2>Our practice</h2>
+    {{ lipsum(1, min=50) }}
+
+    <h2>Who we are</h2>
+{% endcall %}
+
+{% endblock %}
