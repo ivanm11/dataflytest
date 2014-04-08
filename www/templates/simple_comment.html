@@ -1,0 +1,13 @@
+<article class="comments">
+    <p class="published">
+    {{ comment.meta.created|strftime(data.date_format_short) }}
+    </p>
+    <div class="text block-white" data-comment-id="{{ comment._id }}">
+        <a class="delete-button" href="/comments/delete/{{ comment._id }}">delete</a>
+        <a class="edit-button" href="/comments/edit/{{ comment._id }}">edit</a>
+        <div class="comment-text">
+            {{ comment.text }}
+        </div>
+        {# {{ addthis(p) }} #}
+    </div>
+</article>

@@ -1,0 +1,26 @@
+{# {% if single_comment %}
+    <h1 class="single_post">{{ c.meta.title }}</h1>
+{% else %}
+    <h2><a href="/{{ c.id }}">{{ c.meta.title }}</a></h2>
+{% endif %} #}
+<p class="published">
+    {{ c.meta.created|strftime(data.date_format_short) }}
+</p>
+<div class="text block-white" data-comment-id="{{ c._id }}">
+    <a class="delete-button" href="/comments/delete/{{ c._id }}">delete</a>
+    <a class="edit-button" href="/comments/edit/{{ c._id }}">edit</a>
+    {% if single_comment %}
+        <div class="comment-text">
+            {{ c.text }}
+        </div>
+        {# {{ addthis(p) }} #}
+    {% else %}
+
+        <div class="comment-text">
+            {{ c.text|striptags|truncate(600, killwords=False) }}
+        </div>
+
+        {# {{ addthis(p) }} #}
+        {# <a href="/{{ C.id }}" class="readpost">read more</a> #}
+    {% endif %}  
+</div> 

@@ -46,6 +46,6 @@ def get_page(_id):
     return json.loads(dumps(p))
 
 @editor_app.post('/admin/api/pages/id/<page_id:path>')
-def save_page(page_id):    
+def save_page(page_id):
     page = Page(request.json['page'])
     page.save()

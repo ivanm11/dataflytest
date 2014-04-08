@@ -105,3 +105,42 @@ $ () ->
             options.imageUpload = (options.imageUpload +
                 "?width=#{ fitWidth }&height=#{ fitHeight }&crop=#{ crop }")
         $('#hidden-upload .redactor_btn_image').click()
+
+
+#    $('#comment-submit-button').click ->
+#        # check required fields
+#        alert('qwe')
+#        valid = true
+#        action = $('#comments-form').attr('action');
+#        $('form#comments-form [data-required]').each ->
+#            label = $(this).prev('label')
+#            if $(this).val() is ''
+#                label.css('color', 'red')
+#                valid = false
+#            else
+#                label.css('color', '#aaa')
+#        return Datafly.error 'Please fill all required fields.' if !valid
+#        # save
+#        comment =
+#            img: {}
+#            meta: $('form#comments-form').serializeObject()
+#        $('[data-clip]').each ->
+#            clip = $(this).data('clip')
+#            if $(this).is 'img'
+#                src = $(this).attr('src')
+#                comment.img[clip] = src
+#            else
+#                html = $(this).redactor('get')
+#                comment[clip] = html
+##        page['id'] = id = $(this).data('page-id')
+#        $.ajax(
+#            url: action
+#            type: 'POST'
+#            data: JSON.stringify(
+#                comment: comment
+#            ),
+#            dataType: 'json',
+#            contentType: 'application/json'
+##            success: (res) -> $('#save').data('page-id', res.id)
+#        )
+#        Datafly.notify 'New comment published!'

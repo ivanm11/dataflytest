@@ -40,6 +40,25 @@ merge(app, 'datafly.views.blog:public',
         # 'fb_id': '0123456789'
 })
 
+# /comment/<page>
+merge(app, 'datafly.views.comment:public',
+    config = {
+        'feed': {
+            'title': 'Comments',
+            'desc': 'Comments desc...',
+            # 'email': 'info@datafly.net',
+            # 'author': 'DataFly'
+        },
+        # 'addthis_id': '0123456789',
+        # 'fb_id': '0123456789'
+})
+
+# /comments/delete/<id>
+merge(app, 'datafly.views.comment:public')
+
+# /comment/page/create
+merge(app, 'datafly.views.comment:public')
+
 # /product/<page>
 merge(app, 'datafly.views.gallery:public')
 
